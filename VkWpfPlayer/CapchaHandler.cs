@@ -1,0 +1,6 @@
+﻿namespace VkWpfPlayer
+{
+    class CapchaHandler
+    {
+    }
+}

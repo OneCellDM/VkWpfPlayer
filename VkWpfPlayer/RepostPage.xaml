@@ -1,0 +1,85 @@
+﻿<Page x:Class="VkWpfPlayer.RepostPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VkWpfPlayer"
+       xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="RepostPage" Background="White">
+
+    <Grid>
+
+        <Grid HorizontalAlignment="Center" Background="White" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="78.4"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button   x:Name="CloseButton"  Grid.Column="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="CloseButton_Click">
+                <Button.Content>
+                   
+
+                        <TextBlock FontSize="14"  >
+                        <Run Text=" &#xE72B;" FontFamily="Segoe MDL2 Assets"/>
+                        <Run Name="AlbumTitleText"/>
+                        <Run Text="Закрыть "/>
+
+                        </TextBlock>
+
+                    
+           
+            </Button.Content>
+            </Button>
+            <Button x:Name="SearchButton"  Grid.Column="2" Margin="0,0,3,0.4" Click="SearchButton_Click" Background="#FFEDEEF0" BorderBrush="{x:Null}" >
+                <Button.Content>
+                    <TextBlock>
+                  
+                    <Run FontSize="12"  Text="&#xE721;" FontFamily="Segoe MDL2 Assets"></Run>
+                      <Run Text="Поиск "></Run>
+                    </TextBlock>
+                </Button.Content>
+            </Button>
+            <TextBox x:Name="SearchTextBox" TextWrapping="Wrap" Margin="2,1,2,1.4" UndoLimit="200" RenderTransformOrigin="0.5,0.5" TextChanged="SearchTextBox_TextChanged" Grid.Column="1" MinWidth="200">
+                <TextBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0.019"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </TextBox.RenderTransform>
+            </TextBox>
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  VirtualizingPanel.VirtualizationMode="Recycling"  
+                  x:Name="FriendsListview"  
+                  BorderBrush="{x:Null}" 
+                  Grid.ColumnSpan="3" Grid.Row="1" 
+                  Margin="0,4.6,0.2,-0.4" SelectionChanged="FriendsListview_SelectionChanged"
+                  >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse  Width="50" Height="50">
+                                <Ellipse.Fill >
+                                    <ImageBrush ImageSource="{Binding AvatarUrl}"></ImageBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" FontWeight="Bold" Margin="5"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+        </Grid>
+        <StackPanel x:Name="SuccesLoadPanel" Background="#FF4A76A8"  Grid.RowSpan="2" d:IsHidden="True" Margin="0,0,0,-0.4">
+            <Image x:Name="gifim"  gif:ImageBehavior.AutoStart="True" gif:ImageBehavior.AnimateInDesignMode="True" VerticalAlignment="Center" HorizontalAlignment="Center" gif:ImageBehavior.AnimatedSource="Resources/Dual Ring-1.3s-200px.gif" Margin="0,100,0,0" Width="100" Height="100"  />
+        </StackPanel>
+    </Grid>
+</Page>
