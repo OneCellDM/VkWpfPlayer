@@ -79,5 +79,15 @@ namespace VkWpfPlayer.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] SegMDL2 {
+            get {
+                object obj = ResourceManager.GetObject("SegMDL2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

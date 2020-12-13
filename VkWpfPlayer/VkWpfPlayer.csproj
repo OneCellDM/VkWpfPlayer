@@ -234,6 +234,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\SegMDL2.ttf" />
+    <None Include="SegMDL2.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

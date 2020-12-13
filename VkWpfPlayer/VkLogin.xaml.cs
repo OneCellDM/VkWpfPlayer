@@ -113,7 +113,7 @@ namespace VkWpfPlayer
 
                 });
             }
-            var api = new VkNet.VkApi(ToolsAndsettings.loggingHandler.Services);
+            var api = new VkNet.VkApi();
             api.Authorize(new VkNet.Model.ApiAuthParams() { AccessToken = "4b0168fd4b0168fd4b0168fd8f4b676c6744b014b0168fd1093d8fdf1e3c0017422a04c" });
             var data = api.Users.Get(Ids, ProfileFields.Photo50);
 
@@ -176,7 +176,7 @@ namespace VkWpfPlayer
                     Login = LoginTextBox.Text,
                     TwoFactorSupported = true,
                     ApplicationId = 6121396,
-                    Settings = Settings.All,
+                    Settings = Settings.Audio | Settings.Friends | Settings.Offline,
                     TwoFactorAuthorization = () =>
                     {
                         this.Dispatcher.Invoke(() =>
@@ -269,7 +269,7 @@ namespace VkWpfPlayer
 
         private void AccountList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            VkNet.VkApi api = new VkNet.VkApi(ToolsAndsettings.loggingHandler.Services);
+            VkNet.VkApi api = new VkNet.VkApi();
             var item = (UserData)AccountList.SelectedItem;
             api.Authorize(new VkNet.Model.ApiAuthParams
             {
@@ -307,6 +307,26 @@ namespace VkWpfPlayer
             this.AuthErrorBorder.Visibility = Visibility.Collapsed;
             PreviewErrorBorder.Visibility = Visibility.Visible;
 
+        }
+
+        private void DeleteAccountButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            var button= sender as Button;
+            var data = button.DataContext as UserData;
+            var key = Registry.CurrentUser.OpenSubKey("SOFTWARE", true).OpenSubKey("VkPlayerByOneCellDM",true);
+            foreach (var val in key.GetValueNames())
+            {
+                if (val != "Settings")
+                    if (val == data.Id.ToString())
+                    {
+                        key.DeleteValue(val);
+                        ShowActiveAccounts();
+                        break;
+                    }
+                        
+             }
+            
         }
 
 

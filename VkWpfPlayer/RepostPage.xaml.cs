@@ -40,8 +40,15 @@ namespace VkWpfPlayer
                 {
                     this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
                     {
-                        ToolsAndsettings.AddDataToObservationCollection(FriendsCollection, awaiterData.GetResult());
-                        SuccesLoadPanel.Visibility = Visibility.Collapsed;
+                        try
+                        {
+                            ToolsAndsettings.AddDataToObservationCollection(FriendsCollection, awaiterData.GetResult());
+                            SuccesLoadPanel.Visibility = Visibility.Collapsed;
+                        }
+                        catch(Exception ex)
+                        {
+                            LoadingFriends();
+                        }
                     }));
                 });
             });

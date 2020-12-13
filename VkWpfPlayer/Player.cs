@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using VkWpfPlayer.DataModels;
@@ -10,6 +11,8 @@ namespace VkWpfPlayer
 {
     static class Player
     {
+        private static bool Loading = false;
+        private static Thread PlayThread;
         public static double volume = 1;
         public static bool IsRepeat = false;
         static bool stoopedHandled = false;
@@ -30,7 +33,7 @@ namespace VkWpfPlayer
 
         public static event PlayngPosition UpdatePosition;
 
-        static Timer timer = new Timer();
+        static System.Timers.Timer timer = new System.Timers.Timer();
 
         static Player()
         {
@@ -65,9 +68,9 @@ namespace VkWpfPlayer
                     if (IsRepeat)
                     {
                         ToolsAndsettings.loggingHandler.Log.Info("Перезапуск аудио потока");
-                        bool a = Bass.ChannelUpdate(_stream, 0);
-                           bool b=  Player.Play();
-                        if(a&b)    
+                         Bass.ChannelUpdate(_stream, 0);
+                         Player.Play();
+                        if(IsPlaying)    
                             ToolsAndsettings.loggingHandler.Log.Info("Аудио поток перезапущен");
 
                         else ToolsAndsettings.loggingHandler.Log.Error(Bass.LastError.ToString());
@@ -116,17 +119,26 @@ namespace VkWpfPlayer
         {
             _stream = Bass.CreateStream(url, 0, BassFlags.StreamStatus | BassFlags.AutoFree | BassFlags.Prescan | BassFlags.Unicode, null, IntPtr.Zero);
         }
-        public static async Task<bool> Play(AudioModel audioModel, bool repeat = false)
+        public static async void Play(AudioModel audioModel, bool repeat = false)
         {
-            if (Bass.ChannelIsActive(_stream) == PlaybackState.Playing)
-                Bass.ChannelStop(_stream);
+
+            if (Loading)
+                return;
+            
+
             timer.Stop();
             await Task.Run(() =>
             {
-
+                
+                Bass.ChannelStop(_stream);
+                Bass.StreamFree(_stream);
+                Loading = true;
+                
                 SetFromVkModel(audioModel);
+
             });
-            return Play();
+            Play();
+
         }
         public static void Pause()
         {
@@ -143,39 +155,45 @@ namespace VkWpfPlayer
                 ToolsAndsettings.loggingHandler.Log.Error(Bass.LastError);
             }
         }
-        public static bool Play()
+        public static void Play()
         {
-
-
+           
+            if (PlayThread != null && PlayThread.IsAlive)
+                PlayThread.Abort();
 
             if (_stream == 0)
-            {
                 ToolsAndsettings.loggingHandler.Log.Info("Длинна потока = 0");
-                return false;
-            }
-            var t = Task.Run<bool>(() =>
-              {
-                  var reply = false;
-                  if (!IsPaused)
-                      reply = true;
+            else
+            {
 
-
-                  if (!Bass.ChannelPlay(_stream, reply))
+                PlayThread = new Thread(() =>
                   {
-                      ToolsAndsettings.loggingHandler.Log.Info("Ошибка воспроизведения аудио потока");
-                      ToolsAndsettings.loggingHandler.Log.Error(Bass.LastError);
-                      return false;
-                  }
-                  SetVolume(volume);
-                  timer.Start();
-                  stoopedHandled = false;
-                  IsPlaying = true;
-                  IsPaused = false;
-                  ToolsAndsettings.loggingHandler.Log.Info("Аудио поток запущен");
+                      var reply = false;
+                      if (!IsPaused)
+                          reply = true;
 
-                  return true;
-              });
-            return false;
+
+                      if (!Bass.ChannelPlay(_stream, reply))
+                      {
+                          ToolsAndsettings.loggingHandler.Log.Info("Ошибка воспроизведения аудио потока");
+                          ToolsAndsettings.loggingHandler.Log.Error(Bass.LastError);
+
+                      }
+                      SetVolume(volume);
+                      timer.Start();
+                      stoopedHandled = false;
+                      IsPlaying = true;
+                      IsPaused = false;
+                      Loading = false;
+                      ToolsAndsettings.loggingHandler.Log.Info("Аудио поток запущен");
+
+
+                  });
+                PlayThread.IsBackground = true;
+                PlayThread.Priority = ThreadPriority.Lowest;
+                PlayThread.Start();
+            }
+           
         }
 
     }

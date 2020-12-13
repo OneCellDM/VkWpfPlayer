@@ -40,7 +40,7 @@
 
             </StackPanel>
         </Border>
-        <Border x:Name="AccountListPanelBorder" CornerRadius="5" Background="#4A76A8" BorderBrush="#4A76A8" BorderThickness="10" VerticalAlignment="Center" HorizontalAlignment="Center" d:IsHidden="True">
+        <Border x:Name="AccountListPanelBorder" CornerRadius="5" Background="#4A76A8" BorderBrush="#4A76A8" BorderThickness="10" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="50" RenderingBias="Quality" ShadowDepth="3" Direction="100"/>
             </Border.Effect>
@@ -54,8 +54,21 @@
                                         <ImageBrush  ImageSource="{Binding AvatarUrl}"></ImageBrush>
                                     </Ellipse.Fill>
                                 </Ellipse>
-                                <TextBlock VerticalAlignment="Center" Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="5,0"> </TextBlock>
-                             </StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200"></ColumnDefinition>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="5,0"> </TextBlock>
+                                <Button  Grid.Column="1" x:Name="DeleteAccountButton" Content="&#xE74D;" FontFamily="Segoe MDL2 Assets" FontSize="20" Click="DeleteAccountButton_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFDDDDDD">
+                                    <Button.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="6"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                                </Grid>
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -70,20 +83,20 @@
             </Button>
         </StackPanel>
         </Border>
-        <Border  Padding="10" x:Name="AuthErrorBorder" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#4A76A8">
+        <Border  Padding="10" x:Name="AuthErrorBorder" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#4A76A8" d:IsHidden="True" d:IsEffectDisabled="True">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="50" RenderingBias="Quality" ShadowDepth="1" Direction="100"/>
             </Border.Effect>
-            <StackPanel  x:Name="AuthErrorPanel">
-                <TextBlock Foreground="White" HorizontalAlignment="Center"  FontSize="16" FontWeight="Bold" Margin="0,10,0,0" > Ошибка Авторизации </TextBlock>
-                <TextBlock  Margin="5" FontSize="14" Foreground="White">
+            <StackPanel  x:Name="AuthErrorPanel" d:IsHidden="True">
+                <TextBlock Foreground="White" HorizontalAlignment="Center"  FontSize="16" FontWeight="Bold" Margin="0,10,0,0" d:IsHidden="True" > Ошибка Авторизации </TextBlock>
+                <TextBlock  Margin="5" FontSize="14" Foreground="White" d:IsHidden="True">
                         <Run x:Name="AuthErrorCodeTextRun"/>
                         <LineBreak></LineBreak>
                         <Run x:Name="AuthErrorTextRun"/>
                 </TextBlock>
                 <Button Padding="5" x:Name="CancelLoginButton" Margin="5" Content="Закрыть" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Center" Click="CancelLoginButton_Click" FontSize="16">
+                            HorizontalAlignment="Center" Click="CancelLoginButton_Click" FontSize="16" d:IsHidden="True">
                     <Button.Resources >
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10" ></Setter>
