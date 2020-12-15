@@ -16,6 +16,11 @@ namespace VkWpfPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
+
+       
+    
+      
+
         private MyAudios _MyAudiosPage;
         private AlbumsPage _AlbumsPage;
         private SearchPage _searchPage;
@@ -29,6 +34,7 @@ namespace VkWpfPlayer
            
             AuthFrame.Content = new VkLogin().Content;
             ToolsAndsettings.AuthorizedAcces += ToolsAndsettings_AuthorizedAcces;
+           
 
 
         }

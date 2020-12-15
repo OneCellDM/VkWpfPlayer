@@ -50,7 +50,7 @@ namespace VkWpfPlayer
             AuthErrorBorder.Visibility = Visibility.Collapsed;
             SaveAuthDataCheckBox.Visibility = Visibility.Collapsed;
 
-            TwoFactorCodeTextBoxBorder.Visibility = Visibility.Hidden;
+            TwoFactorCodeTextBox.Visibility = Visibility.Hidden;
             showAccountList();
             ShowActiveAccounts();
         }
@@ -71,29 +71,29 @@ namespace VkWpfPlayer
         private void HideLoginComponents()
         {
             
-            TwoFactorCodeTextBoxBorder.Visibility = Visibility.Hidden;
+            TwoFactorCodeTextBox.Visibility = Visibility.Hidden;
             LoginLabel.Visibility = Visibility.Collapsed;
-            LoginTextBoxBorder.Visibility = Visibility.Collapsed;
-            PasswordTextboxBorder.Visibility = Visibility.Collapsed;
+            LoginTextBox.Visibility = Visibility.Collapsed;
+            PasswordTextbox.Visibility = Visibility.Collapsed;
         }
         private void HideTwoAuthComponents()
         {
             AuthButton.Content = "Авторизироваться ";
-            TwoFactorCodeTextBoxBorder.Visibility = Visibility.Hidden;
+            TwoFactorCodeTextBox.Visibility = Visibility.Hidden;
             LoginLabel.Visibility = Visibility.Visible;
             PasswordLabel.Content = "пароль";
-            LoginTextBoxBorder.Visibility = Visibility.Visible;
-            PasswordTextboxBorder.Visibility = Visibility.Visible;
+            LoginTextBox.Visibility = Visibility.Visible;
+            PasswordTextbox.Visibility = Visibility.Visible;
         }
 
         private void ShowTwoAuthComponents()
         {
             AuthButton.Content = "Отправить код авторизации";
-            TwoFactorCodeTextBoxBorder.Visibility = Visibility.Visible;
+            TwoFactorCodeTextBox.Visibility = Visibility.Visible;
             PasswordLabel.Content = "Введите код";
             LoginLabel.Visibility = Visibility.Hidden;
-            LoginTextBoxBorder.Visibility = Visibility.Hidden;
-            PasswordTextboxBorder.Visibility = Visibility.Hidden;
+            LoginTextBox.Visibility = Visibility.Hidden;
+            PasswordTextbox.Visibility = Visibility.Hidden;
         }
         private void ShowActiveAccounts()
         {
@@ -172,7 +172,7 @@ namespace VkWpfPlayer
             {
                 var Awaiter = api.AuthorizeAsync(new VkNet.Model.ApiAuthParams()
                 {
-                    Password = PasswordTextbox.Password,
+                    Password = PasswordTextbox.Text,
                     Login = LoginTextBox.Text,
                     TwoFactorSupported = true,
                     ApplicationId = 6121396,
@@ -262,7 +262,7 @@ namespace VkWpfPlayer
 
         private void GoToAuthButton_Click(object sender, RoutedEventArgs e)
         {
-            PasswordTextbox.Password = "";
+            PasswordTextbox.Text = "";
             LoginTextBox.Text = "";
             HideAccountList();
         }

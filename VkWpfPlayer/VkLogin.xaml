@@ -6,45 +6,45 @@
       xmlns:local="clr-namespace:VkWpfPlayer"
       mc:Ignorable="d" d:DesignWidth="800"
       Title="VkLogin" Height="385">
-    <Grid Background="#4A76A8" Margin="0,0,0,0" >
-        <Border x:Name="LoginBorder"  Padding="10" Background="#4A76A8"  HorizontalAlignment="Center" VerticalAlignment="Center"  CornerRadius="20" d:IsHidden="True">
+    <Grid Background="White" Margin="0,0,0,0" >
+        <Border x:Name="LoginBorder"  Padding="10" Background="White"  HorizontalAlignment="Center" VerticalAlignment="Center"  CornerRadius="20" d:IsHidden="True">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="50" RenderingBias="Quality" ShadowDepth="3" Direction="100"/>
             </Border.Effect>
-            <StackPanel  x:Name="LoginPanel"  UseLayoutRounding="False" SnapsToDevicePixels="True" >
+            <StackPanel  x:Name="LoginPanel"  UseLayoutRounding="False" SnapsToDevicePixels="True" d:IsHidden="True" >
                 <Label x:Name="LoginLabel" HorizontalAlignment="Center" FontSize="14" Margin="0,0,0,10" FontWeight="Bold">Логин</Label>
-                <Border x:Name="LoginTextBoxBorder" CornerRadius="10" BorderThickness="4.5" BorderBrush="#FFDFD5D5" Margin="20,0">
-                    <TextBox x:Name="LoginTextBox" Background="#FFDFD5D5" Height="30" BorderBrush="{x:Null}" Margin="-1.2" />
-                </Border>
+
+                <TextBox  Style="{StaticResource TextBoxStyleRect}" VerticalContentAlignment="Center"  x:Name="LoginTextBox"  Height="30" Background="#F5F5F5" Margin="5,0"  >
+                       
+                    </TextBox>
+               
 
                 <Label x:Name="PasswordLabel" HorizontalAlignment="Center" FontSize="14" Margin="0,10" FontWeight="Bold">Пароль</Label>
-                <Border x:Name="PasswordTextboxBorder" CornerRadius="10" BorderThickness="4.5" BorderBrush="#FFDFD5D5" Margin="20,0">
-                    <PasswordBox x:Name="PasswordTextbox" Background="#FFDFD5D5"  Height="30" BorderBrush="{x:Null}" Margin="-1.4"  />
-                </Border>
+               
+                    <TextBox Style="{StaticResource TextBoxStyleRect}" VerticalContentAlignment="Center" x:Name="PasswordTextbox" Background="#F5F5F5"  Height="30"  Margin="5,0">
+                       
+                    </TextBox>
+                
 
 
-                <Border x:Name="TwoFactorCodeTextBoxBorder" CornerRadius="10" BorderThickness="4.5" BorderBrush="#FFDFD5D5" Margin="20,0" >
-                    <TextBox  x:Name="TwoFactorCodeTextBox" TextWrapping="Wrap"  Margin="-1.2" Background="#FFDFD5D5"  Height="30" BorderBrush="{x:Null}"  />
 
+                <TextBox  Style="{StaticResource TextBoxStyleRect}" VerticalContentAlignment="Center" x:Name="TwoFactorCodeTextBox" TextWrapping="Wrap"  Margin="5,0" Background="#F5F5F5"   Height="30">
+                   
+                </TextBox>
 
-                </Border>
                 <CheckBox x:Name="SaveAuthDataCheckBox" Content="Запомнить  пользователя" Margin="20,5,0,0"/>
 
-                <Button x:Name="AuthButton"  Content="Авторизироваться" Padding="15,10" Margin="80,20"  FontSize="16" Click="AuthButton_Click" >
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="20"/>
-                        </Style>
-                    </Button.Resources>
+                <Button Style="{StaticResource ButtonStyleRect}" x:Name="AuthButton"  Content="Авторизироваться" Padding="15,10" Margin="80,20"  FontSize="16" Click="AuthButton_Click" >
+                   
                 </Button>
 
             </StackPanel>
         </Border>
-        <Border x:Name="AccountListPanelBorder" CornerRadius="5" Background="#4A76A8" BorderBrush="#4A76A8" BorderThickness="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Border x:Name="AccountListPanelBorder"  CornerRadius="5" Background="White"  BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="50" RenderingBias="Quality" ShadowDepth="3" Direction="100"/>
             </Border.Effect>
-            <StackPanel  Background="#4A76A8"  >
+            <StackPanel  Background="White"  >
                 <ListView x:Name="AccountList" Margin="0,0,0,-0.2" Background="{x:Null}" FontWeight="Bold" FontSize="16" BorderBrush="{x:Null}" SelectionChanged="AccountList_SelectionChanged"  >
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -59,51 +59,53 @@
                                         <ColumnDefinition Width="200"></ColumnDefinition>
                                         <ColumnDefinition Width="30"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="5,0"> </TextBlock>
+                                    <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="5,0"> </TextBlock>
                                 <Button  Grid.Column="1" x:Name="DeleteAccountButton" Content="&#xE74D;" FontFamily="Segoe MDL2 Assets" FontSize="20" Click="DeleteAccountButton_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFDDDDDD">
-                                    <Button.Resources>
-                                        <Style TargetType="{x:Type Border}">
-                                            <Setter Property="CornerRadius" Value="6"/>
-                                        </Style>
-                                    </Button.Resources>
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="AliceBlue"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
                                 </Button>
                                 </Grid>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
-                
+                    <local:UserData AvatarUrl="https://sun9-18.userapi.com/impf/c848528/v848528054/15c63b/4MgNIM29Nho.jpg?size=848x1280&amp;quality=96&amp;proxy=1&amp;sign=1c0718e8a71dc5d88500c0b9982868df&amp;type=album" Name="SELDы" Token="GDGFD" Id="5"/>
+                    <local:UserData AvatarUrl="https://sun9-18.userapi.com/impf/c848528/v848528054/15c63b/4MgNIM29Nho.jpg?size=848x1280&amp;quality=96&amp;proxy=1&amp;sign=1c0718e8a71dc5d88500c0b9982868df&amp;type=album" Id="50" Name="te" Token="rew"/>
 
-                    <Button Margin="10" x:Name="GoToAuthButton" Content="Добавить аккаунт" Click="GoToAuthButton_Click" FontSize="16">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="6"/>
-                            </Style>
-                        </Button.Resources>
-            </Button>
-        </StackPanel>
+                </ListView>
+
+
+                <Button Style="{StaticResource ButtonStyleRect}" Margin="10" x:Name="GoToAuthButton" Content="Добавить аккаунт" Click="GoToAuthButton_Click" FontSize="16"/>
+
+
+            </StackPanel>
         </Border>
-        <Border  Padding="10" x:Name="AuthErrorBorder" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#4A76A8" d:IsHidden="True" d:IsEffectDisabled="True">
+        <Border  Padding="10" x:Name="AuthErrorBorder" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" d:IsEffectDisabled="True" d:IsHidden="True">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="50" RenderingBias="Quality" ShadowDepth="1" Direction="100"/>
             </Border.Effect>
-            <StackPanel  x:Name="AuthErrorPanel" d:IsHidden="True">
-                <TextBlock Foreground="White" HorizontalAlignment="Center"  FontSize="16" FontWeight="Bold" Margin="0,10,0,0" d:IsHidden="True" > Ошибка Авторизации </TextBlock>
-                <TextBlock  Margin="5" FontSize="14" Foreground="White" d:IsHidden="True">
+            <StackPanel  x:Name="AuthErrorPanel">
+                <TextBlock  HorizontalAlignment="Center"  FontSize="16" FontWeight="Bold" Margin="0,10,0,0" > Ошибка Авторизации </TextBlock>
+                <TextBlock  Margin="5" FontSize="14">
                         <Run x:Name="AuthErrorCodeTextRun"/>
                         <LineBreak></LineBreak>
                         <Run x:Name="AuthErrorTextRun"/>
                 </TextBlock>
-                <Button Padding="5" x:Name="CancelLoginButton" Margin="5" Content="Закрыть" 
+                <Button Style="{StaticResource ButtonStyleRect}" Padding="5" x:Name="CancelLoginButton" Margin="5" Content="Закрыть" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Center" Click="CancelLoginButton_Click" FontSize="16" d:IsHidden="True">
-                    <Button.Resources >
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="10" ></Setter>
-                        </Style>
-                    </Button.Resources>
+                            HorizontalAlignment="Center" Click="CancelLoginButton_Click" FontSize="16">
+                   
                 </Button>
             </StackPanel>
         </Border>
+        <StackPanel>
+            <Path > </Path>
+        </StackPanel>
     </Grid>
 </Page>

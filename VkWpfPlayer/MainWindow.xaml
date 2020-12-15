@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:VkWpfPlayer"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="200" MinWidth="200" Height="450" Width="590.4" >
+        Title="VKompakt Musik (VKM)" MinHeight="200" MinWidth="200" Height="450" Width="590.4" >
 
 
 
@@ -499,34 +499,15 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Horizontal" Margin="2,0,2.2,0">
-                <Button FontSize="20" x:Name="PreviewTrackButton" Content="&#xE76B;" Margin="10,0,0,0" FontFamily="./Resources/#Segoe MDL2 Assets" Click="PreviewTrackButton_Click" Width="40" Background="#FF4A76A8" BorderBrush="{x:Null}" Foreground="White" Height="40">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="80"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button FontSize="20" x:Name="PauseTrackButton"   Margin="10,0,0,0" Content="&#xE769;" FontFamily="./Resources/#Segoe MDL2 Assets" Click="PauseTrackButton_Click" Visibility="Collapsed">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="80"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button FontSize="20" x:Name="PlayPauseTrackButton"   Margin="10,0,0,0" Content="&#xE768;" FontFamily="./Resources/#Segoe MDL2 Assets" Click="PlayPauseTrackButton_Click" Width="40" Background="#FF4A76A8" BorderBrush="{x:Null}" Foreground="White" Height="40">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="60"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button  FontSize="20" x:Name="NextTrackButton" Content="&#xE76C;" Background="#FF4A76A8" Margin="10,0,0,0" FontFamily="./Resources/#Segoe MDL2 Assets" Click="NextTrackButton_Click" Width="40"  BorderBrush="{x:Null}" Foreground="White" Height="40">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="60"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                
+                <Button Style="{StaticResource PlayerButtonStyle}"  x:Name="PreviewTrackButton"    Content="&#xE76B;"    Click="PreviewTrackButton_Click"/>
+
+                <Button Style="{StaticResource PlayerButtonStyle}"  x:Name="PauseTrackButton"      Content="&#xE769;"    Click="PauseTrackButton_Click" Visibility="Collapsed"/>
+
+                <Button Style="{StaticResource PlayerButtonStyle}"  x:Name="PlayPauseTrackButton"  Content="&#xE768;"    Click="PlayPauseTrackButton_Click"/>
+
+                <Button  Style="{StaticResource PlayerButtonStyle}" x:Name="NextTrackButton"       Content="&#xE76C;"    Click="NextTrackButton_Click"/>
+
                 <Border CornerRadius="10" Margin="10,0,10,0" VerticalAlignment="Center" Width="60" Height="57">
                     <Border.Background>
                         <ImageBrush x:Name="AudioPlayerImage" ImageSource="Resources/MusicIcon.jpg">

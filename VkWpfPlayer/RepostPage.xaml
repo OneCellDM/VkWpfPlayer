@@ -21,7 +21,7 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button   x:Name="CloseButton"  Grid.Column="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="CloseButton_Click">
+            <Button   x:Name="CloseButton"  Grid.Column="0"  Style="{StaticResource ButtonStyleRect}" Click="CloseButton_Click">
                 <Button.Content>
                    
 
@@ -36,7 +36,7 @@
            
             </Button.Content>
             </Button>
-            <Button x:Name="SearchButton"  Grid.Column="2" Margin="0,0,3,0.4" Click="SearchButton_Click" Background="#FFEDEEF0" BorderBrush="{x:Null}" >
+            <Button Style="{ StaticResource ButtonStyleRect}" x:Name="SearchButton"  Grid.Column="2" Margin="0,0,3,0.4" Click="SearchButton_Click"   >
                 <Button.Content>
                     <TextBlock>
                   
@@ -45,15 +45,8 @@
                     </TextBlock>
                 </Button.Content>
             </Button>
-            <TextBox x:Name="SearchTextBox" TextWrapping="Wrap" Margin="2,1,2,1.4" UndoLimit="200" RenderTransformOrigin="0.5,0.5" TextChanged="SearchTextBox_TextChanged" Grid.Column="1" MinWidth="200">
-                <TextBox.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="0.019"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </TextBox.RenderTransform>
+            <TextBox Style="{StaticResource TextBoxStyleRect}" x:Name="SearchTextBox" TextWrapping="Wrap" Margin="2,1,2,1.4" UndoLimit="200" RenderTransformOrigin="0.5,0.5" TextChanged="SearchTextBox_TextChanged" Grid.Column="1" MinWidth="200">
+              
             </TextBox>
             <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   VirtualizingPanel.VirtualizationMode="Recycling"  
@@ -61,10 +54,11 @@
                   BorderBrush="{x:Null}" 
                   Grid.ColumnSpan="3" Grid.Row="1" 
                   Margin="0,4.6,0.2,-0.4" SelectionChanged="FriendsListview_SelectionChanged"
+                      VirtualizingPanel.ScrollUnit="Pixel"
                   >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel  Orientation="Horizontal">
                             <Ellipse  Width="50" Height="50">
                                 <Ellipse.Fill >
                                     <ImageBrush ImageSource="{Binding AvatarUrl}"></ImageBrush>

@@ -29,6 +29,7 @@ namespace VkWpfPlayer
         public MyAudios()
         {
             InitializeComponent();
+            AudioListView.Items.Clear();
             AudioListView.ItemsSource = AudioCollection;
             StartLoading();
             ErrorGrid.Visibility = System.Windows.Visibility.Collapsed;

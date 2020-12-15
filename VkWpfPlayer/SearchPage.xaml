@@ -18,7 +18,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button x:Name="SearchButton"  Grid.Column="1" Margin="0.4,0,3,0.4" Click="SearchButton_Click" Background="#FFEDEEF0" >
+        <Button  Style="{StaticResource ButtonStyleRect}" x:Name="SearchButton"  Grid.Column="1" Margin="0.4,0,3,0.4" Click="SearchButton_Click"  >
             <Button.Content>
                 <TextBlock>
                   
@@ -27,15 +27,8 @@
                 </TextBlock>
             </Button.Content>
         </Button>
-        <TextBox x:Name="SearchTextBox" TextWrapping="Wrap" Margin="2,1,2.6,1.4" UndoLimit="200" RenderTransformOrigin="0.5,0.5">
-            <TextBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0.019"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBox.RenderTransform>
+        <TextBox  Style="{StaticResource TextBoxStyleRect}" x:Name="SearchTextBox" TextWrapping="Wrap" Margin="2,1,2.6,1.4" UndoLimit="200" RenderTransformOrigin="0.5,0.5">
+           
         </TextBox>
         <ListView ItemTemplate="{DynamicResource ResourceKey=AudioListTeamplate}" 
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -43,6 +36,7 @@
                   x:Name="AudioListView"  
                   BorderBrush="{x:Null}" 
                   Grid.ColumnSpan="2" Grid.Row="1" 
+                  VirtualizingPanel.ScrollUnit="Pixel"
                   Margin="0,5,0,0" SelectionChanged="AudioListView_SelectionChanged"
                 
                   ScrollViewer.ScrollChanged="AudioListView_ScrollChanged"
@@ -52,10 +46,10 @@
 
 
         </ListView>
-        <StackPanel x:Name="SuccesLoadPanel" Background="#FF4A76A8" Margin="0,9.6,0,-0.4" Grid.ColumnSpan="2" Grid.Row="1" >
+        <StackPanel x:Name="SuccesLoadPanel" Background="#FF4A76A8" Margin="0,9.6,0,-0.4" Grid.ColumnSpan="2" Grid.Row="1" d:IsHidden="True" >
             <Image x:Name="gifim"  gif:ImageBehavior.AutoStart="True" gif:ImageBehavior.AnimateInDesignMode="True" VerticalAlignment="Center" HorizontalAlignment="Center" gif:ImageBehavior.AnimatedSource="Resources/Dual Ring-1.3s-200px.gif" Margin="0,100,0,0" Width="100" Height="100"  />
         </StackPanel>
-        <Grid x:Name="ErrorGrid" Grid.RowSpan="2" Background="#FF4A76A8" Grid.ColumnSpan="2" Margin="0,30,0,-0.4">
+        <Grid x:Name="ErrorGrid" Grid.RowSpan="2" Background="#FF4A76A8" Grid.ColumnSpan="2" Margin="0,30,0,-0.4" d:IsHidden="True">
             <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock  FontSize="16" Foreground="White" VerticalAlignment="Center"   Text="Произошла ошибка во время загрузки"/>
 

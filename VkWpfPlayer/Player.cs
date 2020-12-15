@@ -162,7 +162,10 @@ namespace VkWpfPlayer
                 PlayThread.Abort();
 
             if (_stream == 0)
+            {
                 ToolsAndsettings.loggingHandler.Log.Info("Длинна потока = 0");
+                Loading = false;
+            }
             else
             {
 

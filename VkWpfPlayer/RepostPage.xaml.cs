@@ -63,6 +63,7 @@ namespace VkWpfPlayer
                     RandomId = new Random().Next(1, 99999999),
                     Attachments = ToolsAndsettings.VkApi.Audio.GetById(new String[] { Player.Audio.Owner_ID.ToString() + "_" + Player.Audio.ID + "_" + Player.Audio.AccessKey }),
                     UserId = ((FriendModel)e.AddedItems[e.AddedItems.Count - 1]).ID,
+
                 }).GetAwaiter();
                 awaiterdata.OnCompleted(() =>
                 {
