@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:VkWpfPlayer"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
-        Title="VKompakt Musik (VKM)" MinHeight="200" MinWidth="200" Height="450" Width="590.4" >
+        Title="VKompakt Musik (VKM)"  MinHeight="100" MinWidth="200" Height="450" Width="590.4" SizeChanged="Window_SizeChanged" >
 
 
 
@@ -538,6 +538,7 @@
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Margin="5,0,-0.2,1.4">
                         <Button x:Name="RepeatButton" Content="&#xE8EE;" FontSize="20" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Left" Background="{x:Null}" Click="RepeatButton_Click" BorderBrush="{x:Null}" Margin="0,0,0,-0.2" Height="29" VerticalAlignment="Bottom" />
+                        <Button x:Name="MiniMaxPlayerButton" Content="MINIPLAYER" Click="MiniMaxPlayerButton_Click"/>
                         <Button x:Name="RepostAudio"  Background="{x:Null}" Click="RepostAudio_Click" BorderBrush="{x:Null}" Margin="0,0,0,-0.2" VerticalAlignment="Top" HorizontalAlignment="Center" Height="29">
                             <Path  Data="M34.1,910.3c-4.6,0-4.6,0-9.1,0c-9.1-4.6-18.3-18.3-13.7-27.4c64-324.7,265.3-530.6,567.1-585.4V114.5c0-9.1,4.6-18.3,13.7-22.9s18.3,0,27.4,4.6l361.3,361.3c4.6,4.6,9.1,9.1,9.1,18.3c0,4.6-4.6,13.7-9.1,18.3L619.5,855.4c-9.1,9.1-18.3,9.1-27.4,4.6c-9.1-4.6-13.7-13.7-13.7-22.9V649.6C340.5,654.2,175.9,736.5,57,901.2C47.8,905.7,38.7,910.3,34.1,910.3z" Stretch="Fill" UseLayoutRounding="False" Width="28" Height="16" Fill="#FF4A76A8"/>
                         </Button>

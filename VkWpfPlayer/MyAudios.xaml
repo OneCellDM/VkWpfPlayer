@@ -30,13 +30,14 @@
             <ListView   ItemTemplate="{DynamicResource ResourceKey=AudioListTeamplate}"
 
 
-                VirtualizingPanel.VirtualizationMode="Recycling"  
+                 
                   x:Name="AudioListView"  
                   BorderBrush="{x:Null}" 
                   Grid.ColumnSpan="2" Grid.Row="1" 
                   Margin="0,5,0,0" SelectionChanged="AudioListView_SelectionChanged"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                         VirtualizingPanel.ScrollUnit="Pixel"
+                        
                   
                       
                   >

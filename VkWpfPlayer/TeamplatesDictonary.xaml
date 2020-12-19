@@ -6,6 +6,7 @@
     <BitmapImage x:Key="Musicico" UriSource="Resources/MusicIcon.jpg" />
 
     <local:DurationConverter x:Name="DConverters" x:Key="Dconverter" />
+    <local:ImageConverter x:Name="Imageconv" x:Key="ImageC"></local:ImageConverter>
    
     <local:ListviewSizeConverter x:Key="LSizeConverter"></local:ListviewSizeConverter>
 
@@ -108,13 +109,24 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="30"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" CornerRadius="5" Width="50" Height="50">
-                <Border.Background>
-                    <ImageBrush ImageSource="{Binding ImageUrl,  
-                                TargetNullValue={StaticResource Musicico}, 
-                                FallbackValue={StaticResource Musicico}, IsAsync=True,Mode=OneWay  }"  />
-                </Border.Background>
-            </Border>
+            
+            <Rectangle  x:Name="Imыg" Width="50" Height="50" RadiusX="60" RadiusY="60" >
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource=
+                        
+                               "{Binding AsyncImageProperty, IsAsync=True, Mode=OneWay,
+                                FallbackValue={StaticResource Musicico}, 
+                                TargetNullValue={StaticResource Musicico}}" >
+
+
+
+                    </ImageBrush>
+                </Rectangle.Fill>
+
+
+            </Rectangle>
+
+
             <StackPanel Grid.Column="1" HorizontalAlignment="Stretch"   Margin="10,0,0,0" VerticalAlignment="Center">
                 <TextBlock Text="{Binding Title}" Foreground="Black" FontWeight="Bold"></TextBlock>
                 <TextBlock Text="{Binding Artist}" Foreground="Black"></TextBlock>
@@ -125,15 +137,27 @@
     </DataTemplate>
 
     <DataTemplate x:Key="AlbumListTeamplate">
-        <StackPanel Margin="5,0">
-            <Border   CornerRadius="10" Width="120" Height="120">
+        <StackPanel  Margin="5,0">
 
-                <Border.Background>
-                    <ImageBrush   ImageSource="{Binding ImageUrl, TargetNullValue={StaticResource Musicico}, 
-                                FallbackValue={StaticResource Musicico}, IsAsync=True}"> 
+
+            <Rectangle  x:Name="Imыg" Width="120" Height="120" RadiusX="60" RadiusY="60" >
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource=
+                        
+                               "{Binding AsyncImageProperty, IsAsync=True, Mode=OneWay,
+                                FallbackValue={StaticResource Musicico}, 
+                                TargetNullValue={StaticResource Musicico}}" >
+                           
+                        
+
                     </ImageBrush>
-                </Border.Background>
-            </Border>
+                </Rectangle.Fill>
+
+
+            </Rectangle>
+
+
+
             <TextBlock  Width="120" Height="40"  TextAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Title}"     FontWeight="Bold"></TextBlock>
         </StackPanel>
     </DataTemplate>

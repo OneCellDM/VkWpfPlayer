@@ -25,7 +25,7 @@ namespace VkWpfPlayer
         {
             InitializeComponent();
             ErrorGrid.Visibility = Visibility.Collapsed;
-
+            AlbumsListView.Items.Clear();
             AlbumsListView.ItemsSource = AlbumsCollection;
             AudioListView.ItemsSource = AudioCollection;
             Task.Run(() => LoadAlbums());
@@ -131,7 +131,7 @@ namespace VkWpfPlayer
         {
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
             {
-
+                AudioCollection.Clear();
                 HidePlaylistAnimation.Completed += HidePlaylistAnimation_Completed;
 
                 HidePlaylistAnimation.From = new Thickness(0, 0, 0, 0);

@@ -1,18 +1,14 @@
-﻿<Page x:Class="VkWpfPlayer.AlbumsPage"
+﻿<Page
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:VkWpfPlayer"
        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      xmlns:DataModels="clr-namespace:VkWpfPlayer.DataModels" x:Class="VkWpfPlayer.AlbumsPage"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AlbumsPage">
-    <Page.Resources>
-
-
-
-    </Page.Resources>
     <Grid>
 
         <ListView ItemsPanel="{DynamicResource WrapPanelTeamplate}" 
@@ -20,50 +16,40 @@
                   SelectionChanged="AlbumsListView_SelectionChanged"  
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                   VirtualizingPanel.ScrollUnit="Pixel"
-                  x:Name="AlbumsListView" Margin="0,0,0,0" Grid.RowSpan="2" SizeChanged="AlbumsListView_SizeChanged"/>
+                  x:Name="AlbumsListView" Margin="0,0,0,0" Grid.RowSpan="2" SizeChanged="AlbumsListView_SizeChanged">
+            <DataModels:AlbumModel ImageUrl="https://sun9-53.userapi.com/impg/8zZlnmUvyFUnZgQuM_s4ycaITcfYD5pGgAxisQ/wsvrmO109K4.jpg?size=806x500&amp;quality=96&amp;proxy=1&amp;sign=f738a551c595ef27bab3cf787af6cabb&amp;type=album" Title="gfd"/>
+            <Button/>
+        </ListView>
 
-        <Grid x:Name="AlbumGrid" Grid.Row="1" Background="White"  >
+        <Grid x:Name="AlbumGrid" Grid.Row="1" Background="White" d:IsHidden="True"  >
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <ListView x:Name="AudioListView"  VirtualizingPanel.ScrollUnit="Pixel" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemTemplate="{DynamicResource ResourceKey=AudioListTeamplate}" Margin="0,30,0,-0.4" Grid.RowSpan="2" BorderBrush="{x:Null}" SelectionChanged="AudioListView_SelectionChanged"    />
             <Button Style="{StaticResource ButtonStyleRect}" x:Name="BackAlbumListButton" HorizontalAlignment="Left" Click="BackAlbumListButton_Click" Margin="5,1,0,2.2" >
-                <Button.Content>
 
-                    <TextBlock FontSize="14"  >
-                        <Run Text=" &#xE72B;" FontFamily="Segoe MDL2 Assets"/>
-                        <Run Name="AlbumTitleText"/>
-                        <Run Text=" "/>
+                <TextBlock FontSize="14"  ><Run Text=" &#xE72B;" FontFamily="Segoe MDL2 Assets"/><Run Text=" "/><Run x:Name="AlbumTitleText"/><Run Text=" "/><Run Text=" "/></TextBlock>
 
-                    </TextBlock>
-
-                </Button.Content>
             </Button>
 
             <StackPanel x:Name="SuccesLoadPanel" Background="#FF4A76A8"  Grid.RowSpan="2" Margin="0,0,0,-0.0" >
                 <Image x:Name="gifim"  gif:ImageBehavior.AutoStart="True" gif:ImageBehavior.AnimateInDesignMode="True" VerticalAlignment="Center" HorizontalAlignment="Center" gif:ImageBehavior.AnimatedSource="Resources/Dual Ring-1.3s-200px.gif" Margin="0,100,0,0" Width="100" Height="100"  />
             </StackPanel>
-          
+
         </Grid>
-        <Grid x:Name="ErrorGrid" Grid.RowSpan="2" Background="#FF4A76A8">
+        <Grid x:Name="ErrorGrid" Grid.RowSpan="2" Background="#FF4A76A8" d:IsHidden="True">
             <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock  FontSize="16" Foreground="White" VerticalAlignment="Center"   Text="Произошла ошибка во время загрузки"/>
 
 
                 <Button x:Name="RetryRequests"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Margin="0,15,0,0" Click="RetryRequests_Click">
-                    <Button.Content>
-                        <TextBlock>
-                           <Run Text="Повторить" />
-
-
-                        </TextBlock>
-                    </Button.Content>
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="6"/>
                         </Style>
                     </Button.Resources>
+                    <TextBlock><Run Text="Повторить" /></TextBlock>
                 </Button>
             </StackPanel>
 

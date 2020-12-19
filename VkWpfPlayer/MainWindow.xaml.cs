@@ -17,7 +17,10 @@ namespace VkWpfPlayer
     public partial class MainWindow : Window
     {
 
-       
+
+        private bool Minimized = false;
+        double OldWith=0;
+        double OldHeight=0;
     
       
 
@@ -93,7 +96,7 @@ namespace VkWpfPlayer
                 PlayPauseTrackButton.Content = System.Net.WebUtility.HtmlDecode("&#xE769;");
                 AudioPlayerTitle.Text = audioModel.Title;
                 AudioPlayerArtist.Text = audioModel.Artist;
-                if (audioModel.ImageUrl != null)
+                if (audioModel.ImageUrl!= null)
                     AudioPlayerImage.ImageSource = new BitmapImage(new Uri(audioModel.ImageUrl));
                 else AudioPlayerImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Resources/MusicIcon.jpg", UriKind.Absolute));
 
@@ -215,6 +218,42 @@ namespace VkWpfPlayer
         private void СurrentPlaylistTab_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _currentPlaylistPage.ScrollingToActiveAudio();
+        }
+
+        private void MiniMaxPlayerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(!Minimized)
+            {
+                Minimized = true;
+                ResizeMode = ResizeMode.NoResize;
+                this.Topmost = true;
+                ShowInTaskbar = false;
+                MinHeight = 100;
+                Height = 100;
+                Width = 500;
+                
+               
+            }
+            else
+            {
+                ResizeMode = ResizeMode.CanResize;
+                this.Topmost = false;
+                
+                ShowInTaskbar = true;
+                Height = OldHeight;
+                Width = OldWith;
+                Minimized = false;
+
+
+            }
+        }
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (!Minimized)
+            {
+                OldWith = e.NewSize.Width;
+                OldHeight = e.NewSize.Height;
+            }
         }
     }
 }

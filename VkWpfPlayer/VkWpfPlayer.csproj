@@ -153,6 +153,7 @@
     <Compile Include="DataModels\AudioModel.cs" />
     <Compile Include="DataModels\FriendModel.cs" />
     <Compile Include="DurationConverter.cs" />
+    <Compile Include="ImageConverter.cs" />
     <Compile Include="ListviewSizeConverter.cs" />
     <Compile Include="MyAudios.xaml.cs">
       <DependentUpon>MyAudios.xaml</DependentUpon>
