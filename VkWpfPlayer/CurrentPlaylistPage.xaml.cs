@@ -30,7 +30,7 @@ namespace VkWpfPlayer
 
         public void PreviewAudio()
         {
-            if (AudioListView.SelectedIndex != 0)
+            if (AudioListView.SelectedIndex>0)
                 AudioListView.SelectedIndex = AudioListView.SelectedIndex - 1;
         }
 
