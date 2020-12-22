@@ -39,7 +39,7 @@
                   VirtualizingPanel.ScrollUnit="Pixel"
                   Margin="0,5,0,0" SelectionChanged="AudioListView_SelectionChanged"
                 
-                  ScrollViewer.ScrollChanged="AudioListView_ScrollChanged"
+                  ScrollViewer.ScrollChanged="AudioListView_ScrollChanged" Background="{x:Null}"
                   
                   >
 

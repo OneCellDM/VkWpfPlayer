@@ -7,11 +7,11 @@
        xmlns:gif="http://wpfanimatedgif.codeplex.com"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="RepostPage" Background="White">
+      Title="RepostPage" Background="{DynamicResource VKBackGroundColor}">
 
     <Grid>
 
-        <Grid HorizontalAlignment="Center" Background="White" >
+        <Grid HorizontalAlignment="Center"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
@@ -54,7 +54,7 @@
                   BorderBrush="{x:Null}" 
                   Grid.ColumnSpan="3" Grid.Row="1" 
                   Margin="0,4.6,0.2,-0.4" SelectionChanged="FriendsListview_SelectionChanged"
-                      VirtualizingPanel.ScrollUnit="Pixel"
+                      VirtualizingPanel.ScrollUnit="Pixel" Background="{x:Null}"
                   >
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -64,7 +64,7 @@
                                     <ImageBrush ImageSource="{Binding AvatarUrl}"></ImageBrush>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" FontWeight="Bold" Margin="5"></TextBlock>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" Foreground="{DynamicResource VKBackGroundColor}" FontWeight="Bold" Margin="5"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

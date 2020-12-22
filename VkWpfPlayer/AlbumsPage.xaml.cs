@@ -15,6 +15,7 @@ namespace VkWpfPlayer
     public partial class AlbumsPage : Page
     {
         private Thread _currentThread;
+        private bool d = false;
         public ObservableCollection<AlbumModel> AlbumsCollection = new ObservableCollection<AlbumModel>();
         public ObservableCollection<AudioModel> AudioCollection = new ObservableCollection<AudioModel>();
 
@@ -52,6 +53,15 @@ namespace VkWpfPlayer
                     try
                     {
                         ToolsAndsettings.AddDataToObservationCollection(AudioCollection, DataAwaiter.GetResult());
+                        if (!d)
+                        {  
+                            d = true;
+                            AudioCollection.Clear();
+                            Thread.Sleep(200);
+                            ToolsAndsettings.AddDataToObservationCollection(AudioCollection, DataAwaiter.GetResult());
+
+
+                        }
                         SuccesLoadPanel.Visibility = Visibility.Collapsed;
                     }
                     catch(Exception EX)
@@ -110,7 +120,9 @@ namespace VkWpfPlayer
         {
             if (AlbumsListView.SelectedIndex != -1)
             {
+                d = false;
                 var album = (AlbumModel)e.AddedItems[e.AddedItems.Count - 1];
+                LoadAudioFromAlbum(album.ID, album.OwnerID);
                 AlbumTitleText.Text = album.Title;
 
                 AlbumsListView.SelectedIndex = -1;
@@ -123,7 +135,7 @@ namespace VkWpfPlayer
                 ShowPlaylistAnimation.Duration = new Duration(TimeSpan.FromSeconds(0.4));
                 AlbumGrid.BeginAnimation(MarginProperty, ShowPlaylistAnimation);
 
-                LoadAudioFromAlbum(album.ID, album.OwnerID);
+               
             }
         }
 

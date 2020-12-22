@@ -6,66 +6,344 @@
     <BitmapImage x:Key="Musicico" UriSource="Resources/MusicIcon.jpg" />
 
     <local:DurationConverter x:Name="DConverters" x:Key="Dconverter" />
-    <local:ImageConverter x:Name="Imageconv" x:Key="ImageC"></local:ImageConverter>
-   
+
     <local:ListviewSizeConverter x:Key="LSizeConverter"></local:ListviewSizeConverter>
 
     <ItemsPanelTemplate x:Key="WrapPanelTeamplate">
         <WrapPanel Orientation="Horizontal" />
     </ItemsPanelTemplate>
-    <SolidColorBrush x:Key="VkBlueColor" Color="#4A76A8"></SolidColorBrush>
-    <SolidColorBrush x:Key="VkButtonColor" Color="#EDEEF0"></SolidColorBrush>
+
+
+    <CornerRadius x:Key="VKImageCornerRadius" BottomLeft="10" TopLeft="10" BottomRight="10" TopRight="10"/>
+    <CornerRadius x:Key="VKButtonAndTextBoxCornerRadius" BottomLeft="10" TopLeft="10" BottomRight="10" TopRight="10"/>
+    <Thickness x:Key="VKImageBorderThickness" Left="0" Top="0" Right="0" Bottom="0"/>
+
+
+    <SolidColorBrush x:Key="VKImageBorderColor" Color="Transparent"></SolidColorBrush>
+    <SolidColorBrush x:Key="VkMouseOverColor" Color="#4A76A8"></SolidColorBrush>
+    <SolidColorBrush x:Key="VkSliderColor" Color="#EDEEF0"></SolidColorBrush>
+    <SolidColorBrush x:Key="VkContolColor" Color="#4A76A8"></SolidColorBrush>
+
     <SolidColorBrush x:Key="VkTextBoxColor" Color="#EDEEF0"></SolidColorBrush>
+    <SolidColorBrush x:Key="VKTextColor" Color="Black"></SolidColorBrush>
+    <SolidColorBrush x:Key="VKBackGroundColor" Color="White"></SolidColorBrush>
     <SolidColorBrush x:Key="VkButtonClickColor" Color="#FFA8A7A7"></SolidColorBrush>
+    <SolidColorBrush x:Key="VkButtonColor" Color="#EDEEF0"></SolidColorBrush>
+
+
+
+    <SolidColorBrush x:Key="SliderThumb.Static.Foreground" Color="#FFE5E5E5"/>
+    <SolidColorBrush x:Key="SliderThumb.MouseOver.Background" Color="#FFDCECFC"/>
+    <SolidColorBrush x:Key="SliderThumb.MouseOver.Border" Color="#FF7Eb4EA"/>
+    <SolidColorBrush x:Key="SliderThumb.Pressed.Background" Color="#FFDAECFC"/>
+    <SolidColorBrush x:Key="SliderThumb.Pressed.Border" Color="#FF569DE5"/>
+    <SolidColorBrush x:Key="SliderThumb.Disabled.Background" Color="#FFF0F0F0"/>
+    <SolidColorBrush x:Key="SliderThumb.Disabled.Border" Color="#FFD9D9D9"/>
+
+    <SolidColorBrush x:Key="SliderThumb.Static.Border" Color="#FFACACAC"/>
+    <ControlTemplate x:Key="SliderThumbHorizontalTop" TargetType="{x:Type Thumb}">
+        <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+            <Path x:Name="grip" Data="M 0,6 C0,6 5.5,0 5.5,0 5.5,0 11,6 11,6 11,6 11,18 11,18 11,18 0,18 0,18 0,18 0,6 0,6 z" Fill="{DynamicResource VkSliderColor}" Stretch="Fill" SnapsToDevicePixels="True" Stroke="{StaticResource SliderThumb.Static.Border}" StrokeThickness="1" UseLayoutRounding="True" VerticalAlignment="Center"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Border}"/>
+            </Trigger>
+            <Trigger Property="IsDragging" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Border}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Border}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="SliderThumbHorizontalBottom" TargetType="{x:Type Thumb}">
+        <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+            <Path x:Name="grip" Data="M 0,12 C0,12 5.5,18 5.5,18 5.5,18 11,12 11,12 11,12 11,0 11,0 11,0 0,0 0,0 0,0 0,12 0,12 z" Fill="{DynamicResource VkSliderColor}" Stretch="Fill" SnapsToDevicePixels="True" Stroke="{StaticResource SliderThumb.Static.Border}" StrokeThickness="1" UseLayoutRounding="True" VerticalAlignment="Center"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Border}"/>
+            </Trigger>
+            <Trigger Property="IsDragging" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Border}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Border}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <SolidColorBrush x:Key="SliderThumb.Track.Border" Color="#FFD6D6D6"/>
+  
+
+    <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" Stroke="{x:Null}">
+                        <Rectangle.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="AliceBlue"/>
+                            </Style>
+
+                        </Rectangle.Resources>
+                    </Rectangle>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ControlTemplate x:Key="SliderThumbHorizontalDefault" TargetType="{x:Type Thumb}">
+        <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+
+            <Ellipse x:Name="grip" Width="10" Height="10" Fill="{DynamicResource VkContolColor}" >
+                
+            </Ellipse>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Border}"/>
+            </Trigger>
+            <Trigger Property="IsDragging" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Border}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Border}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="SliderHorizontal" TargetType="{x:Type Slider}">
+        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TickBar x:Name="TopTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,0,0,2" Placement="Top" Grid.Row="0" Visibility="Collapsed"/>
+                <TickBar x:Name="BottomTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed"/>
+                <Border CornerRadius="2" x:Name="TrackBackground" BorderBrush="{StaticResource SliderThumb.Track.Border}" BorderThickness="0" Background="{DynamicResource VkSliderColor}" Height="5.5" Margin="5,0" Grid.Row="1" VerticalAlignment="center">
+                    <Canvas Margin="-6,0.5">
+                        <Rectangle RadiusX="2" RadiusY="2"  x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Height="4.2" Visibility="Hidden"/>
+                    </Canvas>
+                </Border>
+                <Track x:Name="PART_Track" Grid.Row="1">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                    </Track.DecreaseRepeatButton>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                    </Track.IncreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb x:Name="Thumb" Focusable="False" Height="18" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalDefault}" VerticalAlignment="Top" Width="11" Margin="0,0,0.2,0"/>
+                    </Track.Thumb>
+                </Track>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter Property="Visibility" TargetName="TopTick" Value="Visible"/>
+                <Setter Property="Template" TargetName="Thumb" Value="{StaticResource SliderThumbHorizontalTop}"/>
+                <Setter Property="Margin" TargetName="TrackBackground" Value="5,2,5,0"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter Property="Visibility" TargetName="BottomTick" Value="Visible"/>
+                <Setter Property="Template" TargetName="Thumb" Value="{StaticResource SliderThumbHorizontalBottom}"/>
+                <Setter Property="Margin" TargetName="TrackBackground" Value="5,0,5,2"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter Property="Visibility" TargetName="TopTick" Value="Visible"/>
+                <Setter Property="Visibility" TargetName="BottomTick" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="IsSelectionRangeEnabled" Value="true">
+                <Setter Property="Visibility" TargetName="PART_SelectionRange" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="true">
+                <Setter Property="Foreground" TargetName="Thumb" Value="Blue"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="SliderThumbVerticalLeft" TargetType="{x:Type Thumb}">
+        <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+            <Path x:Name="grip" Data="M 6,11 C6,11 0,5.5 0,5.5 0,5.5 6,0 6,0 6,0 18,0 18,0 18,0 18,11 18,11 18,11 6,11 6,11 z" Fill="{DynamicResource VkSliderColor}" Stretch="Fill" Stroke="{StaticResource SliderThumb.Static.Border}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Border}"/>
+            </Trigger>
+            <Trigger Property="IsDragging" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Border}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Border}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Key="SliderThumbVerticalRight" TargetType="{x:Type Thumb}">
+        <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+            <Path x:Name="grip" Data="M 12,11 C12,11 18,5.5 18,5.5 18,5.5 12,0 12,0 12,0 0,0 0,0 0,0 0,11 0,11 0,11 12,11 12,11 z" Fill="{DynamicResource VkSliderColor}" Stretch="Fill" Stroke="{StaticResource SliderThumb.Static.Border}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Border}"/>
+            </Trigger>
+            <Trigger Property="IsDragging" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Border}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Border}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="SliderThumbVerticalDefault" TargetType="{x:Type Thumb}">
+        <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+            <Path x:Name="grip" Data="M0.5,0.5 L18.5,0.5 18.5,11.5 0.5,11.5z" Fill="{DynamicResource VkSliderColor}" Stretch="Fill" Stroke="{StaticResource SliderThumb.Static.Border}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.MouseOver.Border}"/>
+            </Trigger>
+            <Trigger Property="IsDragging" Value="true">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Pressed.Border}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Fill" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Background}"/>
+                <Setter Property="Stroke" TargetName="grip" Value="{StaticResource SliderThumb.Disabled.Border}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="SliderVertical" TargetType="{x:Type Slider}">
+        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition MinWidth="{TemplateBinding MinWidth}" Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TickBar x:Name="TopTick" Grid.Column="0" Fill="{TemplateBinding Foreground}" Margin="0,0,2,0" Placement="Left" Visibility="Collapsed" Width="4"/>
+                <TickBar x:Name="BottomTick" Grid.Column="2" Fill="{TemplateBinding Foreground}" Margin="2,0,0,0" Placement="Right" Visibility="Collapsed" Width="4"/>
+                <Border x:Name="TrackBackground" BorderBrush="{StaticResource SliderThumb.Track.Border}" BorderThickness="1" Background="{DynamicResource  VkSliderColor}" Grid.Column="1" HorizontalAlignment="center" Margin="0,5" Width="4.0">
+                    <Canvas Margin="-1,-6">
+                        <Rectangle x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Visibility="Hidden" Width="4.0"/>
+                    </Canvas>
+                </Border>
+                <Track x:Name="PART_Track" Grid.Column="1">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                    </Track.DecreaseRepeatButton>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                    </Track.IncreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb x:Name="Thumb" Focusable="False" Height="11" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbVerticalDefault}" VerticalAlignment="Top" Width="18"/>
+                    </Track.Thumb>
+                </Track>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter Property="Visibility" TargetName="TopTick" Value="Visible"/>
+                <Setter Property="Template" TargetName="Thumb" Value="{StaticResource SliderThumbVerticalLeft}"/>
+                <Setter Property="Margin" TargetName="TrackBackground" Value="2,5,0,5"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter Property="Visibility" TargetName="BottomTick" Value="Visible"/>
+                <Setter Property="Template" TargetName="Thumb" Value="{StaticResource SliderThumbVerticalRight}"/>
+                <Setter Property="Margin" TargetName="TrackBackground" Value="0,5,2,5"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter Property="Visibility" TargetName="TopTick" Value="Visible"/>
+                <Setter Property="Visibility" TargetName="BottomTick" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="IsSelectionRangeEnabled" Value="true">
+                <Setter Property="Visibility" TargetName="PART_SelectionRange" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="true">
+                <Setter Property="Foreground" TargetName="Thumb" Value="Blue"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style x:Key="SliderStyle1" TargetType="{x:Type Slider}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource SliderThumb.Static.Foreground}"/>
+        <Setter Property="Template" Value="{StaticResource SliderHorizontal}"/>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{StaticResource SliderVertical}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 
     <Style TargetType="{x:Type Button}" x:Key="PlayerButtonStyle">
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="Background" Value="#4A76A8"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Width" Value="40"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="Margin" Value="10,0,0,0"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="FontFamily" Value="./Resources/#Segoe MDL2 Assets"/>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Background" Value="{DynamicResource VkContolColor}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Margin" Value="10,0,0,0" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontFamily" Value="./Resources/#Segoe MDL2 Assets" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate  TargetType="Button">
-                    <Border CornerRadius="80" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" >
-                        <ContentPresenter Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}"/>
+                    <Border CornerRadius="80" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                        <ContentPresenter Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#365477"/>
+                            <Setter Property="Background" Value="{DynamicResource VkMouseOverColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-   
-    
+
     <Style TargetType="TextBox" x:Key="TextBoxStyleRect">
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Background" Value="{StaticResource VkTextBoxColor}"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="{DynamicResource VkTextBoxColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource VKTextColor}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate  TargetType="TextBox">
-                    <Border CornerRadius="10" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" >
+                    <Border CornerRadius="{DynamicResource VKButtonAndTextBoxCornerRadius}" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
                         <ContentPresenter Margin="2,0,0,0" VerticalAlignment="Center" x:Name="ContentData" Content="{TemplateBinding Text}"></ContentPresenter>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseCaptured" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource VkBlueColor}"/>
-
+                            <Setter Property="BorderBrush" Value="{DynamicResource VkMouseOverColor}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource VkBlueColor}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource VkMouseOverColor}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource VkBlueColor}"></Setter>
+                            <Setter Property="BorderBrush" Value="{DynamicResource VkMouseOverColor}"></Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -73,35 +351,32 @@
         </Setter>
     </Style>
 
-    <Style  TargetType="{x:Type Button}" x:Key="ButtonStyleRect"  >
+    <Style  TargetType="{x:Type Button}" x:Key="ButtonStyleRect">
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Background" Value="{StaticResource VkButtonColor}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Background" Value="{DynamicResource VkButtonColor}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource VKTextColor}" />
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate  TargetType="Button">
-                    <Border CornerRadius="10" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" >
+                    <Border CornerRadius="{DynamicResource VKButtonAndTextBoxCornerRadius}" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
                         <ContentPresenter Margin="2" x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center"  VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseCaptured" Value="True">
-                            <Setter Property="Background" Value="{StaticResource ResourceKey=VkButtonClickColor}"/>
+                            <Setter Property="Background" Value="{DynamicResource ResourceKey=VkButtonClickColor}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource VkBlueColor}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource VkMouseOverColor }" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
-                
             </Setter.Value>
-            
         </Setter>
     </Style>
 
     <DataTemplate x:Key="AudioListTeamplate">
-        
 
         <Grid   Width= "{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView},Converter={StaticResource LSizeConverter}}">
             <Grid.ColumnDefinitions>
@@ -109,56 +384,42 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="30"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
-            <Rectangle  x:Name="Imыg" Width="50" Height="50" RadiusX="60" RadiusY="60" >
-                <Rectangle.Fill>
+
+            <Border  BorderThickness="{DynamicResource VKImageBorderThickness}" BorderBrush="{DynamicResource VKImageBorderColor}" x:Name="Imыg" Width="50" Height="50" CornerRadius="{DynamicResource VKImageCornerRadius}">
+                <Border.Background>
                     <ImageBrush ImageSource=
-                        
+
                                "{Binding AsyncImageProperty, IsAsync=True, Mode=OneWay,
-                                FallbackValue={StaticResource Musicico}, 
-                                TargetNullValue={StaticResource Musicico}}" >
-
-
-
+                                FallbackValue={StaticResource Musicico},
+                                TargetNullValue={StaticResource Musicico}}">
                     </ImageBrush>
-                </Rectangle.Fill>
-
-
-            </Rectangle>
-
+                </Border.Background>
+            </Border>
 
             <StackPanel Grid.Column="1" HorizontalAlignment="Stretch"   Margin="10,0,0,0" VerticalAlignment="Center">
-                <TextBlock Text="{Binding Title}" Foreground="Black" FontWeight="Bold"></TextBlock>
-                <TextBlock Text="{Binding Artist}" Foreground="Black"></TextBlock>
+                <TextBlock Text="{Binding Title}" Foreground="{DynamicResource VKTextColor}" FontWeight="Bold"></TextBlock>
+                <TextBlock Text="{Binding Artist}" Foreground="{DynamicResource VKTextColor}" ></TextBlock>
             </StackPanel>
 
-            <TextBlock Grid.Column="2" VerticalAlignment="Center"   HorizontalAlignment="Stretch" Text="{Binding DurationSeconds,Converter={StaticResource Dconverter} }" Foreground="Black"></TextBlock>
+            <TextBlock Grid.Column="2" VerticalAlignment="Center"   HorizontalAlignment="Stretch" Text="{Binding DurationSeconds,Converter={StaticResource Dconverter} }" Foreground="{DynamicResource VKTextColor}"></TextBlock>
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="AlbumListTeamplate">
         <StackPanel  Margin="5,0">
 
-
-            <Rectangle  x:Name="Imыg" Width="120" Height="120" RadiusX="60" RadiusY="60" >
-                <Rectangle.Fill>
+            <Border BorderBrush="{DynamicResource VKImageBorderColor}" BorderThickness="{DynamicResource VKImageBorderThickness}"  x:Name="Imыg" Width="120" Height="120" CornerRadius="{DynamicResource VKImageCornerRadius}">
+                <Border.Background>
                     <ImageBrush ImageSource=
-                        
+
                                "{Binding AsyncImageProperty, IsAsync=True, Mode=OneWay,
-                                FallbackValue={StaticResource Musicico}, 
-                                TargetNullValue={StaticResource Musicico}}" >
-                           
-                        
-
+                                FallbackValue={StaticResource Musicico},
+                                TargetNullValue={StaticResource Musicico}}">
                     </ImageBrush>
-                </Rectangle.Fill>
+                </Border.Background>
+                </Border>
 
-
-            </Rectangle>
-
-
-
-            <TextBlock  Width="120" Height="40"  TextAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Title}"     FontWeight="Bold"></TextBlock>
+            <TextBlock  Width="120" Height="40"  Foreground="{DynamicResource VKTextColor}" TextAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Title}"     FontWeight="Bold"></TextBlock>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

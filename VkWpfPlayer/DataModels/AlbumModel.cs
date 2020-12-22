@@ -43,9 +43,6 @@ namespace VkWpfPlayer.DataModels
         {
             Task.Run(() =>
             {
-                
-
-
                 FilePath = AppData + "\\" + "album" + ID.ToString();
                 if (new FileInfo(FilePath).Exists)
                     AsyncImageProperty = FilePath;

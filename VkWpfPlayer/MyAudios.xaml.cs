@@ -13,6 +13,7 @@ namespace VkWpfPlayer
     /// </summary>
     public partial class MyAudios : Page
     {
+        
         public delegate void AudioSLoaded();
 
         public event AudioSLoaded SUCESS;
@@ -97,8 +98,7 @@ namespace VkWpfPlayer
                 Player.Play(((AudioModel)e.AddedItems[e.AddedItems.Count - 1]));
             }
         }
-
-        private void SearchButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void search()
         {
             SearchCollection.Clear();
             var list = AudioCollection.Where(x => ((AudioModel)x).Title.ToLower().Contains(SearchTextBox.Text.ToLower()) |
@@ -108,16 +108,24 @@ namespace VkWpfPlayer
                          Select(x => x.First()
                          ).ToList();
             foreach (var audio in list)
-
                 SearchCollection.Add(audio);
 
             AudioListView.ItemsSource = SearchCollection;
+        }
+        private void SearchButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            search();  
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (((TextBox)sender).Text.Length == 0)
                 AudioListView.ItemsSource = AudioCollection;
+            else
+            {
+                search();
+
+            }
         }
 
         private void RetryRequests_Click(object sender, System.Windows.RoutedEventArgs e)

@@ -15,6 +15,48 @@ namespace VkWpfPlayer
 {
     public static class ToolsAndsettings
     {
+        public static class DefaultSettings
+        {
+            public static double ImageCornerRadios { get; private set; } = 10;
+            public static double ButtonAndTextBoxCornerRadius { get; private set; } = 6;
+
+            public static string BackGroundColor { get; private set; } = "White";
+            public static string TextColor { get; private set; } = "Black";
+
+            public static string MouseOverColor { get; private set; } = "#4A76A8";
+            public static string ButtonColor { get; private set; } = "#EDEEF0";
+            public static string TextBoxColor { get; private set; } = "#EDEEF0";
+            public static string SliderColor { get; private set; } = "#EDEEF0";
+            public static string ConrolColor { get; private set; } = "#4A76A8";
+            public static string ImageBorderColor { get; private set; } = "Transparent";
+
+            public static int ImageBorderThickness { get; private set; } = 0;
+            public static int ButtonAndTextBoxBorderThickness { get; private set; } = 2;
+        }
+        public static class CurrentSettings
+        {
+
+            public static double ImageCornerRadios { get; set; } = DefaultSettings.ImageCornerRadios;
+            public static double ButtonAndTextBoxCornerRadius { get; set; } = DefaultSettings.ButtonAndTextBoxCornerRadius;
+
+
+            public static string BackGroundColor { get; set; } = DefaultSettings.BackGroundColor;
+            public static string TextColor { get; set; } = DefaultSettings.TextColor;
+
+            public static string MouseOverColor { get; set; } = DefaultSettings.MouseOverColor;
+            public static string ButtonColor { get; set; } = DefaultSettings.ButtonColor;
+            public static string TextBoxColor { get; set; } = DefaultSettings.TextBoxColor;
+            public static string SliderColor { get; set; } = DefaultSettings.SliderColor;
+            public static string ConrolColor { get; set; } = DefaultSettings.ConrolColor;
+
+            public static string ImageBorderColor { get;  set; } = DefaultSettings.ImageBorderColor;
+
+            public static double ImageBorderThickness { get;  set; } = DefaultSettings.ImageBorderThickness;
+            public static double ButtonAndTextBoxBorderThickness { get;  set; } = DefaultSettings.ButtonAndTextBoxBorderThickness;
+        }
+
+
+
         public static class loggingHandler{
             public static Logger Log { get; set; }
             

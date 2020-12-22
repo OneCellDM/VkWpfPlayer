@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using VkWpfPlayer.Properties;
 
 namespace VkWpfPlayer.DataModels
 {
@@ -29,6 +31,9 @@ namespace VkWpfPlayer.DataModels
                     image = value;
                     LoadImage(value);
                 }
+               
+                    
+                
             }
             get { return image; }
         }
@@ -58,6 +63,7 @@ namespace VkWpfPlayer.DataModels
                               using (WebClient webClient = new WebClient())
                               {
                                   webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
+                          
                                   try
                                   {
                                       webClient.DownloadFileAsync(new Uri(url), FilePath);
@@ -65,7 +71,10 @@ namespace VkWpfPlayer.DataModels
                                   catch (Exception ex)
                                   {
                                       Console.WriteLine(ex.Message);
-                                      AsyncImageProperty = null;
+                                    
+                                          
+                                           
+                                                AsyncImageProperty = null;
                                   }
                               }
                   }

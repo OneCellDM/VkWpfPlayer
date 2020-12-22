@@ -16,32 +16,28 @@ namespace VkWpfPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
-
-
         private bool Minimized = false;
-        double OldWith=0;
-        double OldHeight=0;
-    
-      
+        private double OldWith = 0;
+        private double OldHeight = 0;
 
         private MyAudios _MyAudiosPage;
         private AlbumsPage _AlbumsPage;
         private SearchPage _searchPage;
         private CurrentPlaylistPage _currentPlaylistPage;
         private RepostPage _repostPage;
-        DurationConverter durationconverter = new DurationConverter();
-        
+        private DurationConverter durationconverter = new DurationConverter();
+
         public MainWindow()
         {
             InitializeComponent();
-           
+            String AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\VKM";
+            if (!new System.IO.DirectoryInfo(AppData).Exists)
+                new System.IO.DirectoryInfo(AppData).Create();
+
             AuthFrame.Content = new VkLogin().Content;
-            ToolsAndsettings.AuthorizedAcces += ToolsAndsettings_AuthorizedAcces;
            
-
-
+            ToolsAndsettings.AuthorizedAcces += ToolsAndsettings_AuthorizedAcces;
         }
-    
 
         private void ToolsAndsettings_AuthorizedAcces()
         {
@@ -55,23 +51,15 @@ namespace VkWpfPlayer
             _currentPlaylistPage = new CurrentPlaylistPage();
             AuthFrame.Visibility = Visibility.Collapsed;
 
-           
-
             _repostPage.ClosedEvent += _repostPage_ClosedEvent;
             СurrentPlaylistTab.Content = _currentPlaylistPage.Content;
             MyAudiosTab.Content = _MyAudiosPage.Content;
             MyPlayliststab.Content = _AlbumsPage.Content;
             SearchTab.Content = _searchPage.Content;
-           
-
-
-
         }
 
         private void _repostPage_ClosedEvent()
         {
-
-
             ThicknessAnimation RepostPageHideAnimation = new ThicknessAnimation();
             RepostPageHideAnimation.Completed += HidePlaylistAnimation_Completed;
             RepostPageHideAnimation.From = new Thickness(0, 0, 0, 0);
@@ -79,8 +67,8 @@ namespace VkWpfPlayer
             RepostPageHideAnimation.Duration = new Duration(TimeSpan.FromSeconds(0.4));
 
             AuthFrame.BeginAnimation(MarginProperty, RepostPageHideAnimation);
-
         }
+
         private void HidePlaylistAnimation_Completed(object sender, EventArgs e)
         {
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
@@ -96,7 +84,7 @@ namespace VkWpfPlayer
                 PlayPauseTrackButton.Content = System.Net.WebUtility.HtmlDecode("&#xE769;");
                 AudioPlayerTitle.Text = audioModel.Title;
                 AudioPlayerArtist.Text = audioModel.Artist;
-                if (audioModel.ImageUrl!= null)
+                if (audioModel.ImageUrl != null)
                     AudioPlayerImage.ImageSource = new BitmapImage(new Uri(audioModel.ImageUrl));
                 else AudioPlayerImage.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Resources/MusicIcon.jpg", UriKind.Absolute));
 
@@ -114,8 +102,6 @@ namespace VkWpfPlayer
             }));
         }
 
-
-
         private void PreviewTrackButton_Click(object sender, RoutedEventArgs e)
         {
             _currentPlaylistPage.PreviewAudio();
@@ -123,21 +109,15 @@ namespace VkWpfPlayer
 
         private void PauseTrackButton_Click(object sender, RoutedEventArgs e)
         {
-
         }
-
-
 
         private void NextTrackButton_Click(object sender, RoutedEventArgs e)
         {
             _currentPlaylistPage.NextAudio();
         }
 
-
-
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
 
         private void RepeatButton_Click(object sender, RoutedEventArgs e)
@@ -169,16 +149,13 @@ namespace VkWpfPlayer
             AuthFrame.BeginAnimation(MarginProperty, RepostPageShowAnimation);
             _repostPage.SuccesLoadPanel.Visibility = Visibility.Visible;
             AuthFrame.Visibility = Visibility.Visible;
-
         }
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-
             VolumeSlider.SelectionEnd = e.NewValue;
             Player.SetVolume(e.NewValue);
         }
-
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -205,7 +182,6 @@ namespace VkWpfPlayer
                     PlayPauseTrackButton.Content = System.Net.WebUtility.HtmlDecode("&#xE768;");
                     Player.Pause();
                 }
-
             }
         }
 
@@ -222,7 +198,7 @@ namespace VkWpfPlayer
 
         private void MiniMaxPlayerButton_Click(object sender, RoutedEventArgs e)
         {
-            if(!Minimized)
+            if (!Minimized)
             {
                 Minimized = true;
                 ResizeMode = ResizeMode.NoResize;
@@ -230,29 +206,51 @@ namespace VkWpfPlayer
                 ShowInTaskbar = false;
                 MinHeight = 100;
                 Height = 100;
-                Width = 500;
-                
-               
+                Width = 600;
             }
             else
             {
                 ResizeMode = ResizeMode.CanResize;
                 this.Topmost = false;
-                
+
                 ShowInTaskbar = true;
                 Height = OldHeight;
                 Width = OldWith;
                 Minimized = false;
-
-
             }
         }
+
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (!Minimized)
             {
                 OldWith = e.NewSize.Width;
                 OldHeight = e.NewSize.Height;
+            }
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SettingsPage settingsPage = new SettingsPage();
+                settingsPage.WindowStyle = WindowStyle.ToolWindow;
+
+                settingsPage.ShowDialog();
+              
+                ToolsAndsettings.CurrentSettings.ImageCornerRadios = settingsPage.RoundImageSlider.Value;
+                ToolsAndsettings.CurrentSettings.ButtonAndTextBoxCornerRadius = settingsPage.ButtonRoundRadiusSlider.Value;
+                ToolsAndsettings.CurrentSettings.ImageBorderThickness = settingsPage.BorderThicknessSlider.Value;
+                ToolsAndsettings.CurrentSettings.TextColor = settingsPage.TextColoTextbox.Text.ToUpper().Trim();
+                ToolsAndsettings.CurrentSettings.ConrolColor = settingsPage.ControlColorTextbox.Text.ToUpper().Trim();
+                ToolsAndsettings.CurrentSettings.ButtonColor = settingsPage.ButtonColorTextbox.Text.ToUpper().Trim();
+                ToolsAndsettings.CurrentSettings.ImageBorderColor = settingsPage.ImageBorderColorTextBox.Text.ToUpper().Trim();
+                ToolsAndsettings.CurrentSettings.BackGroundColor = settingsPage.BackGroundTextBox.Text.ToUpper().Trim();
+                ToolsAndsettings.CurrentSettings.SliderColor = settingsPage.SliderColorsTextBox.Text.ToUpper().Trim();
+            }
+            catch(Exception ex)
+            {
+               
             }
         }
     }

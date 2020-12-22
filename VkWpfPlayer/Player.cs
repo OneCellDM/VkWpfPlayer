@@ -41,9 +41,11 @@ namespace VkWpfPlayer
             timer.Interval = 1000;
             timer.Elapsed += Timer_Elapsed;
             ToolsAndsettings.loggingHandler.Log.Info("Инициализация Bass");
+            
             if (Bass.Init())
                 ToolsAndsettings.loggingHandler.Log.Info("Успешно");
             else ToolsAndsettings.loggingHandler.Log.Info("Ошибка инициализации");
+            
 
         }
         public static void SetPosition(double positionFromSeconds)
@@ -94,6 +96,9 @@ namespace VkWpfPlayer
 
             try
             {
+               
+
+
                 Audio = audioModel;
                 if (updateAudioModel != null)
                     updateAudioModel.Invoke(audioModel);
@@ -112,13 +117,13 @@ namespace VkWpfPlayer
             
             volume = value;
             if (!Bass.ChannelSetAttribute(_stream, ChannelAttribute.Volume, volume))
-                ToolsAndsettings.loggingHandler.Log.Error(Bass.LastError);
+                ToolsAndsettings.loggingHandler.Log.Error(Bass.LastError); 
 
         }
         static void SetFromUrl(String url)
         {
             _stream = Bass.CreateStream(url, 0, BassFlags.StreamStatus | BassFlags.AutoFree | BassFlags.Prescan | BassFlags.Unicode, null, IntPtr.Zero);
-        }
+        }   
         public static async void Play(AudioModel audioModel, bool repeat = false)
         {
 
@@ -157,6 +162,8 @@ namespace VkWpfPlayer
         }
         public static void Play()
         {
+            
+            
            
             if (PlayThread != null && PlayThread.IsAlive)
                 PlayThread.Abort();
@@ -168,6 +175,7 @@ namespace VkWpfPlayer
             }
             else
             {
+                
 
                 PlayThread = new Thread(() =>
                   {
