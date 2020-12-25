@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace VkWpfPlayer
@@ -22,154 +12,144 @@ namespace VkWpfPlayer
     /// </summary>
     public partial class SettingsPage : Window
     {
-        DispatcherTimer dispatcherTimer;
+        private DispatcherTimer dispatcherTimer;
+        private BrushConverter brushConverter = new BrushConverter();
+        public void SetColor(String resourceName,String colorName)=>
+                Application.Current.Resources[resourceName] = brushConverter.ConvertFromString(colorName);
+        public void SetCornerRadius(String resourceName, int value)=>
+            Application.Current.Resources[resourceName] = new CornerRadius(value);
+
+        public String GetTextFromTextbox(object textBox)=>
+            ((TextBox) textBox).Text.ToUpper().Trim();
+        
+        public void SetBorderThickness(String resourceName, int value)=>
+            Application.Current.Resources[resourceName] = new Thickness(value);
+        
+
         public SettingsPage()
         {
             InitializeComponent();
-           
-            RoundImageSlider.Value          = ToolsAndsettings.CurrentSettings.ImageCornerRadios;
-            ButtonRoundRadiusSlider.Value   = ToolsAndsettings.CurrentSettings.ButtonAndTextBoxCornerRadius;
-            BorderThicknessSlider.Value     = ToolsAndsettings.CurrentSettings.ImageBorderThickness;
-            TextColoTextbox.Text            = ToolsAndsettings.CurrentSettings.TextColor;    
-            ControlColorTextbox.Text        = ToolsAndsettings.CurrentSettings.ConrolColor;
-            ButtonColorTextbox.Text         = ToolsAndsettings.CurrentSettings.ButtonColor;
-            BackGroundTextBox.Text          = ToolsAndsettings.CurrentSettings.BackGroundColor;
-            SliderColorsTextBox.Text        = ToolsAndsettings.CurrentSettings.SliderColor;
-            MouseOverColorTextBox.Text      = ToolsAndsettings.CurrentSettings.MouseOverColor;
-            ImageBorderColorTextBox.Text    = ToolsAndsettings.CurrentSettings.ImageBorderColor;
-            
-            
 
-
-
+            RoundImageSlider.Value = ToolsAndsettings.CurrentSettings.ImageCornerRadios;
+            ButtonRoundRadiusSlider.Value = ToolsAndsettings.CurrentSettings.ButtonAndTextBoxCornerRadius;
+            BorderThicknessSlider.Value = ToolsAndsettings.CurrentSettings.ImageBorderThickness;
+            TextColoTextbox.Text = ToolsAndsettings.CurrentSettings.TextColor;
+            ControlColorTextbox.Text = ToolsAndsettings.CurrentSettings.ControlColor;
+            TextBoxAndButtonColorTextbox.Text = ToolsAndsettings.CurrentSettings.ButtonColor;
+            BackGroundTextBox.Text = ToolsAndsettings.CurrentSettings.BackGroundColor;
+            SliderColorsTextBox.Text = ToolsAndsettings.CurrentSettings.SliderColor;
+            MouseOverColorTextBox.Text = ToolsAndsettings.CurrentSettings.MouseOverColor;
+            ImageBorderColorTextBox.Text = ToolsAndsettings.CurrentSettings.ImageBorderColor;
+            PlayerButtonTextColorTextBox.Text = ToolsAndsettings.CurrentSettings.PlayerButtonTextColor;
         }
+
 
         private void RoundImageSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-
-            Application.Current.Resources["VKImageCornerRadius"] =new CornerRadius((int)e.NewValue);
+            SetCornerRadius("VKImageCornerRadius",(int)e.NewValue);
             RadiusRoundValue.Content = "Значение: " + ((int)e.NewValue);
-            
         }
 
         private void TextColoTextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-           
-              
-                
-                    try
-                    {
-                        BrushConverter brushConverter = new BrushConverter();
-                        brushConverter.ConvertFromString(TextColoTextbox.Text.ToUpper().Trim());
-                        Application.Current.Resources["VKTextColor"] = brushConverter.ConvertFromString(TextColoTextbox.Text.ToUpper().Trim());
-                        
-                       
-                    }
-                    catch(Exception ex) { Application.Current.Resources["VKTextColor"] = Brushes.Black; }
-                    
-                
-               
-           
-            
+            try
+            {
+               SetColor("VKTextColor",GetTextFromTextbox(sender));
+            }
+            catch (Exception ex) { SetColor("VKTextColor", ToolsAndsettings.DefaultSettings.TextColor); }
         }
 
         private void BackGroundTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-           
-                try
-                {
-                    BrushConverter brushConverter = new BrushConverter();
-                  
-                    Application.Current.Resources["VKBackGroundColor"] = brushConverter.ConvertFromString(BackGroundTextBox.Text.ToUpper().Trim());
-
-
-                }
-                catch (Exception ex) {  Application.Current.Resources["VKBackGroundColor"] = Brushes.White; }
-               
-            
+            try
+            {
+                SetColor("VKBackGroundColor", GetTextFromTextbox(sender));
+            }
+            catch (Exception ex) { SetColor("VKBackGroundColor", ToolsAndsettings.DefaultSettings.BackGroundColor); }
         }
 
         private void ButtonRoundRadiusSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Application.Current.Resources["VKButtonAndTextBoxCornerRadius"] = new CornerRadius((int)e.NewValue);
+            SetCornerRadius("VKButtonAndTextBoxCornerRadius",(int)e.NewValue);
             ButtonRoundRadiusTextBlock.Content = ((int)e.NewValue);
         }
 
         private void ImageBorderColorTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
             try
             {
-                BrushConverter brushConverter = new BrushConverter();
-                Application.Current.Resources["VKImageBorderColor"] = brushConverter.ConvertFromString(ImageBorderColorTextBox.Text.ToUpper().Trim());
+               SetColor("VKImageBorderColor", GetTextFromTextbox(sender));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Application.Current.Resources["VKImageBorderColor"] = Brushes.Transparent;
+                SetColor("VKImageBorderColor", ToolsAndsettings.DefaultSettings.ImageBorderColor);
             }
         }
 
         private void MouseOverColorTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            BrushConverter brushConverter = new BrushConverter();
             try
             {
-               
-
-                Application.Current.Resources["VkMouseOverColor"] = brushConverter.ConvertFromString(MouseOverColorTextBox.Text.ToUpper().Trim());
-
-
+                SetColor("VkMouseOverColor", GetTextFromTextbox(sender));
             }
-            catch (Exception ex) { Debug.WriteLine(ex); Application.Current.Resources["VkMouseOverColor"] = brushConverter.ConvertFromString(ToolsAndsettings.DefaultSettings.MouseOverColor); }
+            catch (Exception ex) { SetColor("VkMouseOverColor", ToolsAndsettings.DefaultSettings.MouseOverColor); }
         }
-        BrushConverter brushConverter = new BrushConverter();
-        private void ButtonColorTextbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
 
+        private void TextboxColorAndButtonColorTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
             try
             {
-        
-
-                Application.Current.Resources["VkButtonColor"] = brushConverter.ConvertFromString(ButtonColorTextbox.Text.ToUpper().Trim());
-
-                    
+                    SetColor("VkButtonColor", GetTextFromTextbox(sender));
+                    SetColor("VkTextBoxColor", GetTextFromTextbox(sender));
+                
+                
             }
-            catch (Exception ex) { Debug.WriteLine(ex); Application.Current.Resources["VkButtonColor"] = brushConverter.ConvertFromString(ToolsAndsettings.DefaultSettings.ButtonColor); }
-
+            
+            catch (Exception ex) { 
+                SetColor("VkTextBoxColor", ToolsAndsettings.DefaultSettings.TextBoxColor); 
+                SetColor("VkButtonColor", ToolsAndsettings.DefaultSettings.ButtonColor); 
+            }
         }
 
         private void ControlColorTextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            BrushConverter brushConverter = new BrushConverter();
             try
             {
-                Application.Current.Resources["VkContolColor"] = brushConverter.ConvertFromString(ControlColorTextbox.Text.ToUpper().Trim());
+                SetColor("VkContolColor", GetTextFromTextbox(sender));
             }
-            catch(Exception ex) { Console.WriteLine(ex.Message); Application.Current.Resources["VkContolColor"] = brushConverter.ConvertFromString(ToolsAndsettings.DefaultSettings.ConrolColor); }
+            catch (Exception ex) {SetColor("VkContolColor", ToolsAndsettings.DefaultSettings.ControlColor); }
         }
 
         private void SliderColorsTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            BrushConverter brushConverter = new BrushConverter();
             try
             {
+                SetColor("VkSliderColor", GetTextFromTextbox(sender));
                
-                Application.Current.Resources["VkSliderColor"] = brushConverter.ConvertFromString(SliderColorsTextBox.Text.ToUpper().Trim());
-
-                
             }
-            catch(Exception ex) { Application.Current.Resources["VkSliderColor"] = brushConverter.ConvertFromString(ToolsAndsettings.DefaultSettings.SliderColor); }
+            catch (Exception ex) { SetColor("VkSliderColor",ToolsAndsettings.DefaultSettings.SliderColor); }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void BorderThicknessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Application.Current.Resources["VKImageBorderThickness"] = new Thickness((int)e.NewValue);
-            BorderThicknessLabel.Content = "Толщина обводки картинки:"+(int)e.NewValue;
+            SetBorderThickness("VKImageBorderThickness", (int)e.NewValue);
+            BorderThicknessLabel.Content = "Толщина обводки картинки:" + (int)e.NewValue;
+        }
+
+      
+
+        private void PlayerButtonTextColorTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                SetColor("VKPlayerButtonTextColor", GetTextFromTextbox(sender));
+            }            
+            catch (Exception ex) {SetColor("VKPlayerButtonTextColor", ToolsAndsettings.DefaultSettings.PlayerButtonTextColor); }
         }
     }
 }

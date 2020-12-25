@@ -18,7 +18,7 @@
     <CornerRadius x:Key="VKButtonAndTextBoxCornerRadius" BottomLeft="10" TopLeft="10" BottomRight="10" TopRight="10"/>
     <Thickness x:Key="VKImageBorderThickness" Left="0" Top="0" Right="0" Bottom="0"/>
 
-
+    <SolidColorBrush x:Key="VKPlayerButtonTextColor" Color="White"></SolidColorBrush>
     <SolidColorBrush x:Key="VKImageBorderColor" Color="Transparent"></SolidColorBrush>
     <SolidColorBrush x:Key="VkMouseOverColor" Color="#4A76A8"></SolidColorBrush>
     <SolidColorBrush x:Key="VkSliderColor" Color="#EDEEF0"></SolidColorBrush>
@@ -136,7 +136,7 @@
                 <TickBar x:Name="BottomTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed"/>
                 <Border CornerRadius="2" x:Name="TrackBackground" BorderBrush="{StaticResource SliderThumb.Track.Border}" BorderThickness="0" Background="{DynamicResource VkSliderColor}" Height="5.5" Margin="5,0" Grid.Row="1" VerticalAlignment="center">
                     <Canvas Margin="-6,0.5">
-                        <Rectangle RadiusX="2" RadiusY="2"  x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Height="4.2" Visibility="Hidden"/>
+                        <Rectangle RadiusX="2" RadiusY="2"  x:Name="PART_SelectionRange" Fill="{DynamicResource VkContolColor}" Height="4.2" Visibility="Hidden"/>
                     </Canvas>
                 </Border>
                 <Track x:Name="PART_Track" Grid.Row="1">
@@ -301,7 +301,7 @@
     <Style TargetType="{x:Type Button}" x:Key="PlayerButtonStyle">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Background" Value="{DynamicResource VkContolColor}" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Foreground" Value="{DynamicResource VKPlayerButtonTextColor}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />

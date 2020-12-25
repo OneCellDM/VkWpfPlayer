@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
+using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -16,6 +17,7 @@ namespace VkWpfPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool IsHidden = false;
         private bool Minimized = false;
         private double OldWith = 0;
         private double OldHeight = 0;
@@ -35,10 +37,15 @@ namespace VkWpfPlayer
                 new System.IO.DirectoryInfo(AppData).Create();
 
             AuthFrame.Content = new VkLogin().Content;
-           
+
             ToolsAndsettings.AuthorizedAcces += ToolsAndsettings_AuthorizedAcces;
+
+           
+
         }
 
+
+       
         private void ToolsAndsettings_AuthorizedAcces()
         {
             Player.UpdatePosition += Player_UpdatePosition;
@@ -120,18 +127,22 @@ namespace VkWpfPlayer
         {
         }
 
-        private void RepeatButton_Click(object sender, RoutedEventArgs e)
+        private void SetRepeatState()
         {
             if (!Player.IsRepeat)
             {
-                RepeatButton.Foreground = new BrushConverter().ConvertFromString("#FF4A76A8") as Brush;
+                RepeatButton.Content = System.Net.WebUtility.HtmlDecode("&#xE8ED;");
                 Player.IsRepeat = true;
             }
             else
             {
-                RepeatButton.Foreground = new BrushConverter().ConvertFromString("#FF000000") as Brush;
+                RepeatButton.Content = System.Net.WebUtility.HtmlDecode("&#xE8EE;");
                 Player.IsRepeat = false;
             }
+        }
+        private void RepeatButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetRepeatState();
         }
 
         private void RepostAudio_Click(object sender, RoutedEventArgs e)
@@ -167,9 +178,9 @@ namespace VkWpfPlayer
             PlayerSlider.SelectionEnd = e.NewValue;
             PlayerSlider.SelectionStart = 0;
         }
-
-        private void PlayPauseTrackButton_Click(object sender, RoutedEventArgs e)
+        private void PlayPauseState()
         {
+
             if (Player.Audio != null)
             {
                 if (Player.IsPaused)
@@ -185,6 +196,11 @@ namespace VkWpfPlayer
             }
         }
 
+        private void PlayPauseTrackButton_Click(object sender, RoutedEventArgs e)
+        {
+            PlayPauseState();
+        }
+
         private void PlayerSlider_LostMouseCapture(object sender, MouseEventArgs e)
         {
             Track _track = PlayerSlider.Template.FindName("PART_Track", PlayerSlider) as Track;
@@ -195,8 +211,7 @@ namespace VkWpfPlayer
         {
             _currentPlaylistPage.ScrollingToActiveAudio();
         }
-
-        private void MiniMaxPlayerButton_Click(object sender, RoutedEventArgs e)
+        private void MinMax()
         {
             if (!Minimized)
             {
@@ -219,6 +234,9 @@ namespace VkWpfPlayer
                 Minimized = false;
             }
         }
+        private void MiniMaxPlayerButton_Click(object sender, RoutedEventArgs e)=>
+            MinMax();
+        
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -237,21 +255,90 @@ namespace VkWpfPlayer
                 settingsPage.WindowStyle = WindowStyle.ToolWindow;
 
                 settingsPage.ShowDialog();
-              
+
                 ToolsAndsettings.CurrentSettings.ImageCornerRadios = settingsPage.RoundImageSlider.Value;
                 ToolsAndsettings.CurrentSettings.ButtonAndTextBoxCornerRadius = settingsPage.ButtonRoundRadiusSlider.Value;
                 ToolsAndsettings.CurrentSettings.ImageBorderThickness = settingsPage.BorderThicknessSlider.Value;
-                ToolsAndsettings.CurrentSettings.TextColor = settingsPage.TextColoTextbox.Text.ToUpper().Trim();
-                ToolsAndsettings.CurrentSettings.ConrolColor = settingsPage.ControlColorTextbox.Text.ToUpper().Trim();
-                ToolsAndsettings.CurrentSettings.ButtonColor = settingsPage.ButtonColorTextbox.Text.ToUpper().Trim();
-                ToolsAndsettings.CurrentSettings.ImageBorderColor = settingsPage.ImageBorderColorTextBox.Text.ToUpper().Trim();
-                ToolsAndsettings.CurrentSettings.BackGroundColor = settingsPage.BackGroundTextBox.Text.ToUpper().Trim();
-                ToolsAndsettings.CurrentSettings.SliderColor = settingsPage.SliderColorsTextBox.Text.ToUpper().Trim();
+                ToolsAndsettings.CurrentSettings.TextColor = settingsPage.GetTextFromTextbox(settingsPage.TextColoTextbox);
+                ToolsAndsettings.CurrentSettings.ControlColor = settingsPage.GetTextFromTextbox(settingsPage.ControlColorTextbox);
+                ToolsAndsettings.CurrentSettings.ButtonColor = settingsPage.GetTextFromTextbox(settingsPage.TextBoxAndButtonColorTextbox);
+                ToolsAndsettings.CurrentSettings.ImageBorderColor = settingsPage.GetTextFromTextbox(settingsPage.ImageBorderColorTextBox);
+                ToolsAndsettings.CurrentSettings.BackGroundColor = settingsPage.GetTextFromTextbox(settingsPage.BackGroundTextBox);
+                ToolsAndsettings.CurrentSettings.SliderColor = settingsPage.GetTextFromTextbox(settingsPage.SliderColorsTextBox);
+                ToolsAndsettings.CurrentSettings.TextBoxColor = settingsPage.GetTextFromTextbox(settingsPage.TextBoxAndButtonColorTextbox);
+                ToolsAndsettings.CurrentSettings.PlayerButtonTextColor = settingsPage.GetTextFromTextbox(settingsPage.PlayerButtonTextColorTextBox);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               
+
             }
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var hotKeyHost = new HotKeyHost((HwndSource)PresentationSource.FromVisual(this));
+
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.P, ModifierKeys.Alt,delegate {
+                PlayPauseState();
+            }
+            ));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.Right, ModifierKeys.Alt,delegate
+            {
+                _currentPlaylistPage.NextAudio();
+            }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.Left, ModifierKeys.Alt, delegate
+            {
+                _currentPlaylistPage.PreviewAudio();
+            }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.Up, ModifierKeys.Alt, delegate
+            {
+                VolumeSlider.Value+=0.1;
+            }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.Down, ModifierKeys.Alt, delegate
+            {
+                VolumeSlider.Value-=0.1;
+            }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.F, ModifierKeys.Alt, delegate
+            {
+                MinMax();
+            }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.R, ModifierKeys.Alt, delegate
+            {
+                SetRepeatState();
+            }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.V, ModifierKeys.Alt, delegate
+            {
+                if (IsHidden)
+                {
+                    Hide();
+                    Show();
+                    Topmost = true;
+                    Topmost = false;
+                    IsHidden = false;
+                }
+                else { Hide(); IsHidden = true; }
+            }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.D, ModifierKeys.Alt, delegate
+            {
+                this.Left+=10;
+            }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.A, ModifierKeys.Alt, delegate
+            {
+                this.Left-=10;
+            }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.W, ModifierKeys.Alt, delegate
+            {
+                this.Top-=10;
+            }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.S, ModifierKeys.Alt, delegate
+            {
+                this.Top+=10;
+            }));
+
+
+        }
+
+
+
     }
 }

@@ -45,7 +45,7 @@ namespace VkWpfPlayer
                             ToolsAndsettings.AddDataToObservationCollection(FriendsCollection, awaiterData.GetResult());
                             SuccesLoadPanel.Visibility = Visibility.Collapsed;
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             LoadingFriends();
                         }

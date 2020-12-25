@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -45,7 +44,7 @@ namespace VkWpfPlayer
                 "https://oauth.vk.com/authorize?client_id=6121396&scope=1073737727&redirect_uri=https://oauth.vk.com/blank.html&display=page&response_type=token&revoke=1"
             );
 
-            
+
             this.InitializeComponent();
             AuthErrorBorder.Visibility = Visibility.Collapsed;
             SaveAuthDataCheckBox.Visibility = Visibility.Collapsed;
@@ -61,7 +60,7 @@ namespace VkWpfPlayer
             AccountListPanelBorder.Visibility = Visibility.Visible;
 
         }
-        
+
         private void HideAccountList()
         {
             LoginBorder.Visibility = Visibility.Visible;
@@ -70,7 +69,7 @@ namespace VkWpfPlayer
         }
         private void HideLoginComponents()
         {
-            
+
             TwoFactorCodeTextBox.Visibility = Visibility.Hidden;
             LoginLabel.Visibility = Visibility.Collapsed;
             LoginTextBox.Visibility = Visibility.Collapsed;
@@ -218,20 +217,20 @@ namespace VkWpfPlayer
                         }
 
                     }
-                    catch (VkNet.Exception.VkAuthorizationException ex) 
+                    catch (VkNet.Exception.VkAuthorizationException ex)
                     {
 
                         this.PreviewErrorBorder = LoginBorder;
                         this.PreviewErrorBorder.Visibility = Visibility.Collapsed;
                         this.AuthErrorBorder.Visibility = Visibility.Visible;
 
-                        
+
                         this.AuthErrorTextRun.Text = ex.Message;
 
 
                         Debug.WriteLine(ex.StackTrace);
                     }
-                    catch(VkNet.Exception.UserAuthorizationFailException ex)
+                    catch (VkNet.Exception.UserAuthorizationFailException ex)
                     {
                         this.PreviewErrorBorder = LoginBorder;
 
@@ -275,25 +274,25 @@ namespace VkWpfPlayer
             {
                 AccessToken = item.Token,
                 UserId = (long)item.Id,
-                
+
             });
             try
             {
                 api.OnTokenExpires += Api_OnTokenExpires;
-                    api.Account.GetInfo();
-                    if (api.IsAuthorized)
-                        ToolsAndsettings.VkApi = api;
-                    
+                api.Account.GetInfo();
+                if (api.IsAuthorized)
+                    ToolsAndsettings.VkApi = api;
+
             }
-            catch(VkNet.Exception.UserAuthorizationFailException ex)
+            catch (VkNet.Exception.UserAuthorizationFailException ex)
             {
-                PreviewErrorBorder= this.AccountListPanelBorder;
+                PreviewErrorBorder = this.AccountListPanelBorder;
                 PreviewErrorBorder.Visibility = Visibility.Collapsed;
                 this.AuthErrorBorder.Visibility = Visibility.Visible;
-             
+
                 this.AuthErrorCodeTextRun.Text = "Код:" + ex.ErrorCode;
                 this.AuthErrorTextRun.Text = ex.Message;
-               
+
             }
         }
 
@@ -312,9 +311,9 @@ namespace VkWpfPlayer
         private void DeleteAccountButton_Click(object sender, RoutedEventArgs e)
         {
 
-            var button= sender as Button;
+            var button = sender as Button;
             var data = button.DataContext as UserData;
-            var key = Registry.CurrentUser.OpenSubKey("SOFTWARE", true).OpenSubKey("VkPlayerByOneCellDM",true);
+            var key = Registry.CurrentUser.OpenSubKey("SOFTWARE", true).OpenSubKey("VkPlayerByOneCellDM", true);
             foreach (var val in key.GetValueNames())
             {
                 if (val != "Settings")
@@ -324,9 +323,9 @@ namespace VkWpfPlayer
                         ShowActiveAccounts();
                         break;
                     }
-                        
-             }
-            
+
+            }
+
         }
 
 

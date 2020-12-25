@@ -2,22 +2,21 @@
 using System.ComponentModel;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace VkWpfPlayer.DataModels
 {
-    public class AlbumModel: INotifyPropertyChanged
+    public class AlbumModel : INotifyPropertyChanged
     {
         public string image;
         public long ID { get; set; }
         public string Title { get; set; }
-        public string ImageUrl { get => image; 
-            set {
+        public string ImageUrl
+        {
+            get => image;
+            set
+            {
 
                 if (value != null)
                 {
@@ -32,14 +31,14 @@ namespace VkWpfPlayer.DataModels
         private String asyncImageProperty;
         public String AsyncImageProperty
         {
-            get=> asyncImageProperty; 
+            get => asyncImageProperty;
             set
             {
                 asyncImageProperty = value;
                 OnPropertyChanged("AsyncImageProperty");
             }
         }
-        private  void LoadImage(string url)
+        private void LoadImage(string url)
         {
             Task.Run(() =>
             {
@@ -65,8 +64,8 @@ namespace VkWpfPlayer.DataModels
                 }
             });
         }
-        private void WebClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)=>    
-            AsyncImageProperty =  FilePath;
+        private void WebClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e) =>
+            AsyncImageProperty = FilePath;
 
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

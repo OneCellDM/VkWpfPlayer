@@ -21,7 +21,7 @@ namespace VkWpfPlayer
 
         ThicknessAnimation ShowPlaylistAnimation = new ThicknessAnimation();
         ThicknessAnimation HidePlaylistAnimation = new ThicknessAnimation();
-        
+
         public AlbumsPage()
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace VkWpfPlayer
             SuccesLoadPanel.Visibility = Visibility.Collapsed;
 
         }
-       
+
         public void LoadAudioFromAlbum(long album_id, long owner_id)
         {
 
@@ -54,7 +54,7 @@ namespace VkWpfPlayer
                     {
                         ToolsAndsettings.AddDataToObservationCollection(AudioCollection, DataAwaiter.GetResult());
                         if (!d)
-                        {  
+                        {
                             d = true;
                             AudioCollection.Clear();
                             Thread.Sleep(200);
@@ -64,10 +64,10 @@ namespace VkWpfPlayer
                         }
                         SuccesLoadPanel.Visibility = Visibility.Collapsed;
                     }
-                    catch(Exception EX)
+                    catch (Exception EX)
                     {
                         ToolsAndsettings.loggingHandler.Log.Error(EX);
-                        _currentThread = new Thread(()=> { LoadAudioFromAlbum(album_id, owner_id); });
+                        _currentThread = new Thread(() => { LoadAudioFromAlbum(album_id, owner_id); });
                         ErrorGrid.Visibility = Visibility.Visible;
                     }
 
@@ -75,7 +75,7 @@ namespace VkWpfPlayer
 
 
 
-               
+
 
 
             });
@@ -93,25 +93,25 @@ namespace VkWpfPlayer
 
 
             var s = ToolsAndsettings.VkApi.Audio.GetPlaylistsAsync(ownerId: (long)ToolsAndsettings.VkApi.UserId, count: 200);
-            
-            s.GetAwaiter(). OnCompleted(() =>
-            {
-                this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
-                {
-                    try
-                    {
-                        ToolsAndsettings.AddDataToObservationCollection(AlbumsCollection, s.GetAwaiter().GetResult());
-                    }
-                    catch (Exception ex)
-                    {
+
+            s.GetAwaiter().OnCompleted(() =>
+           {
+               this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
+               {
+                   try
+                   {
+                       ToolsAndsettings.AddDataToObservationCollection(AlbumsCollection, s.GetAwaiter().GetResult());
+                   }
+                   catch (Exception ex)
+                   {
                         //TODO: Закончить отлов ошибок и их логирование    
                         ToolsAndsettings.loggingHandler.Log.Error(s.Exception.InnerException);
-                     _currentThread = new Thread(() => { LoadAlbums(); });
-                        ErrorGrid.Visibility = Visibility.Visible;
-                    }
-                }));
+                       _currentThread = new Thread(() => { LoadAlbums(); });
+                       ErrorGrid.Visibility = Visibility.Visible;
+                   }
+               }));
 
-            });
+           });
 
         }
 
@@ -135,7 +135,7 @@ namespace VkWpfPlayer
                 ShowPlaylistAnimation.Duration = new Duration(TimeSpan.FromSeconds(0.4));
                 AlbumGrid.BeginAnimation(MarginProperty, ShowPlaylistAnimation);
 
-               
+
             }
         }
 
@@ -178,14 +178,14 @@ namespace VkWpfPlayer
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void RetryRequests_Click(object sender, RoutedEventArgs e)
         {
             this.ErrorGrid.Visibility = Visibility.Collapsed;
             _currentThread.Start();
-            
+
         }
     }
 

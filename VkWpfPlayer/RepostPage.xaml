@@ -64,7 +64,7 @@
                                     <ImageBrush ImageSource="{Binding AvatarUrl}"></ImageBrush>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" Foreground="{DynamicResource VKBackGroundColor}" FontWeight="Bold" Margin="5"></TextBlock>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" Foreground="{DynamicResource VKTextColor}" FontWeight="Bold" Margin="5"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

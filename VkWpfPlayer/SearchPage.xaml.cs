@@ -20,15 +20,15 @@ namespace VkWpfPlayer
             InitializeComponent();
             AudioListView.ItemsSource = SearchCollection;
             SuccesLoadPanel.Visibility = Visibility.Collapsed;
-            
+
             ErrorGrid.Visibility = System.Windows.Visibility.Collapsed;
         }
         public void LoadAudios()
         {
             ErrorGrid.Visibility = Visibility.Collapsed;
-            if(offset==0)
+            if (offset == 0)
                 SuccesLoadPanel.Visibility = Visibility.Visible;
-           
+
             var awaiter = ToolsAndsettings.VkApi.Audio.SearchAsync(new VkNet.Model.RequestParams.AudioSearchParams()
             {
                 Count = 200,
@@ -48,10 +48,10 @@ namespace VkWpfPlayer
                                 SuccesLoadPanel.Visibility = Visibility.Collapsed;
                             }
                             offset += 200;
-                            
+
                             LoadAudios();
 
-                            
+
                         }));
                     else
                     {
@@ -62,20 +62,20 @@ namespace VkWpfPlayer
                         AllAudioFound = true;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     ToolsAndsettings.loggingHandler.Log.Error(ex);
                     ErrorGrid.Visibility = System.Windows.Visibility.Visible;
                 }
                 Loading = false;
             });
-          
+
         }
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             offset = 0;
             SearchCollection.Clear();
-            if(SearchTextBox.Text.Length>0)
+            if (SearchTextBox.Text.Length > 0)
                 LoadAudios();
         }
         private void AudioListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -91,13 +91,13 @@ namespace VkWpfPlayer
         {
 
             //if (!Loading)
-              //  if (e.VerticalChange > 0)
-                //    if (e.VerticalOffset + e.ViewportHeight == e.ExtentHeight)
-                  //      if (!AllAudioFound)
-                    //    {
-                      //      LoadAudios();
-                        //    Loading = true;
-                        //}
+            //  if (e.VerticalChange > 0)
+            //    if (e.VerticalOffset + e.ViewportHeight == e.ExtentHeight)
+            //      if (!AllAudioFound)
+            //    {
+            //      LoadAudios();
+            //    Loading = true;
+            //}
 
 
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -13,7 +12,7 @@ namespace VkWpfPlayer
     /// </summary>
     public partial class MyAudios : Page
     {
-        
+
         public delegate void AudioSLoaded();
 
         public event AudioSLoaded SUCESS;
@@ -34,13 +33,13 @@ namespace VkWpfPlayer
             AudioListView.ItemsSource = AudioCollection;
             StartLoading();
             ErrorGrid.Visibility = System.Windows.Visibility.Collapsed;
-            
+
         }
         private void StartLoading()
         {
-            if(LoadTask!=null&&LoadTask.Status==TaskStatus.Running)
+            if (LoadTask != null && LoadTask.Status == TaskStatus.Running)
             {
-                
+
                 LoadTask.Dispose();
             }
             LoadTask = Task.Run(() =>
@@ -62,30 +61,30 @@ namespace VkWpfPlayer
             var awaiter = ToolsAndsettings.VkApi.Audio.GetAsync(new VkNet.Model.RequestParams.AudioGetParams()
             {
                 Count = 6000,
-                
+
             });
             awaiter.GetAwaiter().OnCompleted(() =>
             {
-               
+
                 this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
                 {
                     try
                     {
-                        
+
                         ToolsAndsettings.AddDataToObservationCollection(AudioCollection, awaiter.GetAwaiter().GetResult());
                         SuccesLoadPanel.Visibility = System.Windows.Visibility.Collapsed;
-                     
+
 
                     }
                     catch (Exception ex)
                     {
-                       
+
                         ToolsAndsettings.loggingHandler.Log.Error(ex);
                         ErrorGrid.Visibility = System.Windows.Visibility.Visible;
                     }
-                   
+
                 }));
-               
+
             });
 
         }
@@ -114,7 +113,7 @@ namespace VkWpfPlayer
         }
         private void SearchButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            search();  
+            search();
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -132,7 +131,7 @@ namespace VkWpfPlayer
         {
             StartLoading();
             ErrorGrid.Visibility = System.Windows.Visibility.Collapsed;
-                
+
         }
     }
 }
