@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VkWpfPlayer"
+     
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
         Title="VKompakt Musik (VKM)"  MinHeight="100" MinWidth="600" Height="450"  Width="857.333" SizeChanged="Window_SizeChanged" Background="{DynamicResource VKBackGroundColor}" Loaded="Window_Loaded" >
@@ -11,7 +12,7 @@
 
 
     <Window.Resources>
-        <local:DurationConverter x:Name="DConverters" x:Key="Dconverter"/>
+       
        
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">

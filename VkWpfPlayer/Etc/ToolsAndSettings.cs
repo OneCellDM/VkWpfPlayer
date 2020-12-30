@@ -114,6 +114,7 @@ namespace VkWpfPlayer
         {
             foreach (var audio in VkCollection)
             {
+                
                 var model = new AudioModel()
                 {
                     Artist = audio.Artist,
@@ -175,6 +176,11 @@ namespace VkWpfPlayer
                 };
                 observableCollection.Add(model);
             }
+        }
+        public static void AddDataToObservationCollection(ObservableCollection<AudioModel> observableCollection, AudioModel audioModel)
+        {
+                observableCollection.Add(audioModel);
+            
         }
     }
 }

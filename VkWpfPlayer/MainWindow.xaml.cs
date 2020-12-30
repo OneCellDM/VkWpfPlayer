@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using VkWpfPlayer.DataModels;
+using VkWpfPlayer.Pages;
 
 namespace VkWpfPlayer
 {
@@ -27,7 +28,7 @@ namespace VkWpfPlayer
         private SearchPage _searchPage;
         private CurrentPlaylistPage _currentPlaylistPage;
         private RepostPage _repostPage;
-        private DurationConverter durationconverter = new DurationConverter();
+        private  Converters.DurationConverter durationconverter = new Converters.DurationConverter();
 
         public MainWindow()
         {
@@ -37,6 +38,8 @@ namespace VkWpfPlayer
                 new System.IO.DirectoryInfo(AppData).Create();
 
             AuthFrame.Content = new VkLogin().Content;
+            TeamplatesDictonary.ArtistClicked += TeamplatesDictonary_ArtistClicked;
+            TeamplatesDictonary.AudioDeleteClicked += TeamplatesDictonary_AudioDeleteClicked;
 
             ToolsAndsettings.AuthorizedAcces += ToolsAndsettings_AuthorizedAcces;
 
@@ -44,8 +47,57 @@ namespace VkWpfPlayer
 
         }
 
+        private void TeamplatesDictonary_AudioDeleteClicked(object audioModel)
+        {
+           
+            var taskAwaiter = ToolsAndsettings.VkApi.Audio.DeleteAsync(((AudioModel)audioModel).ID, ((AudioModel)audioModel).Owner_ID).GetAwaiter();
+            taskAwaiter.OnCompleted(() =>
+            {
 
-       
+                var taskAwaiter2 = ToolsAndsettings.VkApi.Audio.GetByIdAsync(new String[]
+                { ((AudioModel)audioModel).ID.ToString() + "_" + ((AudioModel)audioModel).Owner_ID.ToString()}).GetAwaiter();
+                taskAwaiter2.OnCompleted(() =>
+                {
+                    try
+                    {
+                        var res = taskAwaiter2.GetResult();
+                    }
+                    catch(VkNet.Exception.ParameterMissingOrInvalidException ex)
+                    {
+                        this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
+                        {
+                            if (MyAudiosTab.IsSelected)
+                                _MyAudiosPage.AudioCollection.Remove((AudioModel)audioModel);
+
+                            if (MyPlayliststab.IsSelected)
+                                _AlbumsPage.AudioCollection.Remove((AudioModel)audioModel);
+
+                        }));
+
+                    }
+
+
+                });
+              
+                   
+                
+            });
+            
+        }
+    
+
+        private void TeamplatesDictonary_ArtistClicked(string Artist)
+        {
+                
+            _searchPage.SearchTextBox.Text = Artist;
+
+            _searchPage.AllAudioFound = false;
+             _searchPage.offset = 0;
+            _searchPage.SearchCollection.Clear();
+            _searchPage.LoadAudios();
+            SearchTab.IsSelected = true;
+        }
+
         private void ToolsAndsettings_AuthorizedAcces()
         {
             Player.UpdatePosition += Player_UpdatePosition;
@@ -59,10 +111,20 @@ namespace VkWpfPlayer
             AuthFrame.Visibility = Visibility.Collapsed;
 
             _repostPage.ClosedEvent += _repostPage_ClosedEvent;
+            _searchPage.AudioAdd += _searchPage_AudioAdd;
             СurrentPlaylistTab.Content = _currentPlaylistPage.Content;
             MyAudiosTab.Content = _MyAudiosPage.Content;
             MyPlayliststab.Content = _AlbumsPage.Content;
             SearchTab.Content = _searchPage.Content;
+        }
+
+        private void _searchPage_AudioAdd(AudioModel audioModel)
+        {
+            this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
+             {
+                 ToolsAndsettings.AddDataToObservationCollection(_MyAudiosPage.AudioCollection, audioModel);
+                 _MyAudiosPage.AudioCollection.Move(_MyAudiosPage.AudioCollection.Count - 1, 0);
+             }));
         }
 
         private void _repostPage_ClosedEvent()
@@ -247,32 +309,33 @@ namespace VkWpfPlayer
             }
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+    private void SettingsButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
         {
-            try
-            {
-                SettingsPage settingsPage = new SettingsPage();
-                settingsPage.WindowStyle = WindowStyle.ToolWindow;
+            SettingsPage settingsPage = new SettingsPage();
+            settingsPage.WindowStyle = WindowStyle.ToolWindow;
 
-                settingsPage.ShowDialog();
+            settingsPage.ShowDialog();
 
-                ToolsAndsettings.CurrentSettings.ImageCornerRadios = settingsPage.RoundImageSlider.Value;
-                ToolsAndsettings.CurrentSettings.ButtonAndTextBoxCornerRadius = settingsPage.ButtonRoundRadiusSlider.Value;
-                ToolsAndsettings.CurrentSettings.ImageBorderThickness = settingsPage.BorderThicknessSlider.Value;
-                ToolsAndsettings.CurrentSettings.TextColor = settingsPage.GetTextFromTextbox(settingsPage.TextColoTextbox);
-                ToolsAndsettings.CurrentSettings.ControlColor = settingsPage.GetTextFromTextbox(settingsPage.ControlColorTextbox);
-                ToolsAndsettings.CurrentSettings.ButtonColor = settingsPage.GetTextFromTextbox(settingsPage.TextBoxAndButtonColorTextbox);
-                ToolsAndsettings.CurrentSettings.ImageBorderColor = settingsPage.GetTextFromTextbox(settingsPage.ImageBorderColorTextBox);
-                ToolsAndsettings.CurrentSettings.BackGroundColor = settingsPage.GetTextFromTextbox(settingsPage.BackGroundTextBox);
-                ToolsAndsettings.CurrentSettings.SliderColor = settingsPage.GetTextFromTextbox(settingsPage.SliderColorsTextBox);
-                ToolsAndsettings.CurrentSettings.TextBoxColor = settingsPage.GetTextFromTextbox(settingsPage.TextBoxAndButtonColorTextbox);
-                ToolsAndsettings.CurrentSettings.PlayerButtonTextColor = settingsPage.GetTextFromTextbox(settingsPage.PlayerButtonTextColorTextBox);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            ToolsAndsettings.CurrentSettings.ImageCornerRadios = settingsPage.RoundImageSlider.Value;
+            ToolsAndsettings.CurrentSettings.ButtonAndTextBoxCornerRadius = settingsPage.ButtonRoundRadiusSlider.Value;
+            ToolsAndsettings.CurrentSettings.ImageBorderThickness = settingsPage.BorderThicknessSlider.Value;
+            ToolsAndsettings.CurrentSettings.TextColor = settingsPage.GetTextFromTextbox(settingsPage.TextColoTextbox);
+            ToolsAndsettings.CurrentSettings.ControlColor = settingsPage.GetTextFromTextbox(settingsPage.ControlColorTextbox);
+            ToolsAndsettings.CurrentSettings.ButtonColor = settingsPage.GetTextFromTextbox(settingsPage.TextBoxAndButtonColorTextbox);
+            ToolsAndsettings.CurrentSettings.ImageBorderColor = settingsPage.GetTextFromTextbox(settingsPage.ImageBorderColorTextBox);
+            ToolsAndsettings.CurrentSettings.BackGroundColor = settingsPage.GetTextFromTextbox(settingsPage.BackGroundTextBox);
+            ToolsAndsettings.CurrentSettings.SliderColor = settingsPage.GetTextFromTextbox(settingsPage.SliderColorsTextBox);
+            ToolsAndsettings.CurrentSettings.TextBoxColor = settingsPage.GetTextFromTextbox(settingsPage.TextBoxAndButtonColorTextbox);
+            ToolsAndsettings.CurrentSettings.PlayerButtonTextColor = settingsPage.GetTextFromTextbox(settingsPage.PlayerButtonTextColorTextBox);
         }
+        catch (Exception ex)
+        {
+
+        }
+    }
+        
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

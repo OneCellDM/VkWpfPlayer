@@ -1,4 +1,4 @@
-﻿<Page x:Class="VkWpfPlayer.VkLogin"
+﻿<Page x:Class="VkWpfPlayer.Pages.VkLogin"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -75,8 +75,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                    <local:UserData AvatarUrl="https://sun9-18.userapi.com/impf/c848528/v848528054/15c63b/4MgNIM29Nho.jpg?size=848x1280&amp;quality=96&amp;proxy=1&amp;sign=1c0718e8a71dc5d88500c0b9982868df&amp;type=album" Name="SELDы" Token="GDGFD" Id="5"/>
-                    <local:UserData AvatarUrl="https://sun9-18.userapi.com/impf/c848528/v848528054/15c63b/4MgNIM29Nho.jpg?size=848x1280&amp;quality=96&amp;proxy=1&amp;sign=1c0718e8a71dc5d88500c0b9982868df&amp;type=album" Id="50" Name="te" Token="rew"/>
+                  
 
                 </ListView>
 

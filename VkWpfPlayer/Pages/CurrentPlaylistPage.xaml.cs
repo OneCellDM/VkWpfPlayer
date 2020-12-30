@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using VkWpfPlayer.DataModels;
 
-namespace VkWpfPlayer
+namespace VkWpfPlayer.Pages
 {
     /// <summary>
     /// Логика взаимодействия для CurrentPlaylistPage.xaml

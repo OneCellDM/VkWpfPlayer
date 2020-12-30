@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace VkWpfPlayer
+namespace VkWpfPlayer.Converters
 {
     public class ListviewSizeConverter : IValueConverter
     {

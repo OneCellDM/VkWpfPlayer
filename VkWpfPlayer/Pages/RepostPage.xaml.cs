@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using VkNet.Model.RequestParams;
 using VkWpfPlayer.DataModels;
 
-namespace VkWpfPlayer
+namespace VkWpfPlayer.Pages
 {
     /// <summary>
     /// Логика взаимодействия для RepostPage.xaml

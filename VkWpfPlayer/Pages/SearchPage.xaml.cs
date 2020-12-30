@@ -1,32 +1,36 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using VkWpfPlayer.DataModels;
 
-namespace VkWpfPlayer
+namespace VkWpfPlayer.Pages
 {
     /// <summary>
     /// Логика взаимодействия для SearchPage.xaml
     /// </summary>
     public partial class SearchPage : Page
     {
+        public delegate void AudioAdded(AudioModel audioModel);
+        public event AudioAdded AudioAdd;
         public int offset = 0;
         bool Loading = false;
-        bool AllAudioFound = false;
+        public bool AllAudioFound = false;
         public ObservableCollection<AudioModel> SearchCollection = new System.Collections.ObjectModel.ObservableCollection<AudioModel>();
         public SearchPage()
         {
             InitializeComponent();
+            
             AudioListView.ItemsSource = SearchCollection;
             SuccesLoadPanel.Visibility = Visibility.Collapsed;
 
-            ErrorGrid.Visibility = System.Windows.Visibility.Collapsed;
+            ErrorDialog.Visibility = System.Windows.Visibility.Collapsed;
         }
         public void LoadAudios()
         {
-            ErrorGrid.Visibility = Visibility.Collapsed;
-            if (offset == 0)
+            ErrorDialog.Visibility = Visibility.Collapsed;
+           
                 SuccesLoadPanel.Visibility = Visibility.Visible;
 
             var awaiter = ToolsAndsettings.VkApi.Audio.SearchAsync(new VkNet.Model.RequestParams.AudioSearchParams()
@@ -43,13 +47,12 @@ namespace VkWpfPlayer
                         this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
                         {
                             ToolsAndsettings.AddDataToObservationCollection(SearchCollection, awaiter.GetResult());
-                            if (offset == 0)
-                            {
+                            
                                 SuccesLoadPanel.Visibility = Visibility.Collapsed;
-                            }
+                            
                             offset += 200;
 
-                            LoadAudios();
+                            
 
 
                         }));
@@ -65,7 +68,7 @@ namespace VkWpfPlayer
                 catch (Exception ex)
                 {
                     ToolsAndsettings.loggingHandler.Log.Error(ex);
-                    ErrorGrid.Visibility = System.Windows.Visibility.Visible;
+                    ErrorDialog.Visibility = System.Windows.Visibility.Visible;
                 }
                 Loading = false;
             });
@@ -80,33 +83,74 @@ namespace VkWpfPlayer
         }
         private void AudioListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count != 0)
-            {
-                ToolsAndsettings.SendListClickEvent(SearchCollection, AudioListView.SelectedIndex);
-                Player.Play(((AudioModel)e.AddedItems[e.AddedItems.Count - 1]));
-            }
+           
         }
 
         private void AudioListView_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
 
-            //if (!Loading)
-            //  if (e.VerticalChange > 0)
-            //    if (e.VerticalOffset + e.ViewportHeight == e.ExtentHeight)
-            //      if (!AllAudioFound)
-            //    {
-            //      LoadAudios();
-            //    Loading = true;
-            //}
+            if (!Loading)
+              if (e.VerticalChange > 0)
+                if (e.VerticalOffset + e.ViewportHeight == e.ExtentHeight)
+                  if (!AllAudioFound)
+                {
+                  LoadAudios();
+                Loading = true;
+            }
 
 
 
 
         }
 
-        private void RetryRequests_Click(object sender, RoutedEventArgs e)
+  
+
+        private void AudioListView_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            ErrorGrid.Visibility = Visibility.Collapsed;
+            if (AudioListView.SelectedItems.Count != 0)
+            {
+                ToolsAndsettings.SendListClickEvent(SearchCollection, AudioListView.SelectedIndex);
+                Player.Play(((AudioModel)((ListView)sender).SelectedItem));
+            }
+        }
+
+        private void AddAudioButton_Click(object sender, RoutedEventArgs e)
+        {
+            AudioModel audioModel = (AudioModel)((Button)sender).DataContext;
+
+           var Awaiter= ToolsAndsettings.VkApi.Audio.AddAsync(audioModel.ID, audioModel.Owner_ID,audioModel.AccessKey).GetAwaiter();
+            Awaiter.OnCompleted(() =>
+            {
+
+
+                if (Awaiter.GetResult() != 0)
+                {
+                   
+                   
+
+                    ((Button)sender).Content = System.Net.WebUtility.HtmlDecode("&#xE73E;");
+
+                    AudioAdd?.Invoke(new AudioModel()
+                    {
+                        AccessKey= audioModel.AccessKey,
+                        Artist=audioModel.Artist,
+                        AudioUrl=audioModel.AudioUrl,
+                        ImageUrl=audioModel.ImageUrl,
+                        Title=audioModel.Title,
+                        DurationSeconds=audioModel.DurationSeconds,
+                        Owner_ID = (long)ToolsAndsettings.VkApi.UserId,
+                        ID = Awaiter.GetResult(),
+                    });
+                    
+                }
+
+            });
+
+        }
+
+        private void ErrorDialog_Accepted()
+        {
+            ErrorDialog.Visibility = Visibility.Collapsed;
             offset = 0;
             SearchCollection.Clear();
             if (SearchTextBox.Text.Length > 0)

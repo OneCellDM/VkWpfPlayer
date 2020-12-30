@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace VkWpfPlayer
+namespace VkWpfPlayer.Pages
 {
     /// <summary>
     /// Логика взаимодействия для SettingsPage.xaml

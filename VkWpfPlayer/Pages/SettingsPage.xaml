@@ -1,9 +1,9 @@
-﻿<Window x:Class="VkWpfPlayer.SettingsPage"
+﻿<Window x:Class="VkWpfPlayer.Pages.SettingsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:VkWpfPlayer"
+      xmlns:local="clr-namespace:VkWpfPlayer.Pages"
       mc:Ignorable="d"  Background="White"
       Title="SettingsPage" Height="634.4" Width="492.8">
 
@@ -14,7 +14,7 @@
                     <Label   Content="Радиус края:"></Label>
                     <Border BorderBrush="{DynamicResource VKImageBorderColor}" BorderThickness="{DynamicResource VKImageBorderThickness}" HorizontalAlignment="Center"   Width="120" Height="120"  CornerRadius="{DynamicResource VKImageCornerRadius}" Margin="10,20,0,0">
                         <Border.Background>
-                            <ImageBrush ImageSource="Resources/MusicIcon.jpg"/>
+                            <ImageBrush ImageSource="/Resources/MusicIcon.jpg"/>
                         </Border.Background>
 
                     </Border>

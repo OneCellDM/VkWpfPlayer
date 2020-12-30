@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using VkWpfPlayer.DataModels;
 
-namespace VkWpfPlayer
+namespace VkWpfPlayer.Pages
 {
     /// <summary>
     /// Логика взаимодействия для MyAudios.xaml
@@ -32,11 +32,13 @@ namespace VkWpfPlayer
             AudioListView.Items.Clear();
             AudioListView.ItemsSource = AudioCollection;
             StartLoading();
-            ErrorGrid.Visibility = System.Windows.Visibility.Collapsed;
+
+            
 
         }
         private void StartLoading()
         {
+            ErrorDialog.Visibility = System.Windows.Visibility.Collapsed;
             if (LoadTask != null && LoadTask.Status == TaskStatus.Running)
             {
 
@@ -57,46 +59,40 @@ namespace VkWpfPlayer
             {
                 SuccesLoadPanel.Visibility = System.Windows.Visibility.Visible;
             }));
+         
 
-            var awaiter = ToolsAndsettings.VkApi.Audio.GetAsync(new VkNet.Model.RequestParams.AudioGetParams()
-            {
-                Count = 6000,
-
-            });
-            awaiter.GetAwaiter().OnCompleted(() =>
-            {
-
-                this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
+                var awaiter = ToolsAndsettings.VkApi.Audio.GetAsync(new VkNet.Model.RequestParams.AudioGetParams()
                 {
-                    try
+                    Count = 6000,
+
+                });
+                awaiter.GetAwaiter().OnCompleted(() =>
+                {
+
+                    this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
                     {
+                        try
+                        {
+                            SuccesLoadPanel.Visibility = System.Windows.Visibility.Collapsed;
+                            ToolsAndsettings.AddDataToObservationCollection(AudioCollection, awaiter.GetAwaiter().GetResult());
+                            
+                        }
+                        catch (Exception ex)
+                        {
 
-                        ToolsAndsettings.AddDataToObservationCollection(AudioCollection, awaiter.GetAwaiter().GetResult());
-                        SuccesLoadPanel.Visibility = System.Windows.Visibility.Collapsed;
+                            ToolsAndsettings.loggingHandler.Log.Error(ex);
+                            ErrorDialog.Visibility = System.Windows.Visibility.Visible;
 
+                        }
+                    }));
 
-                    }
-                    catch (Exception ex)
-                    {
-
-                        ToolsAndsettings.loggingHandler.Log.Error(ex);
-                        ErrorGrid.Visibility = System.Windows.Visibility.Visible;
-                    }
-
-                }));
-
-            });
+                });
+            
+          
 
         }
 
-        private void AudioListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count != 0)
-            {
-                ToolsAndsettings.SendListClickEvent((ObservableCollection<AudioModel>)AudioListView.ItemsSource, AudioListView.SelectedIndex);
-                Player.Play(((AudioModel)e.AddedItems[e.AddedItems.Count - 1]));
-            }
-        }
+     
         private void search()
         {
             SearchCollection.Clear();
@@ -127,10 +123,27 @@ namespace VkWpfPlayer
             }
         }
 
-        private void RetryRequests_Click(object sender, System.Windows.RoutedEventArgs e)
+     
+        private void AudioListView_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (AudioListView.SelectedItems.Count != 0)
+            {
+                ToolsAndsettings.SendListClickEvent(AudioCollection, AudioListView.SelectedIndex);
+                Player.Play(((AudioModel)((ListView)sender).SelectedItem));
+            }
+        }
+
+    
+           
+        
+
+        private void ErrorDialog_Accepted()
         {
             StartLoading();
-            ErrorGrid.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void ErrorDialog_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
 
         }
     }

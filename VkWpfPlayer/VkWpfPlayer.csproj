@@ -142,44 +142,52 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AlbumsPage.xaml.cs">
+    <Compile Include="EISDialog.xaml.cs">
+      <DependentUpon>EISDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\UserData.cs" />
+    <Compile Include="Pages\AlbumsPage.xaml.cs">
       <DependentUpon>AlbumsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CapchaHandler.cs" />
-    <Compile Include="CurrentPlaylistPage.xaml.cs">
+    <Compile Include="Pages\CurrentPlaylistPage.xaml.cs">
       <DependentUpon>CurrentPlaylistPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModels\AlbumModel.cs" />
     <Compile Include="DataModels\AudioModel.cs" />
     <Compile Include="DataModels\FriendModel.cs" />
-    <Compile Include="DurationConverter.cs" />
-    <Compile Include="HotKeyEventArgs.cs" />
-    <Compile Include="ListviewSizeConverter.cs" />
-    <Compile Include="MyAudios.xaml.cs">
+    <Compile Include="Converters\DurationConverter.cs" />
+    <Compile Include="Etc\HotKeyEventArgs.cs" />
+    <Compile Include="Converters\ListviewSizeConverter.cs" />
+    <Compile Include="Pages\MyAudios.xaml.cs">
       <DependentUpon>MyAudios.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Player.cs" />
-    <Compile Include="RepostPage.xaml.cs">
+    <Compile Include="Etc\Player.cs" />
+    <Compile Include="Pages\RepostPage.xaml.cs">
       <DependentUpon>RepostPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchPage.xaml.cs">
+    <Compile Include="Pages\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SettingsPage.xaml.cs">
+    <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="TeamplatesDictonary.xaml.cs">
       <DependentUpon>TeamplatesDictonary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ToolsAndSettings.cs" />
-    <Compile Include="VkLogin.xaml.cs">
+    <Compile Include="Etc\ToolsAndSettings.cs" />
+    <Compile Include="Pages\VkLogin.xaml.cs">
       <DependentUpon>VkLogin.xaml</DependentUpon>
     </Compile>
-    <Page Include="AlbumsPage.xaml">
+    <Page Include="EISDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CurrentPlaylistPage.xaml">
+    <Page Include="Pages\AlbumsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CurrentPlaylistPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,19 +203,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MyAudios.xaml">
+    <Page Include="Pages\MyAudios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RepostPage.xaml">
+    <Page Include="Pages\RepostPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchPage.xaml">
+    <Page Include="Pages\SearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SettingsPage.xaml">
+    <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -215,7 +223,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VkLogin.xaml">
+    <Page Include="Pages\VkLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

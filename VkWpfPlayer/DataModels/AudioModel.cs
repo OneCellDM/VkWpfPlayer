@@ -9,6 +9,7 @@ namespace VkWpfPlayer.DataModels
 {
     public class AudioModel
     {
+        
         private string image;
         public long Owner_ID { get; set; }
         public int DurationSeconds { get; set; }

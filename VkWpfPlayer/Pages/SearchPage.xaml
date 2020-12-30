@@ -1,0 +1,97 @@
+﻿<Page x:Class="VkWpfPlayer.Pages.SearchPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VkWpfPlayer"
+       xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SearchPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="78.4"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button  Style="{StaticResource ButtonStyleRect}" x:Name="SearchButton"  Grid.Column="1" Margin="0.4,0,3,0.4" Click="SearchButton_Click"  >
+            <Button.Content>
+                <TextBlock>
+                  
+                    <Run FontSize="12"  Text="&#xE721;" FontFamily="Segoe MDL2 Assets"></Run>
+                      <Run Text="Поиск "></Run>
+                </TextBlock>
+            </Button.Content>
+        </Button>
+        <TextBox  Style="{StaticResource TextBoxStyleRect}" x:Name="SearchTextBox" TextWrapping="Wrap" Margin="2,1,2.6,1.4" UndoLimit="200" RenderTransformOrigin="0.5,0.5">
+           
+        </TextBox>
+        <ListView 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  VirtualizingPanel.VirtualizationMode="Standard"  
+                  x:Name="AudioListView"  
+                  BorderBrush="{x:Null}" 
+                  Grid.ColumnSpan="2" Grid.Row="1" 
+                  VirtualizingPanel.ScrollUnit="Pixel"
+                  Margin="0,5,0,0" MouseLeftButtonUp="AudioListView_MouseLeftButtonUp"
+                
+                  ScrollViewer.ScrollChanged="AudioListView_ScrollChanged" Background="{x:Null}"
+                  
+                  >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid   Width= "{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView},Converter={StaticResource LSizeConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="gdfg"></MenuItem>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+
+                        <Border  BorderThickness="{DynamicResource VKImageBorderThickness}" BorderBrush="{DynamicResource VKImageBorderColor}" x:Name="Imыg" Width="50" Height="50" CornerRadius="{DynamicResource VKImageCornerRadius}">
+                            <Border.Background>
+                                <ImageBrush ImageSource=
+
+                               "{Binding AsyncImageProperty, IsAsync=True, Mode=OneWay,
+                                FallbackValue={StaticResource Musicico},
+                                TargetNullValue={StaticResource Musicico}}">
+                                </ImageBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <StackPanel  Grid.Column="1" HorizontalAlignment="Stretch"   Margin="10,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Title}" Foreground="{DynamicResource VKTextColor}" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding Artist}" Style="{DynamicResource AuthoTextblockStyle}" HorizontalAlignment="Left">
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <Button x:Name="AddAudioButton"  Style="{DynamicResource ButtonStyleRect}" Content="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="20" Width="30" Height="30" Click="AddAudioButton_Click" />
+
+                            <TextBlock  Margin="5,0,0,0" VerticalAlignment="Center"   HorizontalAlignment="Stretch" Text="{Binding DurationSeconds,Converter={StaticResource Dconverter} }" Foreground="{DynamicResource VKTextColor}"></TextBlock>
+                        </StackPanel>
+                    </Grid>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+
+
+        </ListView>
+        <StackPanel x:Name="SuccesLoadPanel" Background="#FF4A76A8" Margin="0,9.6,0,-0.4" Grid.ColumnSpan="2" Grid.Row="1" d:IsHidden="True" >
+            <Image x:Name="gifim"  gif:ImageBehavior.AutoStart="True" gif:ImageBehavior.AnimateInDesignMode="True" VerticalAlignment="Center" HorizontalAlignment="Center" gif:ImageBehavior.AnimatedSource="/Resources/Dual Ring-1.3s-200px.gif" Margin="0,100,0,0" Width="100" Height="100"  />
+        </StackPanel>
+
+        <local:EISDialog   Background="{DynamicResource VKBackGroundColor}"  AcceptButtonText="Повторить" CancelButtonVisible="Collapsed"  ContentDialogData="Произошла огшибка во время загрузки"  x:Name="ErrorDialog"  Accepted="ErrorDialog_Accepted"  />
+
+
+    </Grid>
+</Page>

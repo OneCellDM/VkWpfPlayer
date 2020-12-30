@@ -9,29 +9,15 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using VkNet.Enums.Filters;
+using VkWpfPlayer.DataModels;
 
-namespace VkWpfPlayer
+namespace VkWpfPlayer.Pages
 {
     /// <summary>
     /// Логика взаимодействия для VkLogin.xaml
     /// </summary>
 
-    public class UserData : INotifyPropertyChanged
-    {
-        public string Name { get; set; }
-        public long Id { get; set; }
-        public string Token { get; set; }
-        private string avatarurl;
-        public string AvatarUrl { get { return avatarurl; } set { avatarurl = value; OnPropertyChanged("AvatarUrl"); } }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
-
-    }
+   
     public partial class VkLogin : Page
     {
         private bool twoAuthorize = false;
@@ -278,7 +264,7 @@ namespace VkWpfPlayer
             });
             try
             {
-                api.OnTokenExpires += Api_OnTokenExpires;
+               
                 api.Account.GetInfo();
                 if (api.IsAuthorized)
                     ToolsAndsettings.VkApi = api;
@@ -296,11 +282,7 @@ namespace VkWpfPlayer
             }
         }
 
-        private void Api_OnTokenExpires(VkNet.VkApi sender)
-        {
-            Debug.WriteLine("TOKENEXP");
-        }
-
+        
         private void CancelLoginButton_Click(object sender, RoutedEventArgs e)
         {
             this.AuthErrorBorder.Visibility = Visibility.Collapsed;
@@ -327,47 +309,5 @@ namespace VkWpfPlayer
             }
 
         }
-
-
-
-        /*
-
-AuthWebView.Navigate(AuthUrl);
-Debug.WriteLine("Authoid");
-}
-
-[DllImport("urlmon.dll", CharSet = CharSet.Ansi)]
-private static extern int UrlMkSetSessionOption(int dwOption, string pBuffer, int dwBufferLength, int dwReserved);
-
-public static void SetAnotherUserAgent(string ua)
-{
-const int urlmonOptionUseragent = 0x10000001;
-const int urlmonOptionUseragentRefresh = 0x10000002;
-var UserAgent = ua;
-UrlMkSetSessionOption(urlmonOptionUseragentRefresh, null, 0, 0);
-UrlMkSetSessionOption(urlmonOptionUseragent, UserAgent, UserAgent.Length, 0);
-}
-
-private void AuthWebView_LoadCompleted(object sender, NavigationEventArgs e)
-{
-if (e.Uri.AbsoluteUri.Contains("#access_token"))
-{
-String token = e.Uri.AbsoluteUri.Split('=')[1].Split('&')[0];
-String ID = e.Uri.AbsoluteUri.Split('=')[3];
-
-var api = new VkNet.VkApi();
-var awaiter = api.AuthorizeAsync(new VkNet.Model.ApiAuthParams()
-{
-AccessToken = token,
-UserId = long.Parse(ID)
-}).GetAwaiter();
-
-awaiter.OnCompleted(() =>
-{
-ToolsAndsettings.VkApi = api;
-});
-}
-}
-*/
     }
 }
