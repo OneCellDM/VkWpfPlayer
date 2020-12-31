@@ -239,8 +239,6 @@
 
                 <Button Style="{StaticResource PlayerButtonStyle}"  x:Name="PreviewTrackButton"    Content="&#xE76B;"    Click="PreviewTrackButton_Click"/>
 
-                <Button Style="{StaticResource PlayerButtonStyle}"  x:Name="PauseTrackButton"      Content="&#xE769;"    Click="PauseTrackButton_Click" Visibility="Collapsed"/>
-
                 <Button Style="{StaticResource PlayerButtonStyle}"  x:Name="PlayPauseTrackButton"  Content="&#xE768;"    Click="PlayPauseTrackButton_Click"/>
 
                 <Button  Style="{StaticResource PlayerButtonStyle}" x:Name="NextTrackButton"       Content="&#xE76C;"    Click="NextTrackButton_Click"/>
@@ -268,14 +266,14 @@
                 <StackPanel Orientation="Horizontal" Margin="0,5,0.2,1.2" Grid.Column="2"   >
                     <Slider  x:Name="VolumeSlider" Style="{DynamicResource SliderStyle1}"     Maximum="1" ValueChanged="VolumeSlider_ValueChanged" Value="100"  Margin="0,7,0,7.2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"  />
 
-                    <Button  Foreground="{DynamicResource VkContolColor}" x:Name="RepeatButton" Content="&#xE8EE;" FontSize="20" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Left" Background="{x:Null}" Click="RepeatButton_Click" BorderBrush="{x:Null}" Margin="5,0,0,0.2" Height="31" VerticalAlignment="Bottom" />
+                    <Button  Foreground="{DynamicResource VkContolColor}" x:Name="RepeatButton" Content="&#xE8EE;" FontSize="20" FontFamily="./Resources/#Segoe MDL2 Assets" HorizontalAlignment="Left" Background="{x:Null}" Click="RepeatButton_Click" BorderBrush="{x:Null}" Margin="5,0,0,0.2" Height="31" VerticalAlignment="Bottom" />
 
                     <Button   x:Name="RepostAudio"  Background="{x:Null}" Click="RepostAudio_Click" BorderBrush="{x:Null}" Margin="5,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Height="30">
                         <Path  Data="M34.1,910.3c-4.6,0-4.6,0-9.1,0c-9.1-4.6-18.3-18.3-13.7-27.4c64-324.7,265.3-530.6,567.1-585.4V114.5c0-9.1,4.6-18.3,13.7-22.9s18.3,0,27.4,4.6l361.3,361.3c4.6,4.6,9.1,9.1,9.1,18.3c0,4.6-4.6,13.7-9.1,18.3L619.5,855.4c-9.1,9.1-18.3,9.1-27.4,4.6c-9.1-4.6-13.7-13.7-13.7-22.9V649.6C340.5,654.2,175.9,736.5,57,901.2C47.8,905.7,38.7,910.3,34.1,910.3z" 
                                Stretch="Fill" UseLayoutRounding="False" Width="28" Height="16" Fill="{DynamicResource VkContolColor}"/>
                     </Button>
-                    <Button Foreground="{DynamicResource VkContolColor}" x:Name="MiniMaxPlayerButton" FontFamily="Segoe MDL2 Assets"  Content="&#xE73F;" FontSize="20" Background="{x:Null}" Click="MiniMaxPlayerButton_Click" Margin="5,0,0,0" BorderBrush="{x:Null}"/>
-                    <Button  Foreground="{DynamicResource VkContolColor}" x:Name="SettingsButton" FontFamily="Segoe MDL2 Assets"  Content="&#xE713;" FontSize="20" Background="{x:Null}" Click="SettingsButton_Click" Margin="5,0,0,-0.2" VerticalAlignment="Center" HorizontalAlignment="Right" Height="29" BorderBrush="{x:Null}"/>
+                    <Button Foreground="{DynamicResource VkContolColor}" x:Name="MiniMaxPlayerButton" FontFamily="./Resources/#Segoe MDL2 Assets"  Content="&#xE73F;" FontSize="20" Background="{x:Null}" Click="MiniMaxPlayerButton_Click" Margin="5,0,0,0" BorderBrush="{x:Null}"/>
+                    <Button  Foreground="{DynamicResource VkContolColor}" x:Name="SettingsButton" FontFamily="./Resources/#Segoe MDL2 Assets"  Content="&#xE713;" FontSize="20" Background="{x:Null}" Click="SettingsButton_Click" Margin="5,0,0,-0.2" VerticalAlignment="Center" HorizontalAlignment="Right" Height="29" BorderBrush="{x:Null}"/>
                 
                     </StackPanel>
                 <TextBlock   x:Name="CurrentDurationTextBlock" Foreground="{DynamicResource VKTextColor}" Text="0:00" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0.2,13,6,5.2" HorizontalAlignment="Left" Height="17" RenderTransformOrigin="-1.86,0.729" Grid.Column="1"  />
@@ -288,7 +286,7 @@
         </Grid>
 
 
-        <TabControl Grid.Row="1" Background="{x:Null}" SelectionChanged="TabControl_SelectionChanged" BorderThickness="0">
+        <TabControl Grid.Row="1" Background="{x:Null}"  BorderThickness="0">
 
             <TabItem   x:Name="СurrentPlaylistTab" Header="Текущий плейлист"  IsSelected="True" Style="{DynamicResource TabItemStyle1}" Margin="1,0,1,0"   Width="140" MouseLeftButtonUp="СurrentPlaylistTab_MouseLeftButtonUp">
 

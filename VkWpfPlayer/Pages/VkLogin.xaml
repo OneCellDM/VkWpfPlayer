@@ -60,7 +60,7 @@
                                         <ColumnDefinition Width="30"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="5,0"> </TextBlock>
-                                <Button  Grid.Column="1" x:Name="DeleteAccountButton" Content="&#xE74D;" FontFamily="Segoe MDL2 Assets" FontSize="20" Click="DeleteAccountButton_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFDDDDDD">
+                                <Button  Grid.Column="1" x:Name="DeleteAccountButton" Content="&#xE74D;" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" Click="DeleteAccountButton_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFDDDDDD">
                                         <Button.Style>
                                             <Style TargetType="Button">
                                                 <Style.Triggers>

@@ -24,7 +24,7 @@
             <Button   x:Name="CloseButton"  Grid.Column="0"  Style="{StaticResource ButtonStyleRect}" Click="CloseButton_Click">
                 <Button.Content>
                     <TextBlock FontSize="14"  >
-                        <Run Text=" &#xE72B;" FontFamily="Segoe MDL2 Assets"/>
+                        <Run Text=" &#xE72B;" FontFamily="/Resources/#Segoe MDL2 Assets"/>
                         <Run Name="AlbumTitleText"/>
                         <Run Text="Закрыть "/>
                     </TextBlock>
@@ -33,7 +33,7 @@
             <Button Style="{ StaticResource ButtonStyleRect}" x:Name="SearchButton"  Grid.Column="2" Margin="0,0,3,0.4" Click="SearchButton_Click"   >
                 <Button.Content>
                     <TextBlock>
-                    <Run FontSize="12"  Text="&#xE721;" FontFamily="Segoe MDL2 Assets"></Run>
+                    <Run FontSize="12"  Text="&#xE721;" FontFamily="/Resources/#Segoe MDL2 Assets"></Run>
                       <Run Text="Поиск "></Run>
                     </TextBlock>
                 </Button.Content>

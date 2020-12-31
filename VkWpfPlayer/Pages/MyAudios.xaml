@@ -21,7 +21,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Button Style="{DynamicResource ButtonStyleRect}" x:Name="SearchButton"  VerticalAlignment="Top"  Grid.Column="1" Margin="0.4,0,3,0" Click="SearchButton_Click"   Height="29" >
-                <TextBlock><Run FontSize="12"  Text="&#xE721;" FontFamily="Segoe MDL2 Assets"/><Run Text=" "/><Run Text="Поиск "/></TextBlock>
+                <TextBlock><Run FontSize="12"  Text="&#xE721;" FontFamily="../Resources/#Segoe MDL2 Assets"/><Run Text=" "/><Run Text="Поиск "/></TextBlock>
 
             </Button>
 

@@ -22,7 +22,7 @@
             <Button.Content>
                 <TextBlock>
                   
-                    <Run FontSize="12"  Text="&#xE721;" FontFamily="Segoe MDL2 Assets"></Run>
+                    <Run FontSize="12"  Text="&#xE721;" FontFamily="/Resources/#Segoe MDL2 Assets"></Run>
                       <Run Text="Поиск "></Run>
                 </TextBlock>
             </Button.Content>
@@ -30,7 +30,7 @@
         <TextBox  Style="{StaticResource TextBoxStyleRect}" x:Name="SearchTextBox" TextWrapping="Wrap" Margin="2,1,2.6,1.4" UndoLimit="200" RenderTransformOrigin="0.5,0.5">
            
         </TextBox>
-        <ListView 
+        <ListView ItemTemplate="{DynamicResource AudioSeachListTeamplate}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   VirtualizingPanel.VirtualizationMode="Standard"  
                   x:Name="AudioListView"  
@@ -42,46 +42,7 @@
                   ScrollViewer.ScrollChanged="AudioListView_ScrollChanged" Background="{x:Null}"
                   
                   >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid   Width= "{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView},Converter={StaticResource LSizeConverter}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="gdfg"></MenuItem>
-                            </ContextMenu>
-                        </Grid.ContextMenu>
-
-                        <Border  BorderThickness="{DynamicResource VKImageBorderThickness}" BorderBrush="{DynamicResource VKImageBorderColor}" x:Name="Imыg" Width="50" Height="50" CornerRadius="{DynamicResource VKImageCornerRadius}">
-                            <Border.Background>
-                                <ImageBrush ImageSource=
-
-                               "{Binding AsyncImageProperty, IsAsync=True, Mode=OneWay,
-                                FallbackValue={StaticResource Musicico},
-                                TargetNullValue={StaticResource Musicico}}">
-                                </ImageBrush>
-                            </Border.Background>
-                        </Border>
-
-                        <StackPanel  Grid.Column="1" HorizontalAlignment="Stretch"   Margin="10,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding Title}" Foreground="{DynamicResource VKTextColor}" FontWeight="Bold"></TextBlock>
-                            <TextBlock Text="{Binding Artist}" Style="{DynamicResource AuthoTextblockStyle}" HorizontalAlignment="Left">
-                            </TextBlock>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="2" Orientation="Horizontal">
-                            <Button x:Name="AddAudioButton"  Style="{DynamicResource ButtonStyleRect}" Content="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="20" Width="30" Height="30" Click="AddAudioButton_Click" />
-
-                            <TextBlock  Margin="5,0,0,0" VerticalAlignment="Center"   HorizontalAlignment="Stretch" Text="{Binding DurationSeconds,Converter={StaticResource Dconverter} }" Foreground="{DynamicResource VKTextColor}"></TextBlock>
-                        </StackPanel>
-                    </Grid>
-
-                </DataTemplate>
-            </ListView.ItemTemplate>
+           
 
 
 

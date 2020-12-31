@@ -114,39 +114,7 @@ namespace VkWpfPlayer.Pages
             }
         }
 
-        private void AddAudioButton_Click(object sender, RoutedEventArgs e)
-        {
-            AudioModel audioModel = (AudioModel)((Button)sender).DataContext;
-
-           var Awaiter= ToolsAndsettings.VkApi.Audio.AddAsync(audioModel.ID, audioModel.Owner_ID,audioModel.AccessKey).GetAwaiter();
-            Awaiter.OnCompleted(() =>
-            {
-
-
-                if (Awaiter.GetResult() != 0)
-                {
-                   
-                   
-
-                    ((Button)sender).Content = System.Net.WebUtility.HtmlDecode("&#xE73E;");
-
-                    AudioAdd?.Invoke(new AudioModel()
-                    {
-                        AccessKey= audioModel.AccessKey,
-                        Artist=audioModel.Artist,
-                        AudioUrl=audioModel.AudioUrl,
-                        ImageUrl=audioModel.ImageUrl,
-                        Title=audioModel.Title,
-                        DurationSeconds=audioModel.DurationSeconds,
-                        Owner_ID = (long)ToolsAndsettings.VkApi.UserId,
-                        ID = Awaiter.GetResult(),
-                    });
-                    
-                }
-
-            });
-
-        }
+      
 
         private void ErrorDialog_Accepted()
         {
