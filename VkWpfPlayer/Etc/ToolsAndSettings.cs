@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog;
-
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using VkNet.Model;
 using VkNet.Model.Attachments;
 using VkNet.NLog.Extensions.Logging.Extensions;
@@ -13,8 +15,24 @@ namespace VkWpfPlayer
 {
     public static class ToolsAndsettings
     {
+        
+        static ToolsAndsettings()
+        {
+            
+            VKAudioDownloadPath = System.Environment.GetFolderPath( System.Environment.SpecialFolder.ApplicationData)+"\\VKM\\AUDIO";
+            if (!new DirectoryInfo(VKAudioDownloadPath).Exists)
+                new DirectoryInfo(VKAudioDownloadPath).Create();
+
+            CachePath =System.Environment.GetFolderPath( System.Environment.SpecialFolder.ApplicationData) + "\\VKM\\CACHE";
+
+            if (!new DirectoryInfo(CachePath).Exists)
+                new DirectoryInfo(CachePath).Create();
+        }
+        public static string VKAudioDownloadPath { get; set; }
+        public static string CachePath { get; set; }
         public static class DefaultSettings
         {
+            
             public static double ImageCornerRadios { get; private set; } = 10;
             public static double ButtonAndTextBoxCornerRadius { get; private set; } = 6;
 
@@ -109,25 +127,16 @@ namespace VkWpfPlayer
             if (ListClickHandlerCommonEvent != null)
                 ListClickHandlerCommonEvent.Invoke(models, SelectedIndex);
         }
-
-        public static void AddDataToObservationCollection(ObservableCollection<AudioModel> observableCollection, VkCollection<Audio> VkCollection)
+        public static void AddDataToObservationCollection(ObservableCollection<FriendModel> observableCollection, VkCollection<User> VkCollection)
         {
-            foreach (var audio in VkCollection)
+            foreach (var user in VkCollection)
             {
-                
-                var model = new AudioModel()
+                var model = new FriendModel()
                 {
-                    Artist = audio.Artist,
-                    ID = (long)audio.Id,
-                    DurationSeconds = audio.Duration,
-                    AccessKey = audio.AccessKey,
-                    Owner_ID = (long)audio.OwnerId,
-                    Title = audio.Title
+                    AvatarUrl = user.Photo50.AbsoluteUri,
+                    UserName = user.FirstName + " " + user.LastName,
+                    ID = user.Id,
                 };
-
-                if (audio.Album != null && audio.Album.Thumb != null && audio.Album.Thumb.Photo68 != null)
-                    model.ImageUrl = audio.Album.Thumb.Photo68;
-
                 observableCollection.Add(model);
             }
         }
@@ -164,23 +173,46 @@ namespace VkWpfPlayer
                 }
         }
 
-        public static void AddDataToObservationCollection(ObservableCollection<FriendModel> observableCollection, VkCollection<User> VkCollection)
+        
+
+        public static void AddDataToObservationCollection(ObservableCollection<AudioModel> observableCollection, VkCollection<Audio> VkCollection)
         {
-            foreach (var user in VkCollection)
-            {
-                var model = new FriendModel()
-                {
-                    AvatarUrl = user.Photo50.AbsoluteUri,
-                    UserName = user.FirstName + " " + user.LastName,
-                    ID = user.Id,
-                };
-                observableCollection.Add(model);
-            }
+            foreach (var audio in VkCollection)
+                AddDataToObservationCollection(observableCollection, audio);
+            
         }
-        public static void AddDataToObservationCollection(ObservableCollection<AudioModel> observableCollection, AudioModel audioModel)
+        public static void AddDataToObservationCollection(ObservableCollection<AudioModel> observableCollection, Audio VkAudio)
         {
+            var model = new AudioModel()
+            {
+                Artist = VkAudio.Artist,
+                ID = (long)VkAudio.Id,
+                DurationSeconds = VkAudio.Duration,
+                AccessKey = VkAudio.AccessKey,
+                Owner_ID = (long)VkAudio.OwnerId,
+                Title = VkAudio.Title
+            };
+
+            if (VkAudio.Album != null && VkAudio.Album.Thumb != null && VkAudio.Album.Thumb.Photo68 != null)
+                model.ImageUrl = VkAudio.Album.Thumb.Photo68;
+
+            AddDataToObservationCollection(observableCollection, model);
+
+        }
+
+        public static void AddDataToObservationCollection(ObservableCollection<AudioModel> observableCollection, AudioModel audioModel)=>
                 observableCollection.Add(audioModel);
             
+        
+        public static void AddDataToObservationCollection(ObservableCollection<AudioModel> observableCollection, IEnumerable<Audio> EnumerableCollections)
+        {
+            var iter = EnumerableCollections.GetEnumerator();
+
+            while (iter.MoveNext())
+            {
+                var iterValue = iter.Current;
+                AddDataToObservationCollection(observableCollection, iterValue);
+            }
         }
     }
 }

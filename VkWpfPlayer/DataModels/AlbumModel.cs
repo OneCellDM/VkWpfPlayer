@@ -25,7 +25,7 @@ namespace VkWpfPlayer.DataModels
                 }
             }
         }
-        String AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\VKM";
+        String AppData = ToolsAndsettings.CachePath;
         private string FilePath;
         public long OwnerID { get; set; }
         private String asyncImageProperty;

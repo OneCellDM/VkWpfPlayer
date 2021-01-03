@@ -254,7 +254,7 @@ namespace VkWpfPlayer.Pages
 
         private void AccountList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            VkNet.VkApi api = new VkNet.VkApi(ToolsAndsettings.loggingHandler.Services);
+            VkNet.VkApi api = new VkNet.VkApi();
             var item = (UserData)AccountList.SelectedItem;
             api.Authorize(new VkNet.Model.ApiAuthParams
             {

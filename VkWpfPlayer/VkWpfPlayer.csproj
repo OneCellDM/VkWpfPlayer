@@ -121,6 +121,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="VkNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\VkNet.1.58.0\lib\net461\VkNet.dll</HintPath>
     </Reference>
@@ -133,6 +134,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="WpfAnimatedGif, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9e7cd3b544a090dc, processorArchitecture=MSIL">
       <HintPath>..\packages\WpfAnimatedGif.2.0.0\lib\net40\WpfAnimatedGif.dll</HintPath>
     </Reference>
@@ -146,6 +148,9 @@
       <DependentUpon>EISDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModels\UserData.cs" />
+    <Compile Include="LoadingComponent.xaml.cs">
+      <DependentUpon>LoadingComponent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AlbumsPage.xaml.cs">
       <DependentUpon>AlbumsPage.xaml</DependentUpon>
     </Compile>
@@ -163,6 +168,12 @@
       <DependentUpon>MyAudios.xaml</DependentUpon>
     </Compile>
     <Compile Include="Etc\Player.cs" />
+    <Compile Include="Pages\PopularPage.xaml.cs">
+      <DependentUpon>PopularPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RecomendatePage.xaml.cs">
+      <DependentUpon>RecomendatePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\RepostPage.xaml.cs">
       <DependentUpon>RepostPage.xaml</DependentUpon>
     </Compile>
@@ -183,6 +194,10 @@
       <DependentUpon>VkLogin.xaml</DependentUpon>
     </Compile>
     <Page Include="EISDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -207,6 +222,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\MyAudios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PopularPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RecomendatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

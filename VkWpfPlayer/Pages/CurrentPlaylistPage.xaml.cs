@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using VkWpfPlayer.DataModels;
 
@@ -11,8 +12,25 @@ namespace VkWpfPlayer.Pages
     {
         private bool LoadingList = false;
         private int SelectedIndex = -1;
+        public bool Shuffling = false;
 
         public ObservableCollection<AudioModel> AudioCollection = new System.Collections.ObjectModel.ObservableCollection<AudioModel>();
+      
+        public void Shuffle()
+        {
+             Shuffling = true;
+             Random rand = new Random(DateTime.Now.Millisecond);
+            
+                for (int i = 0; i < AudioCollection.Count - 1; i++)
+                {
+                    int randa = rand.Next(AudioCollection.Count);
+                    int randb = rand.Next(AudioCollection.Count);
+                    var buf = AudioCollection[randa];
+                    AudioCollection[randa] = AudioCollection[randb];
+                    AudioCollection[randb] = buf;
+                }
+             Shuffling = false;   
+        }
 
         public CurrentPlaylistPage()
         {
@@ -28,7 +46,7 @@ namespace VkWpfPlayer.Pages
             NextAudio();
         });
 
-        public void PreviewAudio()
+        public void PreviousAudio()
         {
             if (AudioListView.SelectedIndex > 0)
                 AudioListView.SelectedIndex = AudioListView.SelectedIndex - 1;
@@ -67,10 +85,13 @@ namespace VkWpfPlayer.Pages
 
         private void AudioListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!LoadingList)
-                Player.Play(((AudioModel)e.AddedItems[e.AddedItems.Count - 1]));
+            if (!Shuffling)
+            {
+                if (!LoadingList)
+                    Player.Play(((AudioModel)e.AddedItems[e.AddedItems.Count - 1]));
 
-            SelectedIndex = AudioListView.SelectedIndex;
+                SelectedIndex = AudioListView.SelectedIndex;
+            }
         }
     }
 }

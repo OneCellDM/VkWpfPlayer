@@ -11,6 +11,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using VkWpfPlayer.DataModels;
 using VkWpfPlayer.Pages;
+using System.Windows.Forms;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
+using Button = System.Windows.Controls.Button;
 
 namespace VkWpfPlayer
 {
@@ -29,11 +32,17 @@ namespace VkWpfPlayer
         private SearchPage _searchPage;
         private CurrentPlaylistPage _currentPlaylistPage;
         private RepostPage _repostPage;
+        private RecomendatePage _recomendatePage;
+        private PopularPage _popularPage;
+
         private Converters.DurationConverter durationconverter = new Converters.DurationConverter();
 
         public MainWindow()
         {
             InitializeComponent();
+           
+
+            
             AuthFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
 
             String AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\VKM";
@@ -42,6 +51,7 @@ namespace VkWpfPlayer
 
             AuthFrame.Content = new VkLogin().Content;
             ToolsAndsettings.AuthorizedAcces += ToolsAndsettings_AuthorizedAcces;
+            
         }
 
         private void TeamplatesDictonary_AudioAddToPlaylist(AudioModel audioModel)
@@ -64,7 +74,6 @@ namespace VkWpfPlayer
 
         }
 
-        
         private void TeamplatesDictonary_AudioAdd(AudioModel audioModel, object sender)
         {
             var Awaiter = ToolsAndsettings.VkApi.Audio.AddAsync(audioModel.ID, audioModel.Owner_ID, audioModel.AccessKey).GetAwaiter();
@@ -115,6 +124,7 @@ namespace VkWpfPlayer
 
                             if (MyPlayliststab.IsSelected)
                                 _AlbumsPage.AudioCollection.Remove(audioModel);
+                            
                         }));
                     }
                 });
@@ -137,10 +147,12 @@ namespace VkWpfPlayer
             Player.UpdatePosition += Player_UpdatePosition;
             Player.updateAudioModel += Player_updateAudioModel;
 
-            _MyAudiosPage = new MyAudios();
-            _AlbumsPage = new AlbumsPage();
-            _searchPage = new SearchPage();
-            _repostPage = new RepostPage();
+            _recomendatePage     = new RecomendatePage();
+            _popularPage         = new PopularPage();
+            _MyAudiosPage        = new MyAudios();
+            _AlbumsPage          = new AlbumsPage();
+            _searchPage          = new SearchPage();
+            _repostPage          = new RepostPage();
             _currentPlaylistPage = new CurrentPlaylistPage();
             AuthFrame.Visibility = Visibility.Collapsed;
 
@@ -148,6 +160,8 @@ namespace VkWpfPlayer
             MyAudiosTab.Content = _MyAudiosPage.Content;
             MyPlayliststab.Content = _AlbumsPage.Content;
             SearchTab.Content = _searchPage.Content;
+            RecomendationTab.Content = _recomendatePage.Content;
+            PopularTab.Content = _popularPage.Content;
 
             TeamplatesDictonary.AudioAddToPlaylist += TeamplatesDictonary_AudioAddToPlaylist;
             TeamplatesDictonary.AudioAdd += TeamplatesDictonary_AudioAdd;
@@ -177,7 +191,8 @@ namespace VkWpfPlayer
                         var audiodataen = AudioAwaiter.GetResult().GetEnumerator();
                         audiodataen.MoveNext();
                         var audiodata = audiodataen.Current;
-                        webClient.DownloadFileAsync(new Uri(audiodata.Url.AbsoluteUri),audiodata.Artist+"-"+audiodata.Title+".mp3"); ;
+                        
+                        webClient.DownloadFileAsync(new Uri(audiodata.Url.AbsoluteUri), ToolsAndsettings.VKAudioDownloadPath+"\\"+audiodata.Artist+"-"+audiodata.Title+".mp3"); ;
                     }
 
                     catch (Exception ex)
@@ -237,9 +252,9 @@ namespace VkWpfPlayer
             }));
         }
 
-        private void PreviewTrackButton_Click(object sender, RoutedEventArgs e)
+        private void PreviousTrackButton_Click(object sender, RoutedEventArgs e)
         {
-            _currentPlaylistPage.PreviewAudio();
+            _currentPlaylistPage.PreviousAudio();
         }
 
         private void NextTrackButton_Click(object sender, RoutedEventArgs e)
@@ -327,6 +342,7 @@ namespace VkWpfPlayer
         {
             _currentPlaylistPage.ScrollingToActiveAudio();
         }
+       
 
         private void MinMax()
         {
@@ -405,7 +421,7 @@ namespace VkWpfPlayer
              }));
             hotKeyHost.AddHotKey(new CustomHotKey(Key.Left, ModifierKeys.Alt, delegate
             {
-                _currentPlaylistPage.PreviewAudio();
+                _currentPlaylistPage.PreviousAudio();
             }));
             hotKeyHost.AddHotKey(new CustomHotKey(Key.Up, ModifierKeys.Alt, delegate
             {
@@ -451,6 +467,16 @@ namespace VkWpfPlayer
             {
                 this.Top += 10;
             }));
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           
+        }
+
+        private void ShuffleButton_Click(object sender, RoutedEventArgs e)
+        {
+            _currentPlaylistPage.Shuffle();
         }
     }
 }
