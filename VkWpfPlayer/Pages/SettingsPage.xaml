@@ -13,10 +13,15 @@
             <StackPanel Margin="0,5,0,0"  VerticalAlignment="Center" HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Путь для скачивания аудиозаписей:"></Label>
-                    <TextBox x:Name="AudioDirectoryTextbox" TextChanged="AudioDirectoryTextbox_TextChanged" Width="180"></TextBox>
+                    <TextBox  TextChanged="AudioDirectoryTextbox_TextChanged"  x:Name="AudioDirectoryTextbox" Width="180">
+
+                       
+                    </TextBox>
                     <Button x:Name="AudioSelectPath" Margin="5,0,0,0" Click="AudioSelectPath_Click" > Выбрать путь </Button>
                 </StackPanel>
-                <Label x:Name="PathValideInfoLabel"></Label>
+              
+               
+               
                 <StackPanel>
                     <Label   Content="Радиус края:"></Label>
                     <Border BorderBrush="{DynamicResource VKImageBorderColor}" BorderThickness="{DynamicResource VKImageBorderThickness}" HorizontalAlignment="Center"   Width="120" Height="120"  CornerRadius="{DynamicResource VKImageCornerRadius}" Margin="10,20,0,0">
@@ -51,7 +56,9 @@
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Label  Content="Цвет текста:" Width="200"></Label>
-                        <TextBox x:Name="TextColoTextbox" Width="100" TextChanged="TextColoTextbox_TextChanged" ></TextBox>
+                        <TextBox   x:Name="TextColoTextbox" Width="100" TextChanged="TextColoTextbox_TextChanged" >
+                            
+                        </TextBox>
                         <Button x:Name="SelectTextColorButton" Click="SelectTextColorButton_Click" >Выбрать</Button>
                     </StackPanel>
 

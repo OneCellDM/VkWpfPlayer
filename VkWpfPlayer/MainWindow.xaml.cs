@@ -192,7 +192,7 @@ namespace VkWpfPlayer
                         audiodataen.MoveNext();
                         var audiodata = audiodataen.Current;
                         
-                        webClient.DownloadFileAsync(new Uri(audiodata.Url.AbsoluteUri), ToolsAndsettings.VKAudioDownloadPath+"\\"+audiodata.Artist+"-"+audiodata.Title+".mp3"); ;
+                        webClient.DownloadFileAsync(new Uri(audiodata.Url.AbsoluteUri), ToolsAndsettings.CurrentSettings. VKAudioDownloadPath+"\\"+audiodata.Artist+"-"+audiodata.Title+".mp3"); ;
                     }
 
                     catch (Exception ex)
@@ -385,21 +385,14 @@ namespace VkWpfPlayer
             try
             {
                 SettingsPage settingsPage = new SettingsPage();
-                settingsPage.WindowStyle = WindowStyle.ToolWindow;
+
+                settingsPage.WindowStyle = WindowStyle.SingleBorderWindow;
 
                 settingsPage.ShowDialog();
 
-                ToolsAndsettings.CurrentSettings.ImageCornerRadios = settingsPage.RoundImageSlider.Value;
-                ToolsAndsettings.CurrentSettings.ButtonAndTextBoxCornerRadius = settingsPage.ButtonRoundRadiusSlider.Value;
-                ToolsAndsettings.CurrentSettings.ImageBorderThickness = settingsPage.BorderThicknessSlider.Value;
-                ToolsAndsettings.CurrentSettings.TextColor = settingsPage.GetTextFromTextbox(settingsPage.TextColoTextbox);
-                ToolsAndsettings.CurrentSettings.ControlColor = settingsPage.GetTextFromTextbox(settingsPage.ControlColorTextbox);
-                ToolsAndsettings.CurrentSettings.ButtonColor = settingsPage.GetTextFromTextbox(settingsPage.TextBoxAndButtonColorTextbox);
-                ToolsAndsettings.CurrentSettings.ImageBorderColor = settingsPage.GetTextFromTextbox(settingsPage.ImageBorderColorTextBox);
-                ToolsAndsettings.CurrentSettings.BackGroundColor = settingsPage.GetTextFromTextbox(settingsPage.BackGroundTextBox);
-                ToolsAndsettings.CurrentSettings.SliderColor = settingsPage.GetTextFromTextbox(settingsPage.SliderColorsTextBox);
-                ToolsAndsettings.CurrentSettings.TextBoxColor = settingsPage.GetTextFromTextbox(settingsPage.TextBoxAndButtonColorTextbox);
-                ToolsAndsettings.CurrentSettings.PlayerButtonTextColor = settingsPage.GetTextFromTextbox(settingsPage.PlayerButtonTextColorTextBox);
+               
+
+                ToolsAndsettings.SaveSettings();
             }
             catch (Exception ex)
             {

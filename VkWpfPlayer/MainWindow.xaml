@@ -7,7 +7,7 @@
 
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
-        Title="VKompakt Musik (VKM)"  MinHeight="100" MinWidth="600" Height="450"  Width="857.333" SizeChanged="Window_SizeChanged" Background="{DynamicResource VKBackGroundColor}" Loaded="Window_Loaded">
+        Title="VKompakt Musik (VKM)"  MinHeight="100"  Height="450"  Width="900" SizeChanged="Window_SizeChanged" Background="{DynamicResource VKBackGroundColor}" Loaded="Window_Loaded">
 
     <Window.Resources>
 
@@ -259,7 +259,7 @@
                 <TextBlock x:Name="AudioPlayerArtist" Foreground="{DynamicResource VKTextColor}" Text="артист" Margin="3,18,1.8,1.2" LineStackingStrategy="BlockLineHeight" TextTrimming="CharacterEllipsis" />
                 <Slider Style="{StaticResource SliderStyle1}"  x:Name= "PlayerSlider" Maximum="100" Minimum="1" IsSelectionRangeEnabled="True" ValueChanged="PlayerSlider_ValueChanged_1" LostMouseCapture="PlayerSlider_LostMouseCapture" Margin="0,35,0.4,5" Grid.ColumnSpan="2" Grid.RowSpan="2" />
                 <StackPanel Orientation="Horizontal" Margin="0,5,0.2,1.2" Grid.Column="2">
-                    <Slider  x:Name="VolumeSlider" Style="{DynamicResource SliderStyle1}"     Maximum="1" ValueChanged="VolumeSlider_ValueChanged" Value="100"  Margin="0,7,0,7.2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" />
+                    <Slider  x:Name="VolumeSlider" Style="{DynamicResource SliderStyle1}"     Maximum="1" ValueChanged="VolumeSlider_ValueChanged" Value="1"   HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"    />
                     <Button  Foreground="{DynamicResource VkContolColor}" x:Name="ShuffleButton" Content="&#xE8B1;" FontSize="20" FontFamily="./Resources/#Segoe MDL2 Assets" HorizontalAlignment="Left" Background="{x:Null}" Click="ShuffleButton_Click" BorderBrush="{x:Null}" Margin="5,0,0,0.2" Height="31" VerticalAlignment="Bottom" />
                     <Button  Foreground="{DynamicResource VkContolColor}" x:Name="RepeatButton" Content="&#xE8EE;" FontSize="20" FontFamily="./Resources/#Segoe MDL2 Assets" HorizontalAlignment="Left" Background="{x:Null}" Click="RepeatButton_Click" BorderBrush="{x:Null}" Margin="5,0,0,0.2" Height="31" VerticalAlignment="Bottom" />
 

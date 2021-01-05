@@ -35,6 +35,7 @@ namespace VkWpfPlayer.Pages
                 var awaiterData = ToolsAndsettings.VkApi.Friends.GetAsync(new VkNet.Model.RequestParams.FriendsGetParams()
                 {
                     Fields = VkNet.Enums.Filters.ProfileFields.Photo50,
+                    
                 }).GetAwaiter();
                 awaiterData.OnCompleted(() =>
                 {

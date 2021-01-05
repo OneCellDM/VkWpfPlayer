@@ -1,10 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using NLog;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using System.Windows.Media;
 using VkNet.Model;
 using VkNet.Model.Attachments;
 using VkNet.NLog.Extensions.Logging.Extensions;
@@ -13,23 +18,26 @@ using VkWpfPlayer.DataModels;
 
 namespace VkWpfPlayer
 {
+   
     public static class ToolsAndsettings
     {
         
+
         static ToolsAndsettings()
         {
             
-            VKAudioDownloadPath = System.Environment.GetFolderPath( System.Environment.SpecialFolder.ApplicationData)+"\\VKM\\AUDIO";
-            if (!new DirectoryInfo(VKAudioDownloadPath).Exists)
-                new DirectoryInfo(VKAudioDownloadPath).Create();
+            CurrentSettings.VKAudioDownloadPath = System.Environment.GetFolderPath( System.Environment.SpecialFolder.ApplicationData)+"\\VKM\\AUDIO";
+            if (!new DirectoryInfo(CurrentSettings.VKAudioDownloadPath).Exists)
+                new DirectoryInfo(CurrentSettings.VKAudioDownloadPath).Create();
 
-            CachePath =System.Environment.GetFolderPath( System.Environment.SpecialFolder.ApplicationData) + "\\VKM\\CACHE";
+            CurrentSettings. CachePath =System.Environment.GetFolderPath( System.Environment.SpecialFolder.ApplicationData) + "\\VKM\\CACHE";
 
-            if (!new DirectoryInfo(CachePath).Exists)
-                new DirectoryInfo(CachePath).Create();
+            if (!new DirectoryInfo(CurrentSettings.CachePath).Exists)
+                new DirectoryInfo(CurrentSettings.CachePath).Create();
+
+            LoadSettings();
         }
-        public static string VKAudioDownloadPath { get; set; }
-        public static string CachePath { get; set; }
+     
         public static class DefaultSettings
         {
             
@@ -49,9 +57,92 @@ namespace VkWpfPlayer
             public static int ImageBorderThickness { get; private set; } = 0;
             public static int ButtonAndTextBoxBorderThickness { get; private set; } = 2;
         }
+        public static void SaveSettings()
+        {
+            var fields = typeof(CurrentSettings).GetProperties(BindingFlags.Static | BindingFlags.Public);
+                object[,] a = new object[fields.Length, 2];
+                int i = 0;
+                foreach (PropertyInfo field in fields)
+                {
+                    a[i, 0] = field.Name;
+                    a[i, 1] = field.GetValue(null);
+                    i++;
+                };
+                Stream f = File.Open("settings.json", FileMode.Create);
+            var s = new StreamWriter(f);
+            s.Write(JsonConvert.SerializeObject(a));
+            s.Close();    
+        }
+
+        public static void LoadSettings()
+        {
+            if (new FileInfo("settings.json").Exists)
+            {
+                var fields = typeof(CurrentSettings).GetProperties(BindingFlags.Static | BindingFlags.Public);
+                object[,] a;
+                Stream f = File.Open("settings.json", FileMode.Open);
+
+                var rd = new StreamReader(f);
+
+                a = JsonConvert.DeserializeObject<object[,]>(rd.ReadToEnd()) as object[,];
+
+                rd.Close();
+                f.Close();
+
+                int i = 0;
+                foreach (var field in fields)
+                {
+                    if (field.Name == (a[i, 0] as string))
+                    {
+                        field.SetValue(null, a[i, 1]);
+                    }
+                    i++;
+                };
+                CurrentSettings.SetCornerRadius("VKImageCornerRadius", (int)CurrentSettings.ImageCornerRadios);
+                CurrentSettings.SetColor("VKTextColor", ToolsAndsettings.CurrentSettings.TextColor);
+                CurrentSettings.SetColor("VKBackGroundColor", CurrentSettings.BackGroundColor);
+                CurrentSettings.SetCornerRadius("VKButtonAndTextBoxCornerRadius",(int) CurrentSettings.ButtonAndTextBoxCornerRadius);
+                CurrentSettings.SetColor("VkMouseOverColor", CurrentSettings.MouseOverColor);
+                CurrentSettings.SetColor("VkButtonColor", CurrentSettings.TextBoxColor);
+                CurrentSettings.SetColor("VkTextBoxColor", CurrentSettings.TextBoxColor);
+                CurrentSettings.SetColor("VkContolColor", CurrentSettings.ControlColor);
+                CurrentSettings.SetColor("VkSliderColor", CurrentSettings.SliderColor);
+                CurrentSettings.SetBorderThickness("VKImageBorderThicknes",(int)CurrentSettings.ImageBorderThickness);
+                CurrentSettings.SetColor("VKPlayerButtonTextColor", CurrentSettings.PlayerButtonTextColor);
+                
+                    }
+        }
+        
 
         public static class CurrentSettings
         {
+
+            public static string VKAudioDownloadPath { get; set; }
+            public static string CachePath { get; set; }
+
+            private  static BrushConverter brushConverter = new BrushConverter();
+            public static void SetColor(String resourceName, String colorName) =>
+                    System.Windows.Application.Current.Resources[resourceName] = brushConverter.ConvertFromString(colorName);
+            public static void SetCornerRadius(String resourceName, int value) =>
+                System.Windows.Application.Current.Resources[resourceName] = new System.Windows.CornerRadius(value);
+
+            public static String GetTextFromTextbox(object textBox) =>
+                ((System.Windows.Controls.TextBox)textBox).Text.ToUpper().Trim();
+
+            public static void SetBorderThickness(String resourceName, int value) =>
+                 System.Windows.Application.Current.Resources[resourceName] = new System.Windows.Thickness(value);
+            private static bool ValidateColor(String Name)
+            {
+                try
+                {
+                    brushConverter.ConvertFromString(Name);
+                    return true;
+
+                }
+                catch (Exception ex) { return false; }
+
+            }
+
             public static double ImageCornerRadios { get; set; } = DefaultSettings.ImageCornerRadios;
             public static double ButtonAndTextBoxCornerRadius { get; set; } = DefaultSettings.ButtonAndTextBoxCornerRadius;
 

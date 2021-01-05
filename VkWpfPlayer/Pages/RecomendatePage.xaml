@@ -14,13 +14,13 @@
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ListView BorderThickness="0" BorderBrush="{x:Null}" Grid.Row="1" x:Name="AudioListview" MouseLeftButtonUp="AudioListview_MouseLeftButtonUp"  ItemTemplate="{DynamicResource AudioSeachListTeamplate}" Margin="0,0,0,-0.4" Grid.RowSpan="2" />
+        <ListView BorderThickness="0" BorderBrush="{x:Null}" Grid.Row="1" x:Name="AudioListview" MouseLeftButtonUp="AudioListview_MouseLeftButtonUp"  ItemTemplate="{DynamicResource AudioSeachListTeamplate}" Margin="0,0,0,-0.4" Grid.RowSpan="2" Background="{x:Null}" />
         <Button  Click="UpdateData_Click"  x:Name="UpdateData" Style="{DynamicResource ButtonStyleRect}" HorizontalAlignment="Left" Margin="9,3,0,0" Grid.Column="0" VerticalAlignment="Top"  >
             <Button.Content>
-                <TextBlock>
+                <TextBlock Margin="0,4,0,0">
                     <Run Text=" "></Run>
-                    <Run Text="&#xE72C;"  FontSize="18" FontFamily="/Resources/#Segoe MDL2 Assets"> </Run>
-                    <Run Text="Обновить " FontSize="18"> </Run>
+                    <Run Text="&#xE72C;"   FontSize="14" FontFamily="/Resources/#Segoe MDL2 Assets"> </Run>
+                    <Run Text="Обновить " FontSize="14"> </Run>
                 </TextBlock>
             </Button.Content>
         </Button>

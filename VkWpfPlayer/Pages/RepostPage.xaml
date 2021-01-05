@@ -7,9 +7,9 @@
        xmlns:gif="http://wpfanimatedgif.codeplex.com"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="RepostPage" Background="{DynamicResource VKBackGroundColor}">
+      Title="RepostPage" >
 
-    <Grid>
+    <Grid Background="{DynamicResource VKBackGroundColor}">
 
         <Grid HorizontalAlignment="Center"  >
             <Grid.ColumnDefinitions>
@@ -57,7 +57,7 @@
                                     <ImageBrush ImageSource="{Binding AvatarUrl}"></ImageBrush>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" Foreground="{DynamicResource VKTextColor}" FontWeight="Bold" Margin="5"></TextBlock>
+                            <TextBlock Foreground="{DynamicResource VKTextColor}" VerticalAlignment="Center" Text="{Binding UserName}"  FontWeight="Bold" Margin="5"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

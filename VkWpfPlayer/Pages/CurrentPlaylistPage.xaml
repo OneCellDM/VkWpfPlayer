@@ -10,7 +10,7 @@
 
     <Grid>
         <ListView    ItemTemplate="{DynamicResource ResourceKey=CurrentAudioPlaylist}" 
-                  VirtualizingPanel.VirtualizationMode="Recycling" 
+                  
                     VirtualizingPanel.ScrollUnit="Pixel"
                   x:Name="AudioListView" Margin="0,0,0,-0.4" Background="{x:Null}" BorderBrush="{x:Null}" SelectionChanged="AudioListView_SelectionChanged"/>
 

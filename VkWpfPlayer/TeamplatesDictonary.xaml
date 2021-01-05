@@ -13,6 +13,22 @@
     <ItemsPanelTemplate x:Key="WrapPanelTeamplate">
         <WrapPanel Orientation="Horizontal" />
     </ItemsPanelTemplate>
+    
+    <ControlTemplate x:Key="validationFailed">
+        
+    </ControlTemplate>
+    
+    <Style x:Name="ValidateError" TargetType="TextBox">
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self},
+                    Path=(Validation.Errors)[0].ErrorContent}" />
+                <Setter Property="Foreground" Value="Red" />
+                <Setter Property="BorderBrush" Value="Red"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
 
     <CornerRadius x:Key="VKImageCornerRadius" BottomLeft="10" TopLeft="10" BottomRight="10" TopRight="10"/>
@@ -106,7 +122,7 @@
     <ControlTemplate x:Key="SliderThumbHorizontalDefault" TargetType="{x:Type Thumb}">
         <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
 
-            <Ellipse x:Name="grip" Width="10" Height="10" Fill="{DynamicResource VkContolColor}" >
+            <Ellipse x:Name="grip" Width="10" Height="10"  Fill="{DynamicResource VkContolColor}" >
                 
             </Ellipse>
         </Grid>
@@ -137,7 +153,7 @@
                 <TickBar x:Name="BottomTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed"/>
                 <Border CornerRadius="2" x:Name="TrackBackground" BorderBrush="{StaticResource SliderThumb.Track.Border}" BorderThickness="0" Background="{DynamicResource VkSliderColor}" Height="5.5" Margin="5,0" Grid.Row="1" VerticalAlignment="center">
                     <Canvas Margin="-6,0.5">
-                        <Rectangle RadiusX="2" RadiusY="2"  x:Name="PART_SelectionRange" Fill="{DynamicResource VkContolColor}" Height="4.2" Visibility="Hidden"/>
+                        <Rectangle RadiusX="2" RadiusY="2"  x:Name="PART_SelectionRange" Fill="{DynamicResource VkContolColor}" Height="4.3" Visibility="Hidden"/>
                     </Canvas>
                 </Border>
                 <Track x:Name="PART_Track" Grid.Row="1">
@@ -397,7 +413,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition Width="60"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Border  BorderThickness="{DynamicResource VKImageBorderThickness}" BorderBrush="{DynamicResource VKImageBorderColor}" x:Name="Imыg" Width="50" Height="50" CornerRadius="{DynamicResource VKImageCornerRadius}">
@@ -421,7 +437,7 @@
 
 
             <StackPanel  Grid.Column="2" Orientation="Horizontal">
-                <Button Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DownloadButton"  Opacity="0"  Content="&#xE896;" Click="DownloadButton_Click" ></Button>
+                <Button Foreground="{DynamicResource VkContolColor}" Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DownloadButton"  Opacity="0"  Content="&#xE896;" Click="DownloadButton_Click" ></Button>
                 <TextBlock    VerticalAlignment="Center"   HorizontalAlignment="Right" Text="{Binding DurationSeconds,Converter={StaticResource Dconverter} }" Foreground="{DynamicResource VKTextColor}">
 
                 </TextBlock>
@@ -463,7 +479,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="90"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Border  BorderThickness="{DynamicResource VKImageBorderThickness}" BorderBrush="{DynamicResource VKImageBorderColor}" x:Name="Imыg" Width="50" Height="50" CornerRadius="{DynamicResource VKImageCornerRadius}">
@@ -487,9 +503,9 @@
 
 
             <StackPanel  Grid.Column="2" Orientation="Horizontal">
-                <Button Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DownloadButton"  Opacity="0"  Content="&#xE896;" Click="DownloadButton_Click" ></Button>
-                <Button Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="AddToplaylistButton"  Opacity="0"  Content="&#xE93C;" Click="AddToplaylistButton_Click" ></Button>
-                <Button Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DeleteButton"  Opacity="0"  Content="&#xE894;" Click="DeleteButton_Click" ></Button>
+                <Button Background="{x:Null}" Foreground="{DynamicResource VkContolColor}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DownloadButton"  Opacity="0"  Content="&#xE896;" Click="DownloadButton_Click" ></Button>
+                <Button Background="{x:Null}" Foreground="{DynamicResource VkContolColor}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="AddToplaylistButton"  Opacity="0"  Content="&#xE93C;" Click="AddToplaylistButton_Click" ></Button>
+                <Button Background="{x:Null}"  Foreground="{DynamicResource VkContolColor}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DeleteButton"  Opacity="0"  Content="&#xE894;" Click="DeleteButton_Click" ></Button>
                 <TextBlock   Margin="5,0,0,0"  VerticalAlignment="Center"   HorizontalAlignment="Stretch" Text="{Binding DurationSeconds,Converter={StaticResource Dconverter} }" Foreground="{DynamicResource VKTextColor}">
 
                 </TextBlock>
@@ -551,7 +567,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="90"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
             </Grid.ColumnDefinitions>
           
 
@@ -573,10 +589,10 @@
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DownloadButton"  Opacity="0"  Content="&#xE896;" Click="DownloadButton_Click" ></Button>
-                <Button Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="AddToplaylistButton"  Opacity="0"  Content="&#xE93C;" Click="AddToplaylistButton_Click" ></Button>
-            
-                <Button x:Name="AddAudioButton" Opacity="0" Background="{x:Null}" BorderThickness="0" Content="&#xE710;" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" Width="30" Height="30" Click="AddAudioButton_Click" />
+                <Button Foreground="{DynamicResource VkContolColor}" Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DownloadButton"  Opacity="0"  Content="&#xE896;" Click="DownloadButton_Click" ></Button>
+                <Button Foreground="{DynamicResource VkContolColor}" Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="AddToplaylistButton"  Opacity="0"  Content="&#xE93C;" Click="AddToplaylistButton_Click" ></Button>
+
+                <Button Foreground="{DynamicResource VkContolColor}" x:Name="AddAudioButton" Opacity="0" Background="{x:Null}" BorderThickness="0" Content="&#xE710;" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" Width="30" Height="30" Click="AddAudioButton_Click" />
 
                 <TextBlock  Margin="5,0,0,0" VerticalAlignment="Center"    HorizontalAlignment="Stretch" Text="{Binding DurationSeconds,Converter={StaticResource Dconverter} }" Foreground="{DynamicResource VKTextColor}"></TextBlock>
             </StackPanel>

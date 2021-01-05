@@ -1,5 +1,6 @@
 ﻿using ManagedBass;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,10 +41,10 @@ namespace VkWpfPlayer
             timer.Interval = 1000;
             timer.Elapsed += Timer_Elapsed;
             ToolsAndsettings.loggingHandler.Log.Info("Инициализация Bass");
+            Bass.Configure(Configuration.IncludeDefaultDevice, 1);
+            Bass.Init();
 
-            if (Bass.Init())
-                ToolsAndsettings.loggingHandler.Log.Info("Успешно");
-            else ToolsAndsettings.loggingHandler.Log.Info("Ошибка инициализации");
+          
 
 
         }
@@ -119,10 +120,9 @@ namespace VkWpfPlayer
                 ToolsAndsettings.loggingHandler.Log.Error(Bass.LastError);
 
         }
-        static void SetFromUrl(String url)
-        {
-            _stream = Bass.CreateStream(url, 0, BassFlags.StreamStatus | BassFlags.AutoFree | BassFlags.Prescan | BassFlags.Unicode, null, IntPtr.Zero);
-        }
+        static void SetFromUrl(String url)=>
+            _stream = Bass.CreateStream(url, 0,  BassFlags.StreamStatus | BassFlags.AutoFree | BassFlags.Prescan | BassFlags.Unicode, null, IntPtr.Zero);
+        
         public static async void Play(AudioModel audioModel, bool repeat = false)
         {
 
@@ -163,7 +163,7 @@ namespace VkWpfPlayer
         {
 
 
-
+            
             if (PlayThread != null && PlayThread.IsAlive)
                 PlayThread.Abort();
 
