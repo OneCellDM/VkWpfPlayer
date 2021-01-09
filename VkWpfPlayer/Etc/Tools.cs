@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Media;
 using VkNet.Model;
 using VkNet.Model.Attachments;
@@ -18,26 +19,55 @@ using VkWpfPlayer.DataModels;
 
 namespace VkWpfPlayer
 {
-   
-    public static class ToolsAndsettings
-    {
-        
 
-        static ToolsAndsettings()
+    public static class Tools
+    {
+
+
+        static Tools()
         {
-            
-            CurrentSettings.VKAudioDownloadPath = System.Environment.GetFolderPath( System.Environment.SpecialFolder.ApplicationData)+"\\VKM\\AUDIO";
+
+            CurrentSettings.VKAudioDownloadPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + "\\VKM\\AUDIO";
             if (!new DirectoryInfo(CurrentSettings.VKAudioDownloadPath).Exists)
                 new DirectoryInfo(CurrentSettings.VKAudioDownloadPath).Create();
 
-            CurrentSettings. CachePath =System.Environment.GetFolderPath( System.Environment.SpecialFolder.ApplicationData) + "\\VKM\\CACHE";
+            CurrentSettings.CachePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + "\\VKM\\CACHE";
 
             if (!new DirectoryInfo(CurrentSettings.CachePath).Exists)
                 new DirectoryInfo(CurrentSettings.CachePath).Create();
 
             LoadSettings();
         }
-     
+        public static void SelectedAudioPlay(this System.Windows.Controls.ListView listView)
+        {
+            if (listView.SelectedItems.Count > 0)
+            {
+                SendListClickEvent((ObservableCollection<AudioModel>)listView.ItemsSource, listView.SelectedIndex);
+                Player.Play(((AudioModel)(listView).SelectedItem));
+            }
+        }
+        public static class UI
+        {
+         
+            public static void HideElements(params FrameworkElement[] hideElement)
+            {
+
+                foreach (var element in hideElement)
+                    element.Visibility = Visibility.Collapsed;
+                
+            }
+           
+            public static void ShowElements(params FrameworkElement[] showElement)
+            {
+                foreach(var element in showElement)
+                    element.Visibility = Visibility.Visible;
+                
+                
+            }
+
+
+        }
+
         public static class DefaultSettings
         {
             
@@ -76,7 +106,8 @@ namespace VkWpfPlayer
 
         public static void LoadSettings()
         {
-            if (new FileInfo("settings.json").Exists)
+           
+            if (File.Exists("settings.json"))
             {
                 var fields = typeof(CurrentSettings).GetProperties(BindingFlags.Static | BindingFlags.Public);
                 object[,] a;
@@ -92,6 +123,7 @@ namespace VkWpfPlayer
                 int i = 0;
                 foreach (var field in fields)
                 {
+                       
                     if (field.Name == (a[i, 0] as string))
                     {
                         field.SetValue(null, a[i, 1]);
@@ -99,7 +131,7 @@ namespace VkWpfPlayer
                     i++;
                 };
                 CurrentSettings.SetCornerRadius("VKImageCornerRadius", (int)CurrentSettings.ImageCornerRadios);
-                CurrentSettings.SetColor("VKTextColor", ToolsAndsettings.CurrentSettings.TextColor);
+                CurrentSettings.SetColor("VKTextColor", Tools.CurrentSettings.TextColor);
                 CurrentSettings.SetColor("VKBackGroundColor", CurrentSettings.BackGroundColor);
                 CurrentSettings.SetCornerRadius("VKButtonAndTextBoxCornerRadius",(int) CurrentSettings.ButtonAndTextBoxCornerRadius);
                 CurrentSettings.SetColor("VkMouseOverColor", CurrentSettings.MouseOverColor);
@@ -109,14 +141,23 @@ namespace VkWpfPlayer
                 CurrentSettings.SetColor("VkSliderColor", CurrentSettings.SliderColor);
                 CurrentSettings.SetBorderThickness("VKImageBorderThicknes",(int)CurrentSettings.ImageBorderThickness);
                 CurrentSettings.SetColor("VKPlayerButtonTextColor", CurrentSettings.PlayerButtonTextColor);
-                
-                    }
+                   
+             
+            }
         }
         
 
         public static class CurrentSettings
         {
+            public delegate void UpdateBackground();
+            public static event UpdateBackground BackGroundChanged;
 
+
+
+
+            public static double BackGroundOpacity { get; set; } = 1;
+            public static bool IsBackgroundImage { get; set; }
+            public static string BackGroundImage { get; set; }
             public static string VKAudioDownloadPath { get; set; }
             public static string CachePath { get; set; }
 
@@ -131,10 +172,15 @@ namespace VkWpfPlayer
 
             public static void SetBorderThickness(String resourceName, int value) =>
                  System.Windows.Application.Current.Resources[resourceName] = new System.Windows.Thickness(value);
+           public static void BackGroundInvoke()
+            {
+                BackGroundChanged?.Invoke();
+            }
             private static bool ValidateColor(String Name)
             {
                 try
                 {
+                    
                     brushConverter.ConvertFromString(Name);
                     return true;
 
@@ -263,9 +309,6 @@ namespace VkWpfPlayer
                     });
                 }
         }
-
-        
-
         public static void AddDataToObservationCollection(ObservableCollection<AudioModel> observableCollection, VkCollection<Audio> VkCollection)
         {
             foreach (var audio in VkCollection)

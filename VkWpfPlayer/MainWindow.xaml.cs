@@ -14,6 +14,7 @@ using VkWpfPlayer.Pages;
 using System.Windows.Forms;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Button = System.Windows.Controls.Button;
+using System.Windows.Media;
 
 namespace VkWpfPlayer
 {
@@ -37,8 +38,16 @@ namespace VkWpfPlayer
 
         private Converters.DurationConverter durationconverter = new Converters.DurationConverter();
 
+        public  void SendMessageToMamory()
+        {
+           
+        }
         public MainWindow()
         {
+
+
+
+
             InitializeComponent();
            
 
@@ -50,8 +59,33 @@ namespace VkWpfPlayer
                 new System.IO.DirectoryInfo(AppData).Create();
 
             AuthFrame.Content = new VkLogin().Content;
-            ToolsAndsettings.AuthorizedAcces += ToolsAndsettings_AuthorizedAcces;
-            
+            Tools.AuthorizedAcces += ToolsAndsettings_AuthorizedAcces;
+            Tools.CurrentSettings.BackGroundChanged += CurrentSettings_BackGroundChanged;
+        }
+
+        private void CurrentSettings_BackGroundChanged()
+        {
+            if(Tools.CurrentSettings.BackGroundImage != null)
+            if(Tools.CurrentSettings.IsBackgroundImage &  Tools.CurrentSettings.BackGroundImage.Length>0)
+            {
+                try
+                {
+                        this.Background = new ImageBrush(new BitmapImage(new Uri(Tools.CurrentSettings.BackGroundImage))) { Stretch = Stretch.UniformToFill };
+                        ((Grid)_repostPage.FindName("GridContainer")).Background = new ImageBrush(new BitmapImage(new Uri(Tools.CurrentSettings.BackGroundImage))) { Stretch = Stretch.UniformToFill };
+                        this.Background.Opacity = Tools.CurrentSettings.BackGroundOpacity;
+                        ((Grid)_repostPage.FindName("GridContainer")).Background.Opacity = Tools.CurrentSettings.BackGroundOpacity;
+                        return;
+                }catch(Exception eX)
+                {
+
+                }
+
+
+            }
+          
+                this.Background = (Brush)new BrushConverter().ConvertFromString(Tools.CurrentSettings.BackGroundColor);
+            ((Grid)_repostPage.FindName("GridContainer")).Background = (Brush)new BrushConverter().ConvertFromString(Tools.CurrentSettings.BackGroundColor);
+           
         }
 
         private void TeamplatesDictonary_AudioAddToPlaylist(AudioModel audioModel)
@@ -65,7 +99,7 @@ namespace VkWpfPlayer
             selectPlaylistPage.AlbumSelectedEvent += delegate (AlbumModel AlbumModel)
             {
                 AuthFrame.Visibility = Visibility.Collapsed;
-                var Awaiter = ToolsAndsettings.VkApi.Audio.AddToPlaylistAsync(AlbumModel.OwnerID, AlbumModel.ID,
+                var Awaiter = Tools.VkApi.Audio.AddToPlaylistAsync(AlbumModel.OwnerID, AlbumModel.ID,
                     new string[] { audioModel.Owner_ID + "_" + audioModel.ID.ToString() + "_"  + audioModel.AccessKey });
                 
             };
@@ -76,7 +110,7 @@ namespace VkWpfPlayer
 
         private void TeamplatesDictonary_AudioAdd(AudioModel audioModel, object sender)
         {
-            var Awaiter = ToolsAndsettings.VkApi.Audio.AddAsync(audioModel.ID, audioModel.Owner_ID, audioModel.AccessKey).GetAwaiter();
+            var Awaiter = Tools.VkApi.Audio.AddAsync(audioModel.ID, audioModel.Owner_ID, audioModel.AccessKey).GetAwaiter();
             Awaiter.OnCompleted(() =>
             {
                 if (Awaiter.GetResult() != 0)
@@ -90,12 +124,12 @@ namespace VkWpfPlayer
                         ImageUrl = audioModel.ImageUrl,
                         Title = audioModel.Title,
                         DurationSeconds = audioModel.DurationSeconds,
-                        Owner_ID = (long)ToolsAndsettings.VkApi.UserId,
+                        Owner_ID = (long)Tools.VkApi.UserId,
                         ID = Awaiter.GetResult(),
                     };
                     this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
                     {
-                        ToolsAndsettings.AddDataToObservationCollection(_MyAudiosPage.AudioCollection, newModel);
+                        Tools.AddDataToObservationCollection(_MyAudiosPage.AudioCollection, newModel);
                         _MyAudiosPage.AudioCollection.Move(_MyAudiosPage.AudioCollection.Count - 1, 0);
                     }));
                 }
@@ -104,10 +138,10 @@ namespace VkWpfPlayer
 
         private void TeamplatesDictonary_AudioDeleteClicked(AudioModel audioModel)
         {
-            var taskAwaiter = ToolsAndsettings.VkApi.Audio.DeleteAsync(audioModel.ID, audioModel.Owner_ID).GetAwaiter();
+            var taskAwaiter = Tools.VkApi.Audio.DeleteAsync(audioModel.ID, audioModel.Owner_ID).GetAwaiter();
             taskAwaiter.OnCompleted(() =>
             {
-                var taskAwaiter2 = ToolsAndsettings.VkApi.Audio.GetByIdAsync(new String[]
+                var taskAwaiter2 = Tools.VkApi.Audio.GetByIdAsync(new String[]
                 { audioModel.ID.ToString() + "_" + audioModel.Owner_ID.ToString()}).GetAwaiter();
                 taskAwaiter2.OnCompleted(() =>
                 {
@@ -171,11 +205,12 @@ namespace VkWpfPlayer
 
             _repostPage.ClosedEvent += _repostPage_ClosedEvent;
             Console.WriteLine("Loaded");
+            Tools.CurrentSettings.BackGroundInvoke();
         }
 
         private void TeamplatesDictonary_AudioDownload(AudioModel audioModel,object sender)
         {
-            var AudioAwaiter = ToolsAndsettings.VkApi.Audio.GetByIdAsync(new string[] { audioModel.Owner_ID + "_" + audioModel.ID.ToString() + "_" + audioModel.AccessKey }).GetAwaiter();
+            var AudioAwaiter = Tools.VkApi.Audio.GetByIdAsync(new string[] { audioModel.Owner_ID + "_" + audioModel.ID.ToString() + "_" + audioModel.AccessKey }).GetAwaiter();
             AudioAwaiter.OnCompleted(() =>
             {
                 using (WebClient webClient = new WebClient())
@@ -192,7 +227,7 @@ namespace VkWpfPlayer
                         audiodataen.MoveNext();
                         var audiodata = audiodataen.Current;
                         
-                        webClient.DownloadFileAsync(new Uri(audiodata.Url.AbsoluteUri), ToolsAndsettings.CurrentSettings. VKAudioDownloadPath+"\\"+audiodata.Artist+"-"+audiodata.Title+".mp3"); ;
+                        webClient.DownloadFileAsync(new Uri(audiodata.Url.AbsoluteUri), Tools.CurrentSettings. VKAudioDownloadPath+"\\"+audiodata.Artist+"-"+audiodata.Title+".mp3"); ;
                     }
 
                     catch (Exception ex)
@@ -392,7 +427,7 @@ namespace VkWpfPlayer
 
                
 
-                ToolsAndsettings.SaveSettings();
+                Tools.SaveSettings();
             }
             catch (Exception ex)
             {

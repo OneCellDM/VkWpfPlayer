@@ -62,12 +62,29 @@
                         <Button x:Name="SelectTextColorButton" Click="SelectTextColorButton_Click" >Выбрать</Button>
                     </StackPanel>
 
-
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,10" >
-                        <Label Content="Цвет фона приложения:" Width="200" ></Label>
+                    <StackPanel >
+                        <Label Content="Фон"></Label>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,10" >
+                        <Label Content="Цвет фона " Width="200" ></Label>
                         <TextBox   x:Name="BackGroundTextBox" Width="100" TextChanged="BackGroundTextBox_TextChanged"></TextBox>
                         <Button  x:Name="SelectBackGroundColorButton" Click="SelectBackGroundColorButton_Click" >Выбрать</Button>
+                        </StackPanel>
+                        <CheckBox x:Name="UseImageCheckBox" Checked="UseImageCheckBox_Checked"  Unchecked="UseImageCheckBox_Unchecked" Content="Использовать картинку"></CheckBox>
+                        <StackPanel Orientation="Horizontal"  Margin="0,10,0,10">
+                            <Label Content="Фоновое изображение " Width="200" ></Label>
+                            <TextBox   x:Name="BackGroundImagePath" Width="100" TextChanged="BackGroundImagePath_TextChanged"></TextBox>
+                            <Button  x:Name="SelectBackGroundImageButton" Click="SelectBackGroundImageButton_Click" >Выбрать</Button>
+                        </StackPanel>
+                        <StackPanel>
+
+                            <Label x:Name="BackGroundOpacityLabel" Content="Яркость фона:0"></Label>
+                            <Slider x:Name="BackGroundOpacitySlider"  ValueChanged="BackGroundOpacitySlider_ValueChanged" LargeChange="0.1" Maximum="0.1"></Slider>
+
+                        </StackPanel>
+
+
                     </StackPanel>
+
 
 
                     <StackPanel Orientation="Horizontal">

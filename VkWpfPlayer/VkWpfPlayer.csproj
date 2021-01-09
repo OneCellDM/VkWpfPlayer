@@ -189,7 +189,7 @@
     <Compile Include="TeamplatesDictonary.xaml.cs">
       <DependentUpon>TeamplatesDictonary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Etc\ToolsAndSettings.cs" />
+    <Compile Include="Etc\Tools.cs" />
     <Compile Include="Pages\VkLogin.xaml.cs">
       <DependentUpon>VkLogin.xaml</DependentUpon>
     </Compile>
@@ -300,6 +300,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Blu31.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="091e8cb25f4fc57f4c2045e409f82a9d.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

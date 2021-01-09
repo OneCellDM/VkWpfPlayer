@@ -11,7 +11,7 @@
       Title="AlbumsPage">
     <Grid>
 
-        <ListView ItemsPanel="{DynamicResource WrapPanelTeamplate}" 
+        <ListView Style="{DynamicResource ViewStyle}" ItemsPanel="{DynamicResource WrapPanelTeamplate}" 
                   ItemTemplate="{DynamicResource ResourceKey=AlbumListTeamplate}" 
                   SelectionChanged="AlbumsListView_SelectionChanged"  
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
@@ -21,12 +21,14 @@
             <Button/>
         </ListView>
 
-        <Grid x:Name="AlbumGrid" Grid.Row="1" Background="{DynamicResource VKBackGroundColor}"  >
+        <Grid x:Name="AlbumGrid" Grid.Row="1"   >
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <ListView x:Name="AudioListView"  
+                        Style="{DynamicResource ViewStyle}"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                       VirtualizingPanel.ScrollUnit="Pixel" 
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                       
@@ -36,19 +38,16 @@
                       Grid.RowSpan="2" 
                       BorderBrush="{x:Null}"
                       MouseLeftButtonUp="AudioListView_MouseLeftButtonUp" Background="{x:Null}"    />
-            
-            
+
+
             <Button Style="{StaticResource ButtonStyleRect}" x:Name="BackAlbumListButton" HorizontalAlignment="Left" Click="BackAlbumListButton_Click" Margin="5,1,0,2.2" >
 
                 <TextBlock FontSize="14"  ><Run Text=" &#xE72B;" FontFamily="/Resources/#Segoe MDL2 Assets"/><Run Text=" "/><Run x:Name="AlbumTitleText"/><Run Text=" "/><Run Text=" "/></TextBlock>
 
             </Button>
 
-            <StackPanel x:Name="SuccesLoadPanel" Background="#FF4A76A8"  Grid.RowSpan="2" d:IsHidden="True" Margin="0,0,0,-0.4">
-                <Image x:Name="gifim"  gif:ImageBehavior.AutoStart="True" gif:ImageBehavior.AnimateInDesignMode="True" VerticalAlignment="Center" HorizontalAlignment="Center" gif:ImageBehavior.AnimatedSource="/Resources/Dual Ring-1.3s-200px.gif" Margin="0,100,0,0" Width="100" Height="100"  />
-            </StackPanel>
-
         </Grid>
-        <local:EISDialog   Background="{DynamicResource VKBackGroundColor}"  AcceptButtonText="Повторить" CancelButtonVisible="Collapsed"  ContentDialogData="Произошла огшибка во время загрузки"  x:Name="ErrorDialog"  Accepted="ErrorDialog_Accepted" d:IsHidden="True" />
+        <local:LoadingComponent x:Name="LoadingComponent"  Margin="0,0,0,-0.4"/>
+        <local:EISDialog   Background="{DynamicResource VKBackGroundColor}"  AcceptButtonText="Повторить" CancelButtonVisible="Collapsed"  ContentDialogData="Произошла огшибка во время загрузки"  x:Name="ErrorDialog"  Accepted="ErrorDialog_Accepted" />
     </Grid>
 </Page>

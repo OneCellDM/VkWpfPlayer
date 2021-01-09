@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-
-using System.Windows.Media.Animation;
 
 using VkWpfPlayer.DataModels;
 
@@ -13,57 +12,33 @@ namespace VkWpfPlayer.Pages
 {
     public partial class AlbumsPage : Page
     {
-       
         private Thread _currentThread;
         private bool d = false;
 
         public ObservableCollection<AlbumModel> AlbumsCollection = new ObservableCollection<AlbumModel>()
         {
-           
         };
-        public ObservableCollection<AudioModel> AudioCollection = new ObservableCollection<AudioModel>();
 
-        private ThicknessAnimation ShowPlaylistAnimation = new ThicknessAnimation();
-        private ThicknessAnimation HidePlaylistAnimation = new ThicknessAnimation();
+        public ObservableCollection<AudioModel> AudioCollection = new ObservableCollection<AudioModel>();
 
         public AlbumsPage()
         {
             InitializeComponent();
-            ErrorDialog.Visibility = Visibility.Collapsed;
 
             AlbumsListView.Items.Clear();
             AlbumsListView.ItemsSource = AlbumsCollection;
             AudioListView.ItemsSource = AudioCollection;
 
-            AlbumGrid.Visibility = Visibility.Collapsed;
-            SuccesLoadPanel.Visibility = Visibility.Collapsed;
-
+            Tools.UI.HideElements(ErrorDialog, AlbumGrid);
+            Tools.UI.ShowElements(LoadingComponent);
             Task.Run(() => LoadAlbums());
-           
+        }
 
-            
-        }
-        private void StartHidePlaylistAnimation()
-        {
-            HidePlaylistAnimation.Completed += HidePlaylistAnimation_Completed;
-
-            HidePlaylistAnimation.From = new Thickness(0, 0, 0, 0);
-            HidePlaylistAnimation.To = new Thickness(0, 0, 0, this.AlbumsListView.ActualHeight);
-            HidePlaylistAnimation.Duration = new Duration(TimeSpan.FromSeconds(0.4));
-            AlbumGrid.BeginAnimation(MarginProperty, HidePlaylistAnimation);
-        }
-        private void StartShowPlaylistAnimation()
-        {
-           
-            ShowPlaylistAnimation.From = new Thickness(0, 0, 0, this.AlbumsListView.ActualHeight);
-            ShowPlaylistAnimation.To = new Thickness(0, 0, 0, 0);
-            ShowPlaylistAnimation.Duration = new Duration(TimeSpan.FromSeconds(0.4));
-            AlbumGrid.BeginAnimation(MarginProperty, ShowPlaylistAnimation);
-        }
-       
         public void LoadAudioFromAlbum(long album_id, long owner_id)
         {
-            var DataAwaiter = ToolsAndsettings.VkApi.Audio.GetAsync(new VkNet.Model.RequestParams.AudioGetParams()
+            Tools.UI.HideElements(AlbumsListView);
+            Tools.UI.ShowElements(LoadingComponent, AlbumGrid);
+            var DataAwaiter = Tools.VkApi.Audio.GetAsync(new VkNet.Model.RequestParams.AudioGetParams()
             {
                 Count = 6000,
                 PlaylistId = album_id,
@@ -71,35 +46,34 @@ namespace VkWpfPlayer.Pages
             }).GetAwaiter();
             DataAwaiter.OnCompleted(() =>
             {
-                
                 this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
                 {
                     try
                     {
-                        ToolsAndsettings.AddDataToObservationCollection(AudioCollection, DataAwaiter.GetResult());
+                        Tools.AddDataToObservationCollection(AudioCollection, DataAwaiter.GetResult());
                         if (!d)
                         {
                             d = true;
                             AudioCollection.Clear();
                             Thread.Sleep(200);
-                            ToolsAndsettings.AddDataToObservationCollection(AudioCollection, DataAwaiter.GetResult());
+                            Tools.AddDataToObservationCollection(AudioCollection, DataAwaiter.GetResult());
                         }
-                        SuccesLoadPanel.Visibility = Visibility.Collapsed;
+                        Tools.UI.HideElements(LoadingComponent);
                     }
                     catch (Exception EX)
                     {
-                        ToolsAndsettings.loggingHandler.Log.Error(EX);
+                        Tools.loggingHandler.Log.Error(EX);
                         _currentThread = new Thread(() => { LoadAudioFromAlbum(album_id, owner_id); });
-                        ErrorDialog.Visibility = Visibility.Visible;
+                        Tools.UI.ShowElements(ErrorDialog);
                     }
                 }));
             });
         }
 
-       
         public void LoadAlbums()
         {
-            var s = ToolsAndsettings.VkApi.Audio.GetPlaylistsAsync(ownerId: (long)ToolsAndsettings.VkApi.UserId, count: 200);
+            
+            var s = Tools.VkApi.Audio.GetPlaylistsAsync(ownerId: (long)Tools.VkApi.UserId, count: 200);
 
             s.GetAwaiter().OnCompleted(() =>
            {
@@ -107,14 +81,15 @@ namespace VkWpfPlayer.Pages
                {
                    try
                    {
-                       ToolsAndsettings.AddDataToObservationCollection(AlbumsCollection, s.GetAwaiter().GetResult());
+                       Tools.AddDataToObservationCollection(AlbumsCollection, s.GetAwaiter().GetResult());
+                       Tools.UI.HideElements(LoadingComponent);
+                       
                    }
                    catch (Exception ex)
                    {
-                      
-                       ToolsAndsettings.loggingHandler.Log.Error(s.Exception.InnerException);
+                       Tools.loggingHandler.Log.Error(s.Exception.InnerException);
                        _currentThread = new Thread(() => { LoadAlbums(); });
-                       ErrorDialog.Visibility = Visibility.Visible;
+                       Tools.UI.ShowElements(ErrorDialog);
                    }
                }));
            });
@@ -126,14 +101,11 @@ namespace VkWpfPlayer.Pages
             {
                 d = false;
                 var album = (AlbumModel)e.AddedItems[e.AddedItems.Count - 1];
-                 LoadAudioFromAlbum(album.ID, album.OwnerID);
+                LoadAudioFromAlbum(album.ID, album.OwnerID);
 
                 AlbumTitleText.Text = album.Title;
 
                 AlbumsListView.SelectedIndex = -1;
-                SuccesLoadPanel.Visibility = Visibility.Visible;
-                AlbumGrid.Visibility = Visibility.Visible;
-                StartShowPlaylistAnimation();
             }
         }
 
@@ -142,30 +114,18 @@ namespace VkWpfPlayer.Pages
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
             {
                 AudioCollection.Clear();
-                StartHidePlaylistAnimation();
-               
+                Tools.UI.HideElements(AlbumGrid);
+                Tools.UI.ShowElements(AudioListView); ;
             }));
-        }
-
-        private void HidePlaylistAnimation_Completed(object sender, EventArgs e)
-        {
-            AlbumGrid.Visibility = Visibility.Collapsed;
-            AudioCollection.Clear();
         }
 
         private void AlbumsListView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
         }
 
+        private void AudioListView_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e) =>
 
-        private void AudioListView_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (AudioListView.SelectedItems.Count != 0)
-            {
-                ToolsAndsettings.SendListClickEvent(AudioCollection, AudioListView.SelectedIndex);
-                Player.Play(((AudioModel)((ListView)sender).SelectedItem));
-            }
-        }
+            AudioListView.SelectedAudioPlay();
 
         private void ErrorDialog_Accepted()
         {

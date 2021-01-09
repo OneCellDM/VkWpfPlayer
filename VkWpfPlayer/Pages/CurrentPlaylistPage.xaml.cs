@@ -36,7 +36,7 @@ namespace VkWpfPlayer.Pages
         {
             InitializeComponent();
             AudioListView.ItemsSource = AudioCollection;
-            ToolsAndsettings.ListClickHandlerCommonEvent += ToolsAndsettings_ListClickHandlerCommonEvent;
+            Tools.ListClickHandlerCommonEvent += ToolsAndsettings_ListClickHandlerCommonEvent;
             Player.Stopped += Player_Stopped;
         }
 

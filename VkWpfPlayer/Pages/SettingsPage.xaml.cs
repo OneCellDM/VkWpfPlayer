@@ -96,18 +96,18 @@ namespace VkWpfPlayer.Pages
 
         public SettingsModel()
         {
-            ImageCornerRadios = ToolsAndsettings.CurrentSettings.ImageCornerRadios;
-            ButtonAndTextBoxCornerRadius = ToolsAndsettings.CurrentSettings.ButtonAndTextBoxCornerRadius;
-            ImageBorderThickness = ToolsAndsettings.CurrentSettings.ImageBorderThickness;
-            TextColor = ToolsAndsettings.CurrentSettings.TextColor;
-            ControlColor = ToolsAndsettings.CurrentSettings.ControlColor;
-            ButtonColor = ToolsAndsettings.CurrentSettings.ButtonColor;
-            BackGroundColor = ToolsAndsettings.CurrentSettings.BackGroundColor;
-            SliderColor = ToolsAndsettings.CurrentSettings.SliderColor;
-            MouseOverColor = ToolsAndsettings.CurrentSettings.MouseOverColor;
-            ImageBorderColor = ToolsAndsettings.CurrentSettings.ImageBorderColor;
-            PlayerButtonTextColor = ToolsAndsettings.CurrentSettings.PlayerButtonTextColor;
-            VKAudioDownloadPath = ToolsAndsettings.CurrentSettings.VKAudioDownloadPath;
+            ImageCornerRadios = Tools.CurrentSettings.ImageCornerRadios;
+            ButtonAndTextBoxCornerRadius = Tools.CurrentSettings.ButtonAndTextBoxCornerRadius;
+            ImageBorderThickness = Tools.CurrentSettings.ImageBorderThickness;
+            TextColor = Tools.CurrentSettings.TextColor;
+            ControlColor = Tools.CurrentSettings.ControlColor;
+            ButtonColor = Tools.CurrentSettings.ButtonColor;
+            BackGroundColor = Tools.CurrentSettings.BackGroundColor;
+            SliderColor = Tools.CurrentSettings.SliderColor;
+            MouseOverColor = Tools.CurrentSettings.MouseOverColor;
+            ImageBorderColor = Tools.CurrentSettings.ImageBorderColor;
+            PlayerButtonTextColor = Tools.CurrentSettings.PlayerButtonTextColor;
+            VKAudioDownloadPath = Tools.CurrentSettings.VKAudioDownloadPath;
         }
 
         private BrushConverter brushConverter = new BrushConverter();
@@ -120,20 +120,24 @@ namespace VkWpfPlayer.Pages
         public SettingsPage()
         {
             InitializeComponent();
-            ToolsAndsettings.LoadSettings();
+            Tools.LoadSettings();
 
-            RoundImageSlider.Value = ToolsAndsettings.CurrentSettings.ImageCornerRadios;
-            ButtonRoundRadiusSlider.Value = ToolsAndsettings.CurrentSettings.ButtonAndTextBoxCornerRadius;
-            BorderThicknessSlider.Value = ToolsAndsettings.CurrentSettings.ImageBorderThickness;
-            TextColoTextbox.Text = ToolsAndsettings.CurrentSettings.TextColor;
-            ControlColorTextbox.Text = ToolsAndsettings.CurrentSettings.ControlColor;
-            TextBoxAndButtonColorTextbox.Text = ToolsAndsettings.CurrentSettings.ButtonColor;
-            BackGroundTextBox.Text = ToolsAndsettings.CurrentSettings.BackGroundColor;
-            SliderColorsTextBox.Text = ToolsAndsettings.CurrentSettings.SliderColor;
-            MouseOverColorTextBox.Text = ToolsAndsettings.CurrentSettings.MouseOverColor;
-            ImageBorderColorTextBox.Text = ToolsAndsettings.CurrentSettings.ImageBorderColor;
-            PlayerButtonTextColorTextBox.Text = ToolsAndsettings.CurrentSettings.PlayerButtonTextColor;
-            AudioDirectoryTextbox.Text = ToolsAndsettings.CurrentSettings.VKAudioDownloadPath;
+            RoundImageSlider.Value = Tools.CurrentSettings.ImageCornerRadios;
+            ButtonRoundRadiusSlider.Value = Tools.CurrentSettings.ButtonAndTextBoxCornerRadius;
+            BorderThicknessSlider.Value = Tools.CurrentSettings.ImageBorderThickness;
+            TextColoTextbox.Text = Tools.CurrentSettings.TextColor;
+            ControlColorTextbox.Text = Tools.CurrentSettings.ControlColor;
+            TextBoxAndButtonColorTextbox.Text = Tools.CurrentSettings.ButtonColor;
+            BackGroundTextBox.Text = Tools.CurrentSettings.BackGroundColor;
+            SliderColorsTextBox.Text = Tools.CurrentSettings.SliderColor;
+            MouseOverColorTextBox.Text = Tools.CurrentSettings.MouseOverColor;
+            ImageBorderColorTextBox.Text = Tools.CurrentSettings.ImageBorderColor;
+            PlayerButtonTextColorTextBox.Text = Tools.CurrentSettings.PlayerButtonTextColor;
+            AudioDirectoryTextbox.Text = Tools.CurrentSettings.VKAudioDownloadPath;
+            UseImageCheckBox.IsChecked = Tools.CurrentSettings.IsBackgroundImage;
+            if (Tools.CurrentSettings.BackGroundImage != null)
+                BackGroundImagePath.Text = Tools.CurrentSettings.BackGroundImage;
+            BackGroundOpacitySlider.Value = Tools.CurrentSettings.BackGroundOpacity;
         }
 
         private void MoveCacheToNewLocation(String oldpath, String newpath)
@@ -144,7 +148,7 @@ namespace VkWpfPlayer.Pages
 
         private void RoundImageSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ToolsAndsettings.CurrentSettings.SetCornerRadius("VKImageCornerRadius", (int)e.NewValue);
+            Tools.CurrentSettings.SetCornerRadius("VKImageCornerRadius", (int)e.NewValue);
             RadiusRoundValue.Content = "Значение: " + ((int)e.NewValue);
         }
 
@@ -152,13 +156,13 @@ namespace VkWpfPlayer.Pages
         {
             try
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VKTextColor", ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender));
-                ToolsAndsettings.CurrentSettings.TextColor = ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender);
+                Tools.CurrentSettings.SetColor("VKTextColor", Tools.CurrentSettings.GetTextFromTextbox(sender));
+                Tools.CurrentSettings.TextColor = Tools.CurrentSettings.GetTextFromTextbox(sender);
             }
             catch (Exception ex)
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VKTextColor", ToolsAndsettings.DefaultSettings.TextColor);
-                ToolsAndsettings.CurrentSettings.TextColor = ToolsAndsettings.DefaultSettings.TextColor;
+                Tools.CurrentSettings.SetColor("VKTextColor", Tools.DefaultSettings.TextColor);
+                Tools.CurrentSettings.TextColor = Tools.DefaultSettings.TextColor;
             }
         }
 
@@ -166,21 +170,21 @@ namespace VkWpfPlayer.Pages
         {
             try
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VKBackGroundColor", ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender));
-                ToolsAndsettings.CurrentSettings.BackGroundColor = ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender);
+                Tools.CurrentSettings.SetColor("VKBackGroundColor", Tools.CurrentSettings.GetTextFromTextbox(sender));
+                Tools.CurrentSettings.BackGroundColor = Tools.CurrentSettings.GetTextFromTextbox(sender);
             }
             catch (Exception ex)
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VKBackGroundColor", ToolsAndsettings.DefaultSettings.BackGroundColor);
+                Tools.CurrentSettings.SetColor("VKBackGroundColor", Tools.DefaultSettings.BackGroundColor);
 
-                ToolsAndsettings.CurrentSettings.BackGroundColor = ToolsAndsettings.DefaultSettings.BackGroundColor;
+                Tools.CurrentSettings.BackGroundColor = Tools.DefaultSettings.BackGroundColor;
             }
         }
 
         private void ButtonRoundRadiusSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ToolsAndsettings.CurrentSettings.SetCornerRadius("VKButtonAndTextBoxCornerRadius", (int)e.NewValue);
-            ToolsAndsettings.CurrentSettings.ButtonAndTextBoxCornerRadius = (int)e.NewValue;
+            Tools.CurrentSettings.SetCornerRadius("VKButtonAndTextBoxCornerRadius", (int)e.NewValue);
+            Tools.CurrentSettings.ButtonAndTextBoxCornerRadius = (int)e.NewValue;
             ButtonRoundRadiusTextBlock.Content = ((int)e.NewValue);
         }
 
@@ -188,13 +192,13 @@ namespace VkWpfPlayer.Pages
         {
             try
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VKImageBorderColor", ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender));
-                ToolsAndsettings.CurrentSettings.ImageBorderColor = ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender);
+                Tools.CurrentSettings.SetColor("VKImageBorderColor", Tools.CurrentSettings.GetTextFromTextbox(sender));
+                Tools.CurrentSettings.ImageBorderColor = Tools.CurrentSettings.GetTextFromTextbox(sender);
             }
             catch (Exception ex)
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VKImageBorderColor", ToolsAndsettings.DefaultSettings.ImageBorderColor);
-                ToolsAndsettings.CurrentSettings.ImageBorderColor = ToolsAndsettings.DefaultSettings.ImageBorderColor;
+                Tools.CurrentSettings.SetColor("VKImageBorderColor", Tools.DefaultSettings.ImageBorderColor);
+                Tools.CurrentSettings.ImageBorderColor = Tools.DefaultSettings.ImageBorderColor;
             }
         }
 
@@ -202,14 +206,14 @@ namespace VkWpfPlayer.Pages
         {
             try
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VkMouseOverColor", ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender));
-                ToolsAndsettings.CurrentSettings.MouseOverColor = ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender);
+                Tools.CurrentSettings.SetColor("VkMouseOverColor", Tools.CurrentSettings.GetTextFromTextbox(sender));
+                Tools.CurrentSettings.MouseOverColor = Tools.CurrentSettings.GetTextFromTextbox(sender);
             }
             catch (Exception ex)
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VkMouseOverColor", ToolsAndsettings.DefaultSettings.MouseOverColor);
+                Tools.CurrentSettings.SetColor("VkMouseOverColor", Tools.DefaultSettings.MouseOverColor);
 
-                ToolsAndsettings.CurrentSettings.MouseOverColor = ToolsAndsettings.DefaultSettings.MouseOverColor;
+                Tools.CurrentSettings.MouseOverColor = Tools.DefaultSettings.MouseOverColor;
             }
         }
 
@@ -217,18 +221,18 @@ namespace VkWpfPlayer.Pages
         {
             try
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VkButtonColor", ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender));
-                ToolsAndsettings.CurrentSettings.SetColor("VkTextBoxColor", ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender));
-                ToolsAndsettings.CurrentSettings.ButtonColor = ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender);
-                ToolsAndsettings.CurrentSettings.TextBoxColor = ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender);
+                Tools.CurrentSettings.SetColor("VkButtonColor", Tools.CurrentSettings.GetTextFromTextbox(sender));
+                Tools.CurrentSettings.SetColor("VkTextBoxColor", Tools.CurrentSettings.GetTextFromTextbox(sender));
+                Tools.CurrentSettings.ButtonColor = Tools.CurrentSettings.GetTextFromTextbox(sender);
+                Tools.CurrentSettings.TextBoxColor = Tools.CurrentSettings.GetTextFromTextbox(sender);
             }
             catch (Exception ex)
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VkTextBoxColor", ToolsAndsettings.DefaultSettings.TextBoxColor);
-                ToolsAndsettings.CurrentSettings.SetColor("VkButtonColor", ToolsAndsettings.DefaultSettings.ButtonColor);
+                Tools.CurrentSettings.SetColor("VkTextBoxColor", Tools.DefaultSettings.TextBoxColor);
+                Tools.CurrentSettings.SetColor("VkButtonColor", Tools.DefaultSettings.ButtonColor);
 
-                ToolsAndsettings.CurrentSettings.ButtonColor = ToolsAndsettings.DefaultSettings.ButtonColor;
-                ToolsAndsettings.CurrentSettings.TextBoxColor = ToolsAndsettings.DefaultSettings.TextBoxColor;
+                Tools.CurrentSettings.ButtonColor = Tools.DefaultSettings.ButtonColor;
+                Tools.CurrentSettings.TextBoxColor = Tools.DefaultSettings.TextBoxColor;
             }
         }
 
@@ -236,13 +240,13 @@ namespace VkWpfPlayer.Pages
         {
             try
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VkContolColor", ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender));
-                ToolsAndsettings.CurrentSettings.ControlColor = ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender);
+                Tools.CurrentSettings.SetColor("VkContolColor", Tools.CurrentSettings.GetTextFromTextbox(sender));
+                Tools.CurrentSettings.ControlColor = Tools.CurrentSettings.GetTextFromTextbox(sender);
             }
             catch (Exception ex)
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VkContolColor", ToolsAndsettings.DefaultSettings.ControlColor);
-                ToolsAndsettings.CurrentSettings.ControlColor = ToolsAndsettings.DefaultSettings.ControlColor;
+                Tools.CurrentSettings.SetColor("VkContolColor", Tools.DefaultSettings.ControlColor);
+                Tools.CurrentSettings.ControlColor = Tools.DefaultSettings.ControlColor;
             }
         }
 
@@ -250,13 +254,13 @@ namespace VkWpfPlayer.Pages
         {
             try
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VkSliderColor", ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender));
-                ToolsAndsettings.CurrentSettings.SliderColor = ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender);
+                Tools.CurrentSettings.SetColor("VkSliderColor", Tools.CurrentSettings.GetTextFromTextbox(sender));
+                Tools.CurrentSettings.SliderColor = Tools.CurrentSettings.GetTextFromTextbox(sender);
             }
             catch (Exception ex)
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VkSliderColor", ToolsAndsettings.DefaultSettings.SliderColor);
-                ToolsAndsettings.CurrentSettings.SliderColor = ToolsAndsettings.DefaultSettings.SliderColor;
+                Tools.CurrentSettings.SetColor("VkSliderColor", Tools.DefaultSettings.SliderColor);
+                Tools.CurrentSettings.SliderColor = Tools.DefaultSettings.SliderColor;
             }
         }
 
@@ -266,7 +270,7 @@ namespace VkWpfPlayer.Pages
 
         private void BorderThicknessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ToolsAndsettings.CurrentSettings.SetBorderThickness("VKImageBorderThickness", (int)e.NewValue);
+            Tools.CurrentSettings.SetBorderThickness("VKImageBorderThickness", (int)e.NewValue);
             BorderThicknessLabel.Content = "Толщина обводки картинки:" + (int)e.NewValue;
         }
 
@@ -274,14 +278,14 @@ namespace VkWpfPlayer.Pages
         {
             try
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VKPlayerButtonTextColor", ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender));
-                ToolsAndsettings.CurrentSettings.PlayerButtonTextColor = ToolsAndsettings.CurrentSettings.GetTextFromTextbox(sender);
+                Tools.CurrentSettings.SetColor("VKPlayerButtonTextColor", Tools.CurrentSettings.GetTextFromTextbox(sender));
+                Tools.CurrentSettings.PlayerButtonTextColor = Tools.CurrentSettings.GetTextFromTextbox(sender);
             }
             catch (Exception ex)
             {
-                ToolsAndsettings.CurrentSettings.SetColor("VKPlayerButtonTextColor", ToolsAndsettings.DefaultSettings.PlayerButtonTextColor);
+                Tools.CurrentSettings.SetColor("VKPlayerButtonTextColor", Tools.DefaultSettings.PlayerButtonTextColor);
 
-                ToolsAndsettings.CurrentSettings.PlayerButtonTextColor = ToolsAndsettings.DefaultSettings.PlayerButtonTextColor;
+                Tools.CurrentSettings.PlayerButtonTextColor = Tools.DefaultSettings.PlayerButtonTextColor;
             }
         }
 
@@ -296,7 +300,9 @@ namespace VkWpfPlayer.Pages
             if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 System.Drawing.Color color = colorDialog.Color;
-                TextColoTextbox.Text = "#" + color.Name;
+                if (color.IsNamedColor)
+                   TextColoTextbox.Text = color.Name;
+                else TextColoTextbox.Text = "#" + color.Name;
             }
         }
 
@@ -348,7 +354,7 @@ namespace VkWpfPlayer.Pages
                 System.Drawing.Color color = colorDialog.Color;
                 if (color.IsNamedColor)
                     TextBoxAndButtonColorTextbox.Text = color.Name;
-                else SelectTextBoxAndButtonColorButton.Tag = "#" + color.Name;
+                else TextBoxAndButtonColorTextbox.Text = "#" + color.Name;
             }
         }
 
@@ -403,16 +409,59 @@ namespace VkWpfPlayer.Pages
             DirectoryInfo directoryInfo = new DirectoryInfo(AudioDirectoryTextbox.Text);
 
             if (!directoryInfo.Exists)
-                ToolsAndsettings.CurrentSettings.VKAudioDownloadPath = AudioDirectoryTextbox.Text;
+                Tools.CurrentSettings.VKAudioDownloadPath = AudioDirectoryTextbox.Text;
             else
             {
-                ToolsAndsettings.CurrentSettings.VKAudioDownloadPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + "\\VKM\\AUDIO";
+                Tools.CurrentSettings.VKAudioDownloadPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + "\\VKM\\AUDIO";
             }
         }
 
         private void TextColoTextbox_SourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
         {
             Debug.WriteLine("sss");
+        }
+
+        private void UseImageCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            Tools.CurrentSettings.IsBackgroundImage = true;
+            SelectBackGroundImageButton.IsEnabled = true;
+            BackGroundImagePath.IsEnabled = true;
+            Tools.CurrentSettings.BackGroundInvoke();
+        }
+
+        private void UseImageCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Tools.CurrentSettings.IsBackgroundImage = false;
+            SelectBackGroundImageButton.IsEnabled = false;
+            BackGroundImagePath.IsEnabled = false;
+            Tools.CurrentSettings.BackGroundInvoke();
+        }
+
+        private void BackGroundImagePath_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (File.Exists(BackGroundImagePath.Text))
+            {
+                Tools.CurrentSettings.BackGroundImage = BackGroundImagePath.Text;
+                Tools.CurrentSettings.BackGroundInvoke();
+            }             
+        }
+        private void SelectBackGroundImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.CheckFileExists = true;
+            openFileDialog.CheckPathExists = true;
+            openFileDialog.Filter= "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+           
+            if( openFileDialog.ShowDialog()==System.Windows.Forms.DialogResult.OK)
+                BackGroundImagePath.Text = openFileDialog.FileName;
+        }
+
+        private void BackGroundOpacitySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Tools.CurrentSettings.BackGroundOpacity = e.NewValue*10;
+            BackGroundOpacityLabel.Content = (Math.Round(e.NewValue*1000,0)).ToString();
+            Tools.CurrentSettings.BackGroundInvoke();
+
         }
     }
 }

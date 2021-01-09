@@ -57,11 +57,11 @@ namespace VkWpfPlayer.Pages
 
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
             {
-                SuccesLoadPanel.Visibility = System.Windows.Visibility.Visible;
+                Tools.UI.ShowElements(SuccesLoadPanel);
             }));
          
 
-                var awaiter = ToolsAndsettings.VkApi.Audio.GetAsync(new VkNet.Model.RequestParams.AudioGetParams()
+                var awaiter = Tools.VkApi.Audio.GetAsync(new VkNet.Model.RequestParams.AudioGetParams()
                 {
                     Count = 6000,
 
@@ -74,14 +74,14 @@ namespace VkWpfPlayer.Pages
                         try
                         {
                             SuccesLoadPanel.Visibility = System.Windows.Visibility.Collapsed;
-                            ToolsAndsettings.AddDataToObservationCollection(AudioCollection, awaiter.GetAwaiter().GetResult());
+                            Tools.AddDataToObservationCollection(AudioCollection, awaiter.GetAwaiter().GetResult());
                             
                         }
                         catch (Exception ex)
                         {
 
-                            ToolsAndsettings.loggingHandler.Log.Error(ex);
-                            ErrorDialog.Visibility = System.Windows.Visibility.Visible;
+                            Tools.loggingHandler.Log.Error(ex);
+                            Tools.UI.ShowElements(ErrorDialog);
 
                         }
                     }));
@@ -102,6 +102,7 @@ namespace VkWpfPlayer.Pages
                          x => ((AudioModel)x).Title).
                          Select(x => x.First()
                          ).ToList();
+
             foreach (var audio in list)
                 SearchCollection.Add(audio);
 
@@ -126,11 +127,7 @@ namespace VkWpfPlayer.Pages
      
         private void AudioListView_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (AudioListView.SelectedItems.Count != 0)
-            {
-                ToolsAndsettings.SendListClickEvent(AudioCollection, AudioListView.SelectedIndex);
-                Player.Play(((AudioModel)((ListView)sender).SelectedItem));
-            }
+            AudioListView.SelectedAudioPlay();
         }
 
     

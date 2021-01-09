@@ -29,11 +29,14 @@ namespace VkWpfPlayer.Pages
         {
             InitializeComponent();
             AudioListView.ItemsSource = AlbumsCollection;
+            
             Loading();
         }
         public void Loading()
         {
-            var s = ToolsAndsettings.VkApi.Audio.GetPlaylistsAsync(ownerId: (long)ToolsAndsettings.VkApi.UserId, count: 200);
+            Tools.UI.HideElements(ErrorDialog);
+            Tools.UI.ShowElements(LoadingComponent);
+            var s = Tools.VkApi.Audio.GetPlaylistsAsync(ownerId: (long)Tools.VkApi.UserId, count: 200);
 
             s.GetAwaiter().OnCompleted(() =>
             {
@@ -41,12 +44,15 @@ namespace VkWpfPlayer.Pages
                 {
                     try
                     {
-                        ToolsAndsettings.AddDataToObservationCollection(AlbumsCollection, s.GetAwaiter().GetResult());
+                        Tools.AddDataToObservationCollection(AlbumsCollection, s.GetAwaiter().GetResult());
+                        Tools.UI.HideElements(LoadingComponent);
+                        
                     }
                     catch (Exception ex)
                     {
-                        ToolsAndsettings.loggingHandler.Log.Error(s.Exception.InnerException);
-                       
+                        Tools.loggingHandler.Log.Error(s.Exception.InnerException);
+                        Tools.UI.ShowElements(ErrorDialog);
+
                     }
                 }));
             });
@@ -65,6 +71,10 @@ namespace VkWpfPlayer.Pages
             }
         }
 
-        
+        private void ErrorDialog_Accepted()
+        {
+            Loading();
+
+        }
     }
 }

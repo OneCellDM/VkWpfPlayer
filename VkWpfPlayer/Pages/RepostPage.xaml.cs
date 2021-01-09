@@ -32,7 +32,7 @@ namespace VkWpfPlayer.Pages
             FriendsCollection.Clear();
             Task.Run(() =>
             {
-                var awaiterData = ToolsAndsettings.VkApi.Friends.GetAsync(new VkNet.Model.RequestParams.FriendsGetParams()
+                var awaiterData = Tools.VkApi.Friends.GetAsync(new VkNet.Model.RequestParams.FriendsGetParams()
                 {
                     Fields = VkNet.Enums.Filters.ProfileFields.Photo50,
                     
@@ -43,7 +43,7 @@ namespace VkWpfPlayer.Pages
                     {
                         try
                         {
-                            ToolsAndsettings.AddDataToObservationCollection(FriendsCollection, awaiterData.GetResult());
+                            Tools.AddDataToObservationCollection(FriendsCollection, awaiterData.GetResult());
                             SuccesLoadPanel.Visibility = Visibility.Collapsed;
                         }
                         catch (Exception ex)
@@ -59,10 +59,10 @@ namespace VkWpfPlayer.Pages
         {
             if (FriendsListview.SelectedIndex != -1)
             {
-                var awaiterdata = ToolsAndsettings.VkApi.Messages.SendAsync(new MessagesSendParams()
+                var awaiterdata = Tools.VkApi.Messages.SendAsync(new MessagesSendParams()
                 {
                     RandomId = new Random().Next(1, 99999999),
-                    Attachments = ToolsAndsettings.VkApi.Audio.GetById(new String[] { Player.Audio.Owner_ID.ToString() + "_" + Player.Audio.ID + "_" + Player.Audio.AccessKey }),
+                    Attachments = Tools.VkApi.Audio.GetById(new String[] { Player.Audio.Owner_ID.ToString() + "_" + Player.Audio.ID + "_" + Player.Audio.AccessKey }),
                     UserId = ((FriendModel)e.AddedItems[e.AddedItems.Count - 1]).ID,
 
                 }).GetAwaiter();
@@ -75,20 +75,24 @@ namespace VkWpfPlayer.Pages
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            SearchCollection.Clear();
-            var list = FriendsCollection.Where(x => ((FriendModel)x).UserName.ToLower().Contains(SearchTextBox.Text.ToLower())
-                 );
-            foreach (var audio in list)
-                SearchCollection.Add(audio);
-
-            FriendsListview.ItemsSource = SearchCollection;
+        {;
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (SearchTextBox.Text.Length == 0)
                 FriendsListview.ItemsSource = FriendsCollection;
+            else
+            {
+
+                SearchCollection.Clear();
+                var list = FriendsCollection.Where(x => ((FriendModel)x).UserName.ToLower().Contains(SearchTextBox.Text.ToLower())
+                     );
+                foreach (var audio in list)
+                    SearchCollection.Add(audio);
+
+                FriendsListview.ItemsSource = SearchCollection;
+            }
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

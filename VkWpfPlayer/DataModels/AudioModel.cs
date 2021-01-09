@@ -39,7 +39,7 @@ namespace VkWpfPlayer.DataModels
 
         private string asyncImageProperty;
         private string FilePath;
-        String AppData = ToolsAndsettings.CurrentSettings.CachePath;
+        String AppData = Tools.CurrentSettings.CachePath;
         public String AsyncImageProperty
         {
             get => asyncImageProperty;

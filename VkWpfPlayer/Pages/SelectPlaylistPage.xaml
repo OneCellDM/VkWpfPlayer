@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:VkWpfPlayer.Pages"
+      xmlns:local="clr-namespace:VkWpfPlayer"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SelectPlaylistPage">
@@ -29,10 +29,14 @@
                   BorderBrush="{x:Null}" 
                   VirtualizingPanel.ScrollUnit="Pixel"
                    MouseLeftButtonUp="AudioListView_MouseLeftButtonUp"
-                
                   ScrollViewer.ScrollChanged="AudioListView_ScrollChanged" Background="{x:Null}" Grid.RowSpan="2"
+                      Style="{DynamicResource ViewStyle}"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                   
                   />
+        
+        <local:LoadingComponent x:Name="LoadingComponent" Grid.RowSpan="2"></local:LoadingComponent>
+        <local:EISDialog Accepted="ErrorDialog_Accepted" x:Name="ErrorDialog" Grid.RowSpan="2"></local:EISDialog>
 
     </Grid>
 </Page>

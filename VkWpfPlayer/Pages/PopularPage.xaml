@@ -15,10 +15,13 @@
                   SelectionChanged="AlbumsListView_SelectionChanged"  
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                   VirtualizingPanel.ScrollUnit="Pixel"
-                  x:Name="AlbumsListView" Margin="0,0,0,0" Grid.RowSpan="2"  Background="{x:Null}"/>
+                  x:Name="AlbumsListView" Margin="0,0,0,0"  Grid.RowSpan="2"  Background="{x:Null}"
+                  Style="{DynamicResource ViewStyle}"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  />
 
 
-        <Grid x:Name="AlbumGrid" Grid.Row="1" Background="{DynamicResource VKBackGroundColor}"  >
+        <Grid x:Name="AlbumGrid" Grid.Row="1"   >
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>

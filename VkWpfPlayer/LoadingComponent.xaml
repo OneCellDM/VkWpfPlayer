@@ -7,9 +7,9 @@
              xmlns:gif="http://wpfanimatedgif.codeplex.com"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <StackPanel  Background="#FF4A76A8"  Grid.RowSpan="2" d:IsHidden="True" Margin="0,0,0,-0.4">
-            <Image x:Name="gifim"  gif:ImageBehavior.AutoStart="True" gif:ImageBehavior.AnimateInDesignMode="True" VerticalAlignment="Center" HorizontalAlignment="Center" gif:ImageBehavior.AnimatedSource="/Resources/Dual Ring-1.3s-200px.gif" Margin="0,100,0,0" Width="100" Height="100"  />
+    <Grid Background="#FF4A76A8" >
+        <StackPanel    Grid.RowSpan="2" d:IsHidden="False" Margin="0,0,0,-0.0">
+            <Image x:Name="gifim"  gif:ImageBehavior.AutoStart="True" gif:ImageBehavior.AnimateInDesignMode="True" VerticalAlignment="Center" HorizontalAlignment="Center" gif:ImageBehavior.AnimatedSource="./Resources/Dual Ring-1.3s-200px.gif" Margin="0,100,0,0" Width="100" Height="100"  />
         </StackPanel>
 
     </Grid>

@@ -21,8 +21,7 @@
         <Button  Style="{StaticResource ButtonStyleRect}" x:Name="SearchButton"  Grid.Column="1" Margin="0.4,0,3,0.4" Click="SearchButton_Click"  >
             <Button.Content>
                 <TextBlock>
-                  
-                    <Run FontSize="12"  Text="&#xE721;" FontFamily="/Resources/#Segoe MDL2 Assets"></Run>
+                      <Run FontSize="12"  Text="&#xE721;" FontFamily="/Resources/#Segoe MDL2 Assets"></Run>
                       <Run Text="Поиск "></Run>
                 </TextBlock>
             </Button.Content>
@@ -32,25 +31,17 @@
         </TextBox>
         <ListView ItemTemplate="{DynamicResource AudioSeachListTeamplate}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     Style="{DynamicResource ViewStyle}"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                   VirtualizingPanel.VirtualizationMode="Standard"  
                   x:Name="AudioListView"  
                   BorderBrush="{x:Null}" 
                   Grid.ColumnSpan="2" Grid.Row="1" 
                   VirtualizingPanel.ScrollUnit="Pixel"
-                  Margin="0,5,0,0" MouseLeftButtonUp="AudioListView_MouseLeftButtonUp"
-                
-                  ScrollViewer.ScrollChanged="AudioListView_ScrollChanged" Background="{x:Null}"
-                  
-                  >
-           
-
-
-
+                  Margin="0,5,0,0" MouseLeftButtonUp="AudioListView_MouseLeftButtonUp"       
+                  ScrollViewer.ScrollChanged="AudioListView_ScrollChanged" Background="{x:Null}" >
         </ListView>
-        <StackPanel x:Name="SuccesLoadPanel" Background="#FF4A76A8" Margin="0,9.6,0,-0.4" Grid.ColumnSpan="2" Grid.Row="1" d:IsHidden="True" >
-            <Image x:Name="gifim"  gif:ImageBehavior.AutoStart="True" gif:ImageBehavior.AnimateInDesignMode="True" VerticalAlignment="Center" HorizontalAlignment="Center" gif:ImageBehavior.AnimatedSource="/Resources/Dual Ring-1.3s-200px.gif" Margin="0,100,0,0" Width="100" Height="100"  />
-        </StackPanel>
-
+        <local:LoadingComponent x:Name= "SuccesLoadPanel"  />
         <local:EISDialog   Background="{DynamicResource VKBackGroundColor}"  AcceptButtonText="Повторить" CancelButtonVisible="Collapsed"  ContentDialogData="Произошла огшибка во время загрузки"  x:Name="ErrorDialog"  Accepted="ErrorDialog_Accepted"  />
 
 

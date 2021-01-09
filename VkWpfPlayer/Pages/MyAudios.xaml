@@ -5,11 +5,19 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:VkWpfPlayer"
+   
             xmlns:gif="http://wpfanimatedgif.codeplex.com"
       xmlns:DataModels="clr-namespace:VkWpfPlayer.DataModels" x:Class="VkWpfPlayer.Pages.MyAudios"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MyAudios">
+    <Page.Resources>
+
+
+
+       
+
+    </Page.Resources>
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -28,33 +36,32 @@
             <TextBox Style="{StaticResource TextBoxStyleRect}" x:Name="SearchTextBox" TextWrapping="Wrap" Margin="2,1,2.6,1.4" UndoLimit="200" RenderTransformOrigin="0.5,0.5" TextChanged="SearchTextBox_TextChanged" />
 
 
-            <ListView   ItemTemplate="{DynamicResource ResourceKey=AudioListTeamplate}"
+            <ListView     Style="{DynamicResource ViewStyle}"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto" ItemTemplate="{DynamicResource ResourceKey=AudioListTeamplate}"
 
 
-                 
+               
                   x:Name="AudioListView"  
                   BorderBrush="{x:Null}" 
                   Grid.ColumnSpan="2" Grid.Row="1" 
                   Margin="0,5,0,0" MouseLeftButtonUp="AudioListView_MouseLeftButtonUp"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        VirtualizingPanel.ScrollUnit="Pixel" Background="{x:Null}"
-                        
-                  
-                      
+                        VirtualizingPanel.ScrollUnit="Pixel" 
+                         
                   >
+
                 <DataModels:AudioModel  AccessKey="fd" Artist="seld" DurationSeconds="200" ImageUrl="https://sun9-17.userapi.com/impf/c849020/v849020438/15e2f1/sPV7-pUQMLc.jpg?size=80x80&amp;quality=96&amp;sign=a9ba35d04bfcefe75438884b3f0dcdb7&amp;type=audio" Title="Title"/>
                 <Button/>
+
             </ListView>
-
-
         </Grid>
- 
-        <local:EISDialog   Background="{DynamicResource VKBackGroundColor}"  AcceptButtonText="Повторить" CancelButtonVisible="Collapsed"  ContentDialogData="Произошла огшибка во время загрузки"  x:Name="ErrorDialog"  Accepted="ErrorDialog_Accepted" Loaded="ErrorDialog_Loaded" />
+
+        <local:EISDialog   Background="{DynamicResource VKBackGroundColor}"  AcceptButtonText="Повторить" CancelButtonVisible="Collapsed"  ContentDialogData="Произошла огшибка во время загрузки"  x:Name="ErrorDialog"  Accepted="ErrorDialog_Accepted" Loaded="ErrorDialog_Loaded" d:IsHidden="True" />
 
         <StackPanel x:Name="SuccesLoadPanel" Background="#FF4A76A8"  Grid.RowSpan="2" Margin="0,0,0,-0.0" d:IsHidden="True" >
             <Image x:Name="gifim"  gif:ImageBehavior.AutoStart="True" gif:ImageBehavior.AnimateInDesignMode="True" VerticalAlignment="Center" HorizontalAlignment="Center" gif:ImageBehavior.AnimatedSource="../Resources/Dual Ring-1.3s-200px.gif" Margin="0,100,0,0" Width="100" Height="100"  />
         </StackPanel>
-       
+
     </Grid>
 
 </Page>

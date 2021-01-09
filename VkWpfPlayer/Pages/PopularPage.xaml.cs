@@ -68,11 +68,11 @@ namespace VkWpfPlayer.Pages
             if (AlbumsListView.SelectedIndex != -1)
             {
                 
-                var Await = ToolsAndsettings.VkApi.Audio.GetPopularAsync(false, (VkNet.Enums.AudioGenre)((AlbumModel)AlbumsListView.SelectedItem).ID, 1000, 0).GetAwaiter();
+                var Await = Tools.VkApi.Audio.GetPopularAsync(false, (VkNet.Enums.AudioGenre)((AlbumModel)AlbumsListView.SelectedItem).ID, 1000, 0).GetAwaiter();
                 Await.OnCompleted(() =>
                 {
 
-                    ToolsAndsettings.AddDataToObservationCollection(AudioCollection, Await.GetResult());
+                    Tools.AddDataToObservationCollection(AudioCollection, Await.GetResult());
                     SuccesLoadPanel.Visibility = Visibility.Collapsed;
 
 
@@ -84,6 +84,7 @@ namespace VkWpfPlayer.Pages
                 AlbumsListView.SelectedIndex = -1;
                 SuccesLoadPanel.Visibility = Visibility.Visible;
                 AlbumGrid.Visibility = Visibility.Visible;
+                this.AlbumsListView.Visibility = Visibility.Collapsed;
 
 
                 ShowPlaylistAnimation.From = new Thickness(0, 0, 0, this.AlbumsListView.ActualHeight);
@@ -102,6 +103,7 @@ namespace VkWpfPlayer.Pages
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
             {
                 AudioCollection.Clear();
+                this.AlbumsListView.Visibility = Visibility.Visible;
                 HidePlaylistAnimation.Completed += HidePlaylistAnimation_Completed;
 
                 HidePlaylistAnimation.From = new Thickness(0, 0, 0, 0);
@@ -122,7 +124,7 @@ namespace VkWpfPlayer.Pages
             if(AudioListView.SelectedItems.Count>0)
             {
                 Player.Play( (AudioModel) AudioListView.SelectedItem);
-                ToolsAndsettings.SendListClickEvent(AudioCollection, AudioListView.SelectedIndex);
+                Tools.SendListClickEvent(AudioCollection, AudioListView.SelectedIndex);
             }
         }
     }

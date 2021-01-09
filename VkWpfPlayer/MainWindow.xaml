@@ -7,7 +7,7 @@
 
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
-        Title="VKompakt Musik (VKM)"  MinHeight="100"  Height="450"  Width="900" SizeChanged="Window_SizeChanged" Background="{DynamicResource VKBackGroundColor}" Loaded="Window_Loaded">
+        Title="VKompakt Musik (VKM)"  MinHeight="100"  Height="450"  Width="900" SizeChanged="Window_SizeChanged"  Loaded="Window_Loaded">
 
     <Window.Resources>
 
@@ -216,6 +216,7 @@
             </Setter>
         </Style>
     </Window.Resources>
+  
 
     <Grid x:Name="grid">
 
@@ -238,7 +239,7 @@
 
                 <Button  Style="{StaticResource PlayerButtonStyle}" x:Name="NextTrackButton"       Content="&#xE76C;"    Click="NextTrackButton_Click" />
 
-                <Border CornerRadius="{DynamicResource VKImageCornerRadius}" BorderThickness="{DynamicResource VKImageBorderThickness}" Margin="10,0,0,0" VerticalAlignment="Center" Width="56" Height="56">
+                <Border CornerRadius="{DynamicResource VKImageCornerRadius}" BorderThickness="{DynamicResource VKImageBorderThickness}" Margin="10,0,0,0" VerticalAlignment="Center" Width="50" Height="50">
                     <Border.Background>
                         <ImageBrush x:Name="AudioPlayerImage" ImageSource="Resources/MusicIcon.jpg">
                         </ImageBrush>

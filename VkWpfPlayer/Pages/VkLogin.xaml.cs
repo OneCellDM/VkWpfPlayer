@@ -267,7 +267,7 @@ namespace VkWpfPlayer.Pages
                
                 api.Account.GetInfo();
                 if (api.IsAuthorized)
-                    ToolsAndsettings.VkApi = api;
+                    Tools.VkApi = api;
 
             }
             catch (VkNet.Exception.UserAuthorizationFailException ex)

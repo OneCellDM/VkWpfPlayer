@@ -64,14 +64,14 @@ namespace VkWpfPlayer.Pages
         public void Loading()
         {
             isloading = true;
-            var Awaiter = ToolsAndsettings.VkApi.Audio.GetRecommendationsAsync(null, null, 1000, 0, false).GetAwaiter();
+            var Awaiter = Tools.VkApi.Audio.GetRecommendationsAsync(null, null, 1000, 0, false).GetAwaiter();
             Awaiter.OnCompleted(() =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     try
                     {
-                        ToolsAndsettings.AddDataToObservationCollection(AudioCollection, Awaiter.GetResult());
+                        Tools.AddDataToObservationCollection(AudioCollection, Awaiter.GetResult());
                         LoadingComponent.Visibility = Visibility.Collapsed;
 
                     }
@@ -90,7 +90,7 @@ namespace VkWpfPlayer.Pages
         {
             if(AudioListview.SelectedItems.Count>0)
             {
-                ToolsAndsettings.SendListClickEvent(AudioCollection,AudioListview.SelectedIndex);
+                Tools.SendListClickEvent(AudioCollection,AudioListview.SelectedIndex);
                 Player.Play((AudioModel)AudioListview.SelectedItem);
             }
         }
