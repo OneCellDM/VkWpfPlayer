@@ -115,7 +115,7 @@ namespace VkWpfPlayer.Pages
             {
                 AudioCollection.Clear();
                 Tools.UI.HideElements(AlbumGrid);
-                Tools.UI.ShowElements(AudioListView); ;
+                Tools.UI.ShowElements(AlbumsListView); ;
             }));
         }
 

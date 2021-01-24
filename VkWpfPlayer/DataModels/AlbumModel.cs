@@ -25,7 +25,7 @@ namespace VkWpfPlayer.DataModels
                 }
             }
         }
-        String AppData = Tools.CurrentSettings.CachePath;
+        String AppData = Tools.settings.CurrentSettings.CachePath;
         private string FilePath;
         public long OwnerID { get; set; }
         private String asyncImageProperty;

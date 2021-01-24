@@ -40,7 +40,7 @@ namespace VkWpfPlayer
             volume = 1.0;
             timer.Interval = 1000;
             timer.Elapsed += Timer_Elapsed;
-            Tools.loggingHandler.Log.Info("Инициализация Bass");
+           // Tools.loggingHandler.Log.Info("Инициализация Bass");
             Bass.Configure(Configuration.IncludeDefaultDevice, 1);
             Bass.Init();
 
@@ -52,8 +52,8 @@ namespace VkWpfPlayer
         {
 
 
-            if (!Bass.ChannelSetPosition(_stream, Bass.ChannelSeconds2Bytes(_stream, positionFromSeconds)))
-                Tools.loggingHandler.Log.Error(Bass.LastError);
+            Bass.ChannelSetPosition(_stream, Bass.ChannelSeconds2Bytes(_stream, positionFromSeconds));
+              //  Tools.loggingHandler.Log.Error(Bass.LastError);
 
 
 
@@ -69,17 +69,14 @@ namespace VkWpfPlayer
 
                     if (IsRepeat)
                     {
-                        Tools.loggingHandler.Log.Info("Перезапуск аудио потока");
+                       
                         Bass.ChannelUpdate(_stream, 0);
                         Player.Play();
-                        if (IsPlaying)
-                            Tools.loggingHandler.Log.Info("Аудио поток перезапущен");
-
-                        else Tools.loggingHandler.Log.Error(Bass.LastError.ToString());
+                      
                     }
                     else
                     {
-                        Tools.loggingHandler.Log.Info("Аудио поток остановлен");
+                       
                         if (Stopped != null)
                             Stopped.Invoke();
                         stoopedHandled = true;
@@ -106,7 +103,9 @@ namespace VkWpfPlayer
                 SetFromUrl(Audio.AudioUrl);
                 return true;
             }
-            catch (Exception ex) { Tools.loggingHandler.Log.Error(ex); }
+            catch (Exception ex)
+            {// Tools.loggingHandler.Log.Error(ex);
+            }
 
             return false;
         }
@@ -116,8 +115,8 @@ namespace VkWpfPlayer
         {
 
             volume = value;
-            if (!Bass.ChannelSetAttribute(_stream, ChannelAttribute.Volume, volume))
-                Tools.loggingHandler.Log.Error(Bass.LastError);
+            Bass.ChannelSetAttribute(_stream, ChannelAttribute.Volume, volume);
+               // Tools.loggingHandler.Log.Error(Bass.LastError);
 
         }
         static void SetFromUrl(String url)=>
@@ -148,15 +147,14 @@ namespace VkWpfPlayer
         {
             if (Bass.ChannelPause(_stream))
             {
-                Tools.loggingHandler.Log.Info("Аудио поток приостановлен");
+                
 
                 IsPaused = true;
                 IsPlaying = false;
             }
             else
             {
-                Tools.loggingHandler.Log.Info("Аудио поток не был приостановлен");
-                Tools.loggingHandler.Log.Error(Bass.LastError);
+              
             }
         }
        
@@ -170,7 +168,7 @@ namespace VkWpfPlayer
 
             if (_stream == 0)
             {
-                Tools.loggingHandler.Log.Info("Длинна потока = 0");
+               
                 Loading = false;
             }
             else
@@ -186,8 +184,6 @@ namespace VkWpfPlayer
 
                       if (!Bass.ChannelPlay(_stream, reply))
                       {
-                          Tools.loggingHandler.Log.Info("Ошибка воспроизведения аудио потока");
-                          Tools.loggingHandler.Log.Error(Bass.LastError);
 
                       }
                       SetVolume(volume);
@@ -196,8 +192,7 @@ namespace VkWpfPlayer
                       IsPlaying = true;
                       IsPaused = false;
                       Loading = false;
-                      Tools.loggingHandler.Log.Info("Аудио поток запущен");
-
+                     
 
                   });
                 PlayThread.IsBackground = true;

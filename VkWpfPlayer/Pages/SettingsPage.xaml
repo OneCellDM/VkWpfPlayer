@@ -1,43 +1,37 @@
 ﻿<Window x:Class="VkWpfPlayer.Pages.SettingsPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:VkWpfPlayer.Pages"
-      mc:Ignorable="d"  Background="White"
-      Title="SettingsPage" Height="634.4" MinWidth="500" Width="500">
-
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"  Background="White"
+      Title="SettingsPage" Height="1088" MinWidth="500" Width="500">
+    
+   
     <Grid>
         <ScrollViewer>
-            
+
             <StackPanel Margin="0,5,0,0"  VerticalAlignment="Center" HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Путь для скачивания аудиозаписей:"></Label>
-                    <TextBox  TextChanged="AudioDirectoryTextbox_TextChanged"  x:Name="AudioDirectoryTextbox" Width="180">
-
-                       
+                    <TextBox    x:Name="AudioDirectoryTextbox" Width="180" TextChanged="AudioDirectoryTextbox_TextChanged">
                     </TextBox>
-                    <Button x:Name="AudioSelectPath" Margin="5,0,0,0" Click="AudioSelectPath_Click" > Выбрать путь </Button>
+                    <Button x:Name="AudioSelectPath"  Margin="5,0,0,0" Click="AudioSelectPath_Click"  >Выбрать путь</Button>
                 </StackPanel>
-              
-               
-               
+
                 <StackPanel>
                     <Label   Content="Радиус края:"></Label>
                     <Border BorderBrush="{DynamicResource VKImageBorderColor}" BorderThickness="{DynamicResource VKImageBorderThickness}" HorizontalAlignment="Center"   Width="120" Height="120"  CornerRadius="{DynamicResource VKImageCornerRadius}" Margin="10,20,0,0">
                         <Border.Background>
-                            <ImageBrush ImageSource="/Resources/MusicIcon.jpg"/>
+                            <ImageBrush ImageSource="/Resources/MusicIcon.jpg" />
                         </Border.Background>
-
                     </Border>
                     <Label Name="RadiusRoundValue" Content="Значение: 10"></Label>
-                    <Slider x:Name="RoundImageSlider" HorizontalAlignment="Stretch"   ValueChanged="RoundImageSlider_ValueChanged" Maximum="100" Margin="0,-2,0,0" Minimum="1" SmallChange="1" Value="10"/>
+                    <Slider x:Name="RoundImageSlider" HorizontalAlignment="Stretch" ValueChanged="RoundImageSlider_ValueChanged"   Maximum="100" Margin="0,-2,0,0" Minimum="1" SmallChange="1" Value="10" />
 
                     <StackPanel>
-                       
-                        <Label x:Name="BorderThicknessLabel" Content="Толщина обводки  картинки:0"></Label>
-                        <Slider x:Name="BorderThicknessSlider"  ValueChanged="BorderThicknessSlider_ValueChanged"></Slider>
-                        
+
+                        <Label x:Name="ImageBorderThicknessLabel" Content="Толщина обводки  картинки:0"></Label>
+                        <Slider x:Name="ImageBorderThicknessSlider" ValueChanged="ImageBorderThicknessSlider_ValueChanged"  ></Slider>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel>
@@ -46,92 +40,68 @@
                         <Button Style="{DynamicResource ButtonStyleRect}" Height="40"  Content="Пример текста"></Button>
                         <TextBox Style="{DynamicResource TextBoxStyleRect}" Width="150" Margin="20,0,0,0" Height="25"></TextBox>
                     </StackPanel>
-                    <Label  x:Name="ButtonRoundRadiusTextBlock"  Content="Значение: 10"></Label>
-                    <Slider x:Name="ButtonRoundRadiusSlider"    HorizontalAlignment="Stretch"   ValueChanged="ButtonRoundRadiusSlider_ValueChanged" Maximum="100" Margin="0,-2,0,0" Minimum="1" SmallChange="1">
-                        
+                    <Label  x:Name="ButtonAndTextboxRoundRadiusTextBlock"   Content="Значение: 10"></Label>
+                    <Slider x:Name="ButtonAndTextboxRoundRadiusSlider"  ValueChanged="ButtonAndTextboxRoundRadiusSlider_ValueChanged"   HorizontalAlignment="Stretch"   Maximum="100" Margin="0,-2,0,0" Minimum="1" SmallChange="1">
                     </Slider>
-
-
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Label  Content="Цвет текста:" Width="200"></Label>
                         <TextBox   x:Name="TextColoTextbox" Width="100" TextChanged="TextColoTextbox_TextChanged" >
-                            
                         </TextBox>
                         <Button x:Name="SelectTextColorButton" Click="SelectTextColorButton_Click" >Выбрать</Button>
                     </StackPanel>
 
-                    <StackPanel >
+                    <StackPanel>
                         <Label Content="Фон"></Label>
-                        <StackPanel Orientation="Horizontal" Margin="0,10,0,10" >
-                        <Label Content="Цвет фона " Width="200" ></Label>
-                        <TextBox   x:Name="BackGroundTextBox" Width="100" TextChanged="BackGroundTextBox_TextChanged"></TextBox>
-                        <Button  x:Name="SelectBackGroundColorButton" Click="SelectBackGroundColorButton_Click" >Выбрать</Button>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                            <Label Content="Цвет фона " Width="200" ></Label>
+                            <TextBox  x:Name="BackGroundTextBox" Width="100" TextChanged="BackGroundTextBox_TextChanged" ></TextBox>
+                            <Button  x:Name="SelectBackGroundColorButton" Click="SelectBackGroundColorButton_Click" >Выбрать</Button>
                         </StackPanel>
-                        <CheckBox x:Name="UseImageCheckBox" Checked="UseImageCheckBox_Checked"  Unchecked="UseImageCheckBox_Unchecked" Content="Использовать картинку"></CheckBox>
+                        <CheckBox x:Name="UseImageCheckBox"    Content="Использовать картинку" Checked="UseImageCheckBox_Checked" Unchecked="UseImageCheckBox_Unchecked"></CheckBox>
                         <StackPanel Orientation="Horizontal"  Margin="0,10,0,10">
                             <Label Content="Фоновое изображение " Width="200" ></Label>
-                            <TextBox   x:Name="BackGroundImagePath" Width="100" TextChanged="BackGroundImagePath_TextChanged"></TextBox>
+                            <TextBox   x:Name="BackGroundImagePath" Width="100" TextChanged="BackGroundImagePath_TextChanged" ></TextBox>
                             <Button  x:Name="SelectBackGroundImageButton" Click="SelectBackGroundImageButton_Click" >Выбрать</Button>
                         </StackPanel>
-                        <StackPanel>
-
-                            <Label x:Name="BackGroundOpacityLabel" Content="Яркость фона:0"></Label>
-                            <Slider x:Name="BackGroundOpacitySlider"  ValueChanged="BackGroundOpacitySlider_ValueChanged" LargeChange="0.1" Maximum="0.1"></Slider>
-
-                        </StackPanel>
-
-
+                        <StackPanel/>
                     </StackPanel>
-
-
 
                     <StackPanel Orientation="Horizontal">
                         <Label   Content="Цвет обводки изображения:" Width="200"></Label>
-                        <TextBox x:Name="ImageBorderColorTextBox"  Width="100" TextChanged="ImageBorderColorTextBox_TextChanged"></TextBox>
+                        <TextBox x:Name="ImageBorderColorTextBox"  Width="100" TextChanged="ImageBorderColorTextBox_TextChanged" ></TextBox>
                         <Button x:Name="SelectImageBorderColorButton" Click="SelectImageBorderColorButton_Click" >Выбрать</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <Label   Content="Цвет обьектов при наведении:" Width="200"></Label>
-                        <TextBox  x:Name="MouseOverColorTextBox" Width="100" TextChanged="MouseOverColorTextBox_TextChanged"></TextBox>
-                        <Button x:Name="SelectMouseOverColorButton"  Click="SelectMouseOverColorButton_Click">Выбрать</Button>
+                        <TextBox  x:Name="MouseOverColorTextBox" TextChanged="MouseOverColorTextBox_TextChanged" Width="100" ></TextBox>
+                        <Button x:Name="SelectMouseOverColorButton" Click="SelectMouseOverColorButton_Click" >Выбрать</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <Label    Content="Цвет кнопок:" Width="200"></Label>
-                        <TextBox  x:Name="TextBoxAndButtonColorTextbox"  Width="100" TextChanged="TextboxColorAndButtonColorTextbox_TextChanged" ></TextBox>
-                        <Button x:Name="SelectTextBoxAndButtonColorButton" Click="SelectTextBoxAndButtonColorButton_Click"   >Выбрать</Button>
+                        <Label    Content="Цвет кнопок и полей ввода:" Width="200"></Label>
+                        <TextBox  x:Name="TextBoxAndButtonColorTextbox"  TextChanged="TextBoxAndButtonColorTextbox_TextChanged" Width="100"  ></TextBox>
+                        <Button x:Name="SelectTextBoxAndButtonColorButton" Click="SelectTextBoxAndButtonColorButton_Click"  >Выбрать</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <Label    Content="Цвет текста кнопок плеера:" Width="200"></Label>
-                        <TextBox  x:Name="PlayerButtonTextColorTextBox"  Width="100" TextChanged="PlayerButtonTextColorTextBox_TextChanged" ></TextBox>
-                        <Button x:Name="SelectPlayerButtonTextColorButton" Click="SelectPlayerButtonTextColorButton_Click" >Выбрать</Button>
+                        <TextBox  x:Name="PlayerButtonTextColorTextBox" TextChanged="PlayerButtonTextColorTextBox_TextChanged"  Width="100"></TextBox>
+                        <Button x:Name="SelectPlayerButtonTextColorButton" Click="SelectPlayerButtonTextColorButton_Click">Выбрать</Button>
                     </StackPanel>
-                   
-
-
-
 
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <Label   Content="Цвет контролов" Width="200"></Label>
-                        <TextBox   x:Name="ControlColorTextbox" Width="100" TextChanged="ControlColorTextbox_TextChanged"></TextBox>
-                        <Button  x:Name="SelectControlColorTextboxButton" Click="SelectControlColorTextboxButton_Click" >Выбрать</Button>
+                        <TextBox   x:Name="ControlColorTextbox" TextChanged="ControlColorTextbox_TextChanged" Width="100"/>
+                       
+                        <Button  x:Name="SelectControlColorTextboxButton" Click="SelectControlColorTextboxButton_Click"  >Выбрать</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <Label   Content="Цвет слайдеров" Width="200"></Label>
-                        <TextBox  x:Name="SliderColorsTextBox" Width="100" TextChanged="SliderColorsTextBox_TextChanged"></TextBox>
+                        <TextBox  x:Name="SliderColorsTextBox" TextChanged="SliderColorsTextBox_TextChanged" Width="100" ></TextBox>
                         <Button   x:Name="SelectSliderColorButton" Click="SelectSliderColorButton_Click" >Выбрать</Button>
                     </StackPanel>
-
-
                 </StackPanel>
-
-
-
-
-
             </StackPanel>
         </ScrollViewer>
-
     </Grid>
 </Window>

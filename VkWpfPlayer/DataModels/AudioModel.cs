@@ -9,7 +9,11 @@ namespace VkWpfPlayer.DataModels
 {
     public class AudioModel
     {
-        
+        private string asyncImageProperty;
+        private string FilePath;
+
+        String AppData = Tools.settings.CurrentSettings.CachePath;
+
         private string image;
         public long Owner_ID { get; set; }
         public int DurationSeconds { get; set; }
@@ -30,16 +34,9 @@ namespace VkWpfPlayer.DataModels
                     LoadImage(value);
                 }
 
-
-
             }
             get { return image; }
         }
-
-
-        private string asyncImageProperty;
-        private string FilePath;
-        String AppData = Tools.CurrentSettings.CachePath;
         public String AsyncImageProperty
         {
             get => asyncImageProperty;
@@ -68,10 +65,6 @@ namespace VkWpfPlayer.DataModels
                           }
                           catch (Exception ex)
                           {
-                              Console.WriteLine(ex.Message);
-
-
-
                               AsyncImageProperty = null;
                           }
                       }

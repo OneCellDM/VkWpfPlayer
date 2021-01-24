@@ -68,6 +68,7 @@ namespace VkWpfPlayer.Pages
                 }).GetAwaiter();
                 awaiterdata.OnCompleted(() =>
                 {
+                    FriendsListview.SelectedIndex = -1;
                     if (ClosedEvent != null)
                         ClosedEvent.Invoke();
                 });

@@ -45,8 +45,8 @@ namespace VkWpfPlayer
         public MainWindow()
         {
 
-
-
+           
+            Tools.settings.LoadSettings();
 
             InitializeComponent();
            
@@ -60,33 +60,38 @@ namespace VkWpfPlayer
 
             AuthFrame.Content = new VkLogin().Content;
             Tools.AuthorizedAcces += ToolsAndsettings_AuthorizedAcces;
-            Tools.CurrentSettings.BackGroundChanged += CurrentSettings_BackGroundChanged;
+            
         }
 
-        private void CurrentSettings_BackGroundChanged()
+   
+
+        public void UpdateBG()
         {
-            if(Tools.CurrentSettings.BackGroundImage != null)
-            if(Tools.CurrentSettings.IsBackgroundImage &  Tools.CurrentSettings.BackGroundImage.Length>0)
-            {
-                try
+
+            if (Tools.settings.CurrentSettings.BackGroundImage != null)
+                if (Tools.settings.CurrentSettings.IsBackgroundImage & Tools.settings.CurrentSettings.BackGroundImage.Length > 0)
                 {
-                        this.Background = new ImageBrush(new BitmapImage(new Uri(Tools.CurrentSettings.BackGroundImage))) { Stretch = Stretch.UniformToFill };
-                        ((Grid)_repostPage.FindName("GridContainer")).Background = new ImageBrush(new BitmapImage(new Uri(Tools.CurrentSettings.BackGroundImage))) { Stretch = Stretch.UniformToFill };
-                        this.Background.Opacity = Tools.CurrentSettings.BackGroundOpacity;
-                        ((Grid)_repostPage.FindName("GridContainer")).Background.Opacity = Tools.CurrentSettings.BackGroundOpacity;
+                    try
+                    {
+                        this.Background = new ImageBrush(new BitmapImage(new Uri(Tools.settings.CurrentSettings.BackGroundImage))) { Stretch = Stretch.UniformToFill };
+                        ((Grid)_repostPage.FindName("GridContainer")).Background = new ImageBrush(new BitmapImage(new Uri(Tools.settings.CurrentSettings.BackGroundImage))) { Stretch = Stretch.UniformToFill };
+                        this.Background.Opacity = Tools.settings.CurrentSettings.BackGroundOpacity;
+                        ((Grid)_repostPage.FindName("GridContainer")).Background.Opacity = Tools.settings.CurrentSettings.BackGroundOpacity;
                         return;
-                }catch(Exception eX)
-                {
+                    }
+                    catch (Exception eX)
+                    {
+
+                    }
+
 
                 }
 
+            this.Background = (Brush)new BrushConverter().ConvertFromString(Tools.settings.CurrentSettings.BackGroundColor);
+            ((Grid)_repostPage.FindName("GridContainer")).Background = (Brush)new BrushConverter().ConvertFromString(Tools.settings.CurrentSettings.BackGroundColor);
 
-            }
-          
-                this.Background = (Brush)new BrushConverter().ConvertFromString(Tools.CurrentSettings.BackGroundColor);
-            ((Grid)_repostPage.FindName("GridContainer")).Background = (Brush)new BrushConverter().ConvertFromString(Tools.CurrentSettings.BackGroundColor);
-           
         }
+       
 
         private void TeamplatesDictonary_AudioAddToPlaylist(AudioModel audioModel)
         {
@@ -205,7 +210,8 @@ namespace VkWpfPlayer
 
             _repostPage.ClosedEvent += _repostPage_ClosedEvent;
             Console.WriteLine("Loaded");
-            Tools.CurrentSettings.BackGroundInvoke();
+            
+            UpdateBG();
         }
 
         private void TeamplatesDictonary_AudioDownload(AudioModel audioModel,object sender)
@@ -227,7 +233,7 @@ namespace VkWpfPlayer
                         audiodataen.MoveNext();
                         var audiodata = audiodataen.Current;
                         
-                        webClient.DownloadFileAsync(new Uri(audiodata.Url.AbsoluteUri), Tools.CurrentSettings. VKAudioDownloadPath+"\\"+audiodata.Artist+"-"+audiodata.Title+".mp3"); ;
+                        webClient.DownloadFileAsync(new Uri(audiodata.Url.AbsoluteUri), Tools.settings.CurrentSettings. VKAudioDownloadPath+"\\"+audiodata.Artist+"-"+audiodata.Title+".mp3"); ;
                     }
 
                     catch (Exception ex)
@@ -267,6 +273,7 @@ namespace VkWpfPlayer
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
             {
                 PlayPauseTrackButton.Content = System.Net.WebUtility.HtmlDecode("&#xE769;");
+                PlayPouseThumbButton.ImageSource = Tools.LoadBitmapFromResource("Resources/pause.png");
                 AudioPlayerTitle.Text = audioModel.Title;
                 AudioPlayerArtist.Text = audioModel.Artist;
                 if (audioModel.ImageUrl != null)
@@ -352,11 +359,14 @@ namespace VkWpfPlayer
                 if (Player.IsPaused)
                 {
                     PlayPauseTrackButton.Content = System.Net.WebUtility.HtmlDecode("&#xE769;");
+                    PlayPouseThumbButton.ImageSource = Tools.LoadBitmapFromResource("Resources/pause.png");
                     Player.Play();
                 }
                 else
                 {
                     PlayPauseTrackButton.Content = System.Net.WebUtility.HtmlDecode("&#xE768;");
+                    PlayPouseThumbButton.ImageSource = Tools.LoadBitmapFromResource("Resources/play.png");
+                   
                     Player.Pause();
                 }
             }
@@ -384,15 +394,16 @@ namespace VkWpfPlayer
             if (!Minimized)
             {
                 Minimized = true;
+                this.WindowStyle = WindowStyle.None;
                 ResizeMode = ResizeMode.NoResize;
-                this.Topmost = true;
                 ShowInTaskbar = false;
-                MinHeight = 100;
-                Height = 100;
+                MinHeight = 60;
+                Height = 60;
                 Width = 600;
             }
             else
             {
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
                 ResizeMode = ResizeMode.CanResize;
                 this.Topmost = false;
 
@@ -419,15 +430,26 @@ namespace VkWpfPlayer
         {
             try
             {
+
                 SettingsPage settingsPage = new SettingsPage();
 
                 settingsPage.WindowStyle = WindowStyle.SingleBorderWindow;
+                settingsPage.BackgroundUpdated += delegate {
+                   
+                    UpdateBG();
+
+                };
 
                 settingsPage.ShowDialog();
+                Tools.settings.SaveSettings();
+                Tools.settings.LoadSettings();
 
-               
+                Tools.settings.CurrentSettings.UpdateSettings();
 
-                Tools.SaveSettings();
+
+
+
+
             }
             catch (Exception ex)
             {
@@ -495,6 +517,12 @@ namespace VkWpfPlayer
             {
                 this.Top += 10;
             }));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.T, ModifierKeys.Alt, delegate
+            {
+                if (!this.Topmost)
+                    this.Topmost = true;
+                else this.Topmost = false;
+            }));
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -505,6 +533,21 @@ namespace VkWpfPlayer
         private void ShuffleButton_Click(object sender, RoutedEventArgs e)
         {
             _currentPlaylistPage.Shuffle();
+        }
+
+        private void PlayPouseThumbButton_Click(object sender, EventArgs e)
+        {
+            PlayPauseState();
+        }
+
+        private void PreviousThumbButton_Click(object sender, EventArgs e)
+        {
+            _currentPlaylistPage.PreviousAudio();
+        }
+
+        private void NexThumbButton_Click(object sender, EventArgs e)
+        {
+            _currentPlaylistPage.NextAudio();
         }
     }
 }

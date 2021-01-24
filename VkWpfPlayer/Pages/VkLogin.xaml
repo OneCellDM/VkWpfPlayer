@@ -30,11 +30,12 @@
                 </TextBox>
 
                 <CheckBox x:Name="SaveAuthDataCheckBox" Content="Запомнить  пользователя" Margin="20,5,0,0"/>
+                <StackPanel Orientation="Vertical">
 
-                <Button Style="{StaticResource ButtonStyleRect}" x:Name="AuthButton"  Content="Авторизироваться" Padding="15,10" Margin="80,20"  FontSize="16" Click="AuthButton_Click" >
+                    <Button Style="{StaticResource ButtonStyleRect}" x:Name="AuthButton"  Content="Авторизироваться" Padding="15,10" Margin="80,20"  FontSize="16" Click="AuthButton_Click" />
+                    <Button Style="{StaticResource ButtonStyleRect}" x:Name="LoginExit" Content="Выйти" Padding="15,10" Margin="80,5"  FontSize="16"></Button>
                    
-                </Button>
-
+                </StackPanel>
             </StackPanel>
         </Border>
         <Border x:Name="AccountListPanelBorder"  CornerRadius="5" Background="White"  BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -57,16 +58,8 @@
                                         <ColumnDefinition Width="30"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="5,0"> </TextBlock>
-                                <Button  Grid.Column="1" x:Name="DeleteAccountButton" Content="&#xE74D;" FontFamily="/Resources/#Segoe MDL2 Assets" FontSize="20" Click="DeleteAccountButton_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFDDDDDD">
-                                        <Button.Style>
-                                            <Style TargetType="Button">
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Foreground" Value="AliceBlue"/>
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
+                                <Button  Style="{StaticResource TransparentButtonStyle}" Grid.Column="1" x:Name="DeleteAccountButton" Content="&#xE74D;" FontFamily="/Resources/#Segoe MDL2 Assets" FontSize="20" Click="DeleteAccountButton_Click"  >
+                                       
                                 </Button>
                                 </Grid>
                             </StackPanel>

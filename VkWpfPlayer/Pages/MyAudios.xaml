@@ -15,25 +15,32 @@
 
 
 
-       
+
 
     </Page.Resources>
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="78.4"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Style="{DynamicResource ButtonStyleRect}" x:Name="SearchButton"  VerticalAlignment="Top"  Grid.Column="1" Margin="0.4,0,3,0" Click="SearchButton_Click"   Height="29" >
+            <Button  Margin="5,0,0,0" Style="{DynamicResource ButtonStyleRect}" x:Name="UpdateListButton"  VerticalAlignment="Top"  Grid.Column="0" Click="UpdateListButton_Click"    >
+                <TextBlock Margin="5,0,0,0" ><Run FontSize="14"   Text="&#xE72C;" FontFamily="../Resources/#Segoe MDL2 Assets"/><Run Text=" "/><Run  FontSize="14" Text="Обновить "/></TextBlock>
+
+            </Button>
+            <Button Visibility="Collapsed" Style="{DynamicResource ButtonStyleRect}" x:Name="SearchButton"  VerticalAlignment="Top"  Grid.Column="2" Click="SearchButton_Click"   Height="29" >
                 <TextBlock><Run FontSize="12"  Text="&#xE721;" FontFamily="../Resources/#Segoe MDL2 Assets"/><Run Text=" "/><Run Text="Поиск "/></TextBlock>
 
             </Button>
 
-            <TextBox Style="{StaticResource TextBoxStyleRect}" x:Name="SearchTextBox" TextWrapping="Wrap" Margin="2,1,2.6,1.4" UndoLimit="200" RenderTransformOrigin="0.5,0.5" TextChanged="SearchTextBox_TextChanged" />
+            <TextBox Style="{DynamicResource TextBoxStyleRect}" x:Name="SearchTextBox" TextWrapping="Wrap" Margin="5,0,5,0" UndoLimit="200" RenderTransformOrigin="0.5,0.5" TextChanged="SearchTextBox_TextChanged" Grid.Column="1" >
+               
+            </TextBox>
 
 
             <ListView     Style="{DynamicResource ViewStyle}"

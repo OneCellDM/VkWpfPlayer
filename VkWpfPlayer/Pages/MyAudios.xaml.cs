@@ -57,6 +57,8 @@ namespace VkWpfPlayer.Pages
 
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
             {
+                SearchTextBox.Text = "";
+                AudioCollection.Clear();
                 Tools.UI.ShowElements(SuccesLoadPanel);
             }));
          
@@ -142,6 +144,11 @@ namespace VkWpfPlayer.Pages
         private void ErrorDialog_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
 
+        }
+
+        private void UpdateListButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        { 
+            StartLoading();
         }
     }
 }

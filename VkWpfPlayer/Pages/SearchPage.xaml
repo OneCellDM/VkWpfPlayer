@@ -12,13 +12,13 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="78.4"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button  Style="{StaticResource ButtonStyleRect}" x:Name="SearchButton"  Grid.Column="1" Margin="0.4,0,3,0.4" Click="SearchButton_Click"  >
+        <Button  Style="{StaticResource ButtonStyleRect}"  x:Name="SearchButton"  Grid.Column="1" Margin="5,0,5,-2" Click="SearchButton_Click"  >
             <Button.Content>
                 <TextBlock>
                       <Run FontSize="12"  Text="&#xE721;" FontFamily="/Resources/#Segoe MDL2 Assets"></Run>
@@ -29,7 +29,7 @@
         <TextBox  Style="{StaticResource TextBoxStyleRect}" x:Name="SearchTextBox" TextWrapping="Wrap" Margin="2,1,2.6,1.4" UndoLimit="200" RenderTransformOrigin="0.5,0.5">
            
         </TextBox>
-        <ListView ItemTemplate="{DynamicResource AudioSeachListTeamplate}"
+        <ListView BorderThickness="0" ItemTemplate="{DynamicResource AudioSeachListTeamplate}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      Style="{DynamicResource ViewStyle}"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -41,8 +41,8 @@
                   Margin="0,5,0,0" MouseLeftButtonUp="AudioListView_MouseLeftButtonUp"       
                   ScrollViewer.ScrollChanged="AudioListView_ScrollChanged" Background="{x:Null}" >
         </ListView>
-        <local:LoadingComponent x:Name= "SuccesLoadPanel"  />
-        <local:EISDialog   Background="{DynamicResource VKBackGroundColor}"  AcceptButtonText="Повторить" CancelButtonVisible="Collapsed"  ContentDialogData="Произошла огшибка во время загрузки"  x:Name="ErrorDialog"  Accepted="ErrorDialog_Accepted"  />
+        <local:LoadingComponent x:Name= "SuccesLoadPanel" Grid.ColumnSpan="2"  Grid.RowSpan="2" d:IsHidden="True"  />
+        <local:EISDialog   Background="{DynamicResource VKBackGroundColor}"  Grid.ColumnSpan="2" Grid.RowSpan="2" AcceptButtonText="Повторить" CancelButtonVisible="Collapsed"  ContentDialogData="Произошла огшибка во время загрузки"  x:Name="ErrorDialog"  Accepted="ErrorDialog_Accepted" d:IsHidden="True"  />
 
 
     </Grid>

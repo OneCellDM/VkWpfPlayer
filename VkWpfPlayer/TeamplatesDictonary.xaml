@@ -40,7 +40,7 @@
 
     <SolidColorBrush x:Key="VKPlayerButtonTextColor" Color="White"></SolidColorBrush>
     <SolidColorBrush x:Key="VKImageBorderColor" Color="Transparent"></SolidColorBrush>
-    <SolidColorBrush x:Key="VkMouseOverColor" Color="#4A76A8"></SolidColorBrush>
+    <SolidColorBrush x:Key="VkMouseOverColor" Color="#FFA8A7A7"></SolidColorBrush>
     <SolidColorBrush x:Key="VkSliderColor" Color="#EDEEF0"></SolidColorBrush>
     <SolidColorBrush x:Key="VkContolColor" Color="#4A76A8"></SolidColorBrush>
 
@@ -612,7 +612,7 @@
             <Setter.Value>
                 <ControlTemplate  TargetType="TextBox">
                     <Border CornerRadius="{DynamicResource VKButtonAndTextBoxCornerRadius}" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
-                        <ContentPresenter Margin="2,0,0,0" VerticalAlignment="Center" x:Name="ContentData" Content="{TemplateBinding Text}"></ContentPresenter>
+                        <ContentPresenter Margin="14,-0.2,0,2" VerticalAlignment="Center" x:Name="ContentData" Content="{TemplateBinding Text}"></ContentPresenter>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseCaptured" Value="True">
@@ -640,7 +640,7 @@
             <Setter.Value>
                 <ControlTemplate  TargetType="Button">
                     <Border CornerRadius="{DynamicResource VKButtonAndTextBoxCornerRadius}" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
-                        <ContentPresenter Margin="2" x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center"  VerticalAlignment="Center" />
+                        <ContentPresenter Margin="10,5.5,10,5.5" x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center"  VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseCaptured" Value="True">
@@ -654,7 +654,34 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="TransparentButtonStyle" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="{TemplateBinding Background}" >
+                        <ContentPresenter   HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+           
+        </Setter>
+        <Style.Triggers>
+            
+            <Trigger Property="IsMouseOver" Value="True">
+              
+                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource VkMouseOverColor}"></Setter>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                
+                    <Setter Property="Foreground" Value="{StaticResource VkContolColor}"></Setter>
+                <Setter Property="Background" Value="Transparent"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key= "AuthoTextblockStyle" TargetType="{x:Type TextBlock}"  >
         <Setter Property="Foreground" Value="{DynamicResource VKTextColor}"></Setter>
         
@@ -765,10 +792,10 @@
 
 
             <StackPanel  Grid.Column="2" Orientation="Horizontal">
-                <Button Background="{x:Null}" Foreground="{DynamicResource VkContolColor}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DownloadButton"  Opacity="0"  Content="&#xE896;" Click="DownloadButton_Click" ></Button>
-                <Button Background="{x:Null}" Foreground="{DynamicResource VkContolColor}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="AddToplaylistButton"  Opacity="0"  Content="&#xE93C;" Click="AddToplaylistButton_Click" ></Button>
-                <Button Background="{x:Null}"  Foreground="{DynamicResource VkContolColor}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DeleteButton"  Opacity="0"  Content="&#xE894;" Click="DeleteButton_Click" ></Button>
-                <TextBlock   Margin="5,0,0,0"  VerticalAlignment="Center"   HorizontalAlignment="Stretch" Text="{Binding DurationSeconds,Converter={StaticResource Dconverter} }" Foreground="{DynamicResource VKTextColor}">
+                <Button  Style="{DynamicResource TransparentButtonStyle}" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DownloadButton"  Opacity="0"  Content="&#xE896;" Click="DownloadButton_Click" ></Button>
+                <Button  Style="{DynamicResource TransparentButtonStyle}" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="AddToplaylistButton"  Opacity="0"  Content="&#xE93C;" Click="AddToplaylistButton_Click" ></Button>
+                <Button  Style="{DynamicResource TransparentButtonStyle}" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DeleteButton"  Opacity="0"  Content="&#xE894;" Click="DeleteButton_Click" ></Button>
+                <TextBlock Margin="5,0,0,0"  VerticalAlignment="Center"   HorizontalAlignment="Stretch" Text="{Binding DurationSeconds,Converter={StaticResource Dconverter} }" Foreground="{DynamicResource VKTextColor}">
 
                 </TextBlock>
             </StackPanel>
@@ -851,10 +878,10 @@
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Foreground="{DynamicResource VkContolColor}" Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DownloadButton"  Opacity="0"  Content="&#xE896;" Click="DownloadButton_Click" ></Button>
-                <Button Foreground="{DynamicResource VkContolColor}" Background="{x:Null}" BorderThickness="0" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="AddToplaylistButton"  Opacity="0"  Content="&#xE93C;" Click="AddToplaylistButton_Click" ></Button>
+                <Button Style="{DynamicResource TransparentButtonStyle}"  Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="DownloadButton"  Opacity="0"  Content="&#xE896;" Click="DownloadButton_Click" ></Button>
+                <Button Style="{DynamicResource TransparentButtonStyle}" Width="30" Height="30" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" x:Name="AddToplaylistButton"  Opacity="0"  Content="&#xE93C;" Click="AddToplaylistButton_Click" ></Button>
 
-                <Button Foreground="{DynamicResource VkContolColor}" x:Name="AddAudioButton" Opacity="0" Background="{x:Null}" BorderThickness="0" Content="&#xE710;" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" Width="30" Height="30" Click="AddAudioButton_Click" />
+                <Button Style="{DynamicResource TransparentButtonStyle}" x:Name="AddAudioButton" Opacity="0"  Content="&#xE710;" FontFamily="./Resources/#Segoe MDL2 Assets" FontSize="20" Width="30" Height="30" Click="AddAudioButton_Click" />
 
                 <TextBlock  Margin="5,0,0,0" VerticalAlignment="Center"    HorizontalAlignment="Stretch" Text="{Binding DurationSeconds,Converter={StaticResource Dconverter} }" Foreground="{DynamicResource VKTextColor}"></TextBlock>
             </StackPanel>

@@ -16,7 +16,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="78.4"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -31,7 +31,7 @@
                     </TextBlock>
                 </Button.Content>
             </Button>
-            <Button Style="{ StaticResource ButtonStyleRect}" x:Name="SearchButton"  Grid.Column="2" Margin="0,0,3,0.4" Click="SearchButton_Click"   >
+            <Button Visibility="Collapsed" Style="{ StaticResource ButtonStyleRect}" x:Name="SearchButton"  Grid.Column="2" Margin="0,0,3,0.4" Click="SearchButton_Click"   >
                 <Button.Content>
                     <TextBlock>
                     <Run FontSize="12"  Text="&#xE721;" FontFamily="/Resources/#Segoe MDL2 Assets"></Run>
