@@ -38,7 +38,7 @@
                       MouseLeftButtonUp="AudioListView_MouseLeftButtonUp" Background="{x:Null}"    />
 
 
-            <Button Style="{StaticResource ButtonStyleRect}" x:Name="BackAlbumListButton" HorizontalAlignment="Left" Click="BackAlbumListButton_Click" Margin="5,1,0,2.2" >
+            <Button Style="{StaticResource ButtonStyleRect}" x:Name="BackAlbumListButton" HorizontalAlignment="Left" Click="BackAlbumListButton_Click" Margin="5,0,0,0" >
 
                 <TextBlock FontSize="14"  ><Run Text=" &#xE72B;" FontFamily="/Resources/#Segoe MDL2 Assets"/><Run Text=" "/><Run x:Name="AlbumTitleText"/><Run Text=" "/><Run Text=" "/></TextBlock>
 

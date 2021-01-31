@@ -43,8 +43,11 @@ namespace VkWpfPlayer.Pages
 
         private void TextColoTextbox_TextChanged(object sender, TextChangedEventArgs e) =>
             Tools.settings.CurrentSettings.TextColor = Tools.UI.GetTextFromTextboxToUpper(sender);
-        private void BackGroundTextBox_TextChanged(object sender, TextChangedEventArgs e) =>
+        private void BackGroundTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
             Tools.settings.CurrentSettings.BackGroundColor = Tools.UI.GetTextFromTextboxToUpper(sender);
+            BackgroundUpdated?.Invoke();
+        }
         private void ImageBorderColorTextBox_TextChanged(object sender, TextChangedEventArgs e) =>
             Tools.settings.CurrentSettings.ImageBorderColor = Tools.UI.GetTextFromTextboxToUpper(sender);
         private void MouseOverColorTextBox_TextChanged(object sender, TextChangedEventArgs e) =>
